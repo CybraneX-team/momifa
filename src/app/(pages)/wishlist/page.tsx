@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useState, useEffect } from 'react';
 
 const Wishlist = () => {
@@ -19,12 +18,22 @@ const Wishlist = () => {
     localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
   };
 
+  const removeFromWishlist = (index) => {
+    const updatedWishlist = [...wishlist];
+    updatedWishlist.splice(index, 1);
+    setWishlist(updatedWishlist);
+    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+  };
+
   return (
     <div>
       <h1>Wishlist</h1>
       <ul>
         {wishlist.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index}>
+            <button onClick={() => removeFromWishlist(index)}>Delete</button>
+            {item}
+          </li>
         ))}
       </ul>
       <button onClick={() => addToWishlist('New Item')}>Add to Wishlist</button>
