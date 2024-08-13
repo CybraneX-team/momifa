@@ -1,0 +1,18 @@
+.icon-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.icon-scroll {
+    display: flex;
+    width: 200%;
+}
+
+.scroll-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}

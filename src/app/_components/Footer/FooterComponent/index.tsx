@@ -27,6 +27,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
                 alt={inclusion.title}
                 width={36}
                 height={36}
+                color={"white"}
                 className={classes.icon}
               />
 

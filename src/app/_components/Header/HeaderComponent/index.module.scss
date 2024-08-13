@@ -1,17 +1,34 @@
+.mainHeader{
+  background-color: aqua;
+}
+
 .header {
-  padding: 36px 0;
+  padding: 15px 70px;
+  width: 900px;
+  margin-left: 320px;
+  position: fixed;
+  z-index: 999;
+}
+
+.svg {
+  width: 100px;
+}
+
+.hide {
+  padding-right: 40px !important;
+
 }
 
 .wrap {
   display: flex;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  padding: 20px 0;
   align-items: center;
   justify-content: space-between;
+  border-radius: 160px;
+  background: black;
   flex-wrap: wrap;
-  gap: calc(var(--base) / 2) var(--base)
-}
-
-.logo {
-  width: 170px;
 }
 
 .hide { 

@@ -7,6 +7,7 @@ import { profileNavItems } from '../../constants/'
 import { UserInfo } from './UserInfo'
 
 import classes from './index.module.scss'
+import "./bgWhite.scss"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

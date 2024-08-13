@@ -22,8 +22,16 @@ export const dynamic = 'force-dynamic'
 
 import Categories from '../../_components/Categories'
 import Promotion from '../../_components/Promotion'
+import IconScoll from '../../_components/IconScroll'
 
 import classes from './index.module.scss'
+import "./bg.scss"
+import dynamicM from 'next/dynamic';
+
+const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
+  ssr: false,
+  loading: () => <div style={{ height: '300px' }}>Loading...</div>
+});
 
 export default async function Page({ params: { slug = 'home' } }) {
   const { isEnabled: isDraftMode } = draftMode()
@@ -65,9 +73,13 @@ export default async function Page({ params: { slug = 'home' } }) {
         <section>
           <Hero {...hero} />
 
+            {/* <IconScoll /> */}
+            <div style={{ width: '100%', margin: '20px 0' }}>
+              <FallingRectangles />
+            </div>
           <Gutter className={classes.home}>
             <Categories categories={categories} />
-            <Promotion />
+            {/* <Promotion /> */}
           </Gutter>
         </section>
       ) : (

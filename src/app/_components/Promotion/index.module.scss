@@ -6,6 +6,8 @@
   gap: 30px;
   margin-bottom: 30px;
 
+  color: white;
+  
   @include small-break {
     grid-template-columns: 1fr;
   }

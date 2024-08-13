@@ -1,6 +1,9 @@
+"use client"
+
 import React from 'react'
 import Link from 'next/link'
 
+import {motion} from "framer-motion"
 import { Category } from '../../../payload/payload-types'
 import CategoryCard from './CategoryCard'
 
@@ -10,14 +13,23 @@ const Categories = ({ categories }: { categories: Category[] }) => {
   return (
     <section className={classes.container}>
       <div className={classes.titleWrapper}>
-        <h3>Shop by Categories</h3>
-        <Link href="/products">Show All</Link>
+        <motion.div
+        style={{ fontSize: "50px", color: "white"}}
+         initial={{ scale: 0, opacity: 0 }}
+         animate={{ scale: 1, opacity: 1 }}
+         transition={{
+           type: 'spring',
+           stiffness: 400,
+           damping: 40
+         }}
+         >
+          Shop by Categories
+         </motion.div>
+        <Link style={{color: "white"}} href="/products">Show All</Link>
       </div>
 
       <div className={classes.list}>
-        {categories.map(category => {
-          return <CategoryCard key={category.id} category={category} />
-        })}
+        <CategoryCard />
       </div>
     </section>
   )
