@@ -92,7 +92,7 @@ const CategoryCard = () => {
         href="/products"
         data-text="Explore Branded"
         style={{ height: "500px", width: "400px" }}
-        className={`${classes.glass} ${classes.gradient01}`} 
+        className={`${classes.glass} `} 
         variants={cardVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
@@ -106,7 +106,7 @@ const CategoryCard = () => {
           href="/products"
           data-text="Explore Plain"
           style={{ height: "250px", width: "600px" }}
-          className={`${classes.glass} ${classes.gradient02}`} 
+          className={`${classes.glass}`} 
           variants={cardVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -120,7 +120,7 @@ const CategoryCard = () => {
           href="/products"
           data-text="Explore Accessories"
           style={{ height: "250px", width: "600px" }}
-          className={`${classes.glass} ${classes.gradient01}`} 
+          className={`${classes.glass}`} 
           variants={cardVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}

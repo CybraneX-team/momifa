@@ -29,7 +29,11 @@
 
 html {
   @extend %body;
-  background: #090005;
+  background-image: url(../../../media/bg-momifa.jpg);
+  background-attachment: fixed; // Add this line
+  background-position: center; // Optional: centers the image
+  background-repeat: no-repeat; // Optional: prevents image from repeating
+  background-size: cover; // Optional: makes sure the image covers the entire viewport
   -webkit-font-smoothing: antialiased;
   opacity: 0;
 

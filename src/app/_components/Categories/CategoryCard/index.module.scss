@@ -86,7 +86,7 @@
   position: relative;
   width: 180px;
   height: 200px;
-  background: linear-gradient(#fff2, transparent);
+  background: rgba(35, 35, 35, 0.5); // #232323 with 50% opacity
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -95,7 +95,6 @@
   transition: 0.5s;
   border-radius: 10px;
   margin: 0 10px;
-  backdrop-filter: blur(10px);
 }
 
 // .container:hover .glass {
@@ -126,19 +125,37 @@
   margin-top: 50px;
 }
 
-.gradient01{
-  background-color:hsla(326,100%,1%,1);
-  background-image:
-  radial-gradient(at 100% 100%, hsla(207,26%,83%,1) 0px, transparent 50%),
-  radial-gradient(at 4% 0%, hsla(24,70%,70%,1) 0px, transparent 50%);
-}
+// .gradient01{
+//   background-color:hsla(326,100%,1%,1);
+//   background-image:
+//   radial-gradient(at 100% 100%, hsla(207,26%,83%,1) 0px, transparent 50%),
+//   radial-gradient(at 4% 0%, hsla(24,70%,70%,1) 0px, transparent 50%);
+// }
 
 
-.gradient02{
-  background-color:hsla(326,100%,1%,1);
-background-image:
-radial-gradient(at 0% 100%, hsla(7,92%,74%,1) 0px, transparent 50%),
-radial-gradient(at 0% 0%, hsla(190,48%,81%,1) 0px, transparent 50%),
-radial-gradient(at 100% 100%, hsla(357,94%,42%,1) 0px, transparent 50%),
-radial-gradient(at 100% 0%, hsla(203,76%,52%,1) 0px, transparent 50%);
+// .gradient02{
+//   background-color:hsla(326,100%,1%,1);
+// background-image:
+// radial-gradient(at 0% 100%, hsla(7,92%,74%,1) 0px, transparent 50%),
+// radial-gradient(at 0% 0%, hsla(190,48%,81%,1) 0px, transparent 50%),
+// radial-gradient(at 100% 100%, hsla(357,94%,42%,1) 0px, transparent 50%),
+// radial-gradient(at 100% 0%, hsla(203,76%,52%,1) 0px, transparent 50%);
+// }
+
+.image {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.8));
+    transition: all 0.3s ease;
 }
+
+.image:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 1));}
+
+.image2 {
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.8));
+    transition: all 0.3s ease;
+}
+
+.image2:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 1));}
