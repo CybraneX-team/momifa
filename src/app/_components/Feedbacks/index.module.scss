@@ -1,0 +1,99 @@
+.feedbackContainer {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color:hsla(0,0%,0%,1);
+background-image:
+radial-gradient(at 49% 100%, hsla(138,0%,0%,1) 0px, transparent 50%),
+radial-gradient(at 61% 0%, hsla(325,95%,25%,1) 0px, transparent 50%),
+radial-gradient(at 40% 0%, hsla(259,55%,32%,1) 0px, transparent 50%);
+  }
+  
+  .backgroundText {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 250px;
+    --font-selector: R0Y7VW5ib3VuZGVkLXJlZ3VsYXI=;
+    --framer-text-color: var(--token-a3567fc0-2c6f-4fa8-ac8f-89ddd158e98d, rgb(255, 255, 255));
+    --framer-font-family: "Unbounded", "Unbounded Placeholder", sans-serif;
+    color: rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+    z-index: 1;
+
+    @media (max-width: 738px) {
+      font-size: 50px;
+    }
+  }
+  
+  .cardWrapper {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .cardContainer {
+    position: absolute;
+    width: 100%;
+    will-change: transform;
+  }
+  
+  .card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .cardHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .profilePic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .headerInfo {
+    flex: 1;
+  }
+  
+  .name {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .company {
+    font-size: 12px;
+    color: #cccccc;
+    margin: 0;
+  }
+  
+  .stars {
+    color: gold;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .feedbackText {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+  }
+  
+//   :global {
+//     :root {
+      // --font-selector: R0Y7VW5ib3VuZGVkLXJlZ3VsYXI=;
+      // --framer-font-family: "Unbounded", "Unbounded Placeholder", sans-serif;
+//       --framer-font-size: 67.37414965986395px;
+      // --framer-text-color: var(--token-a3567fc0-2c6f-4fa8-ac8f-89ddd158e98d, rgb(255, 255, 255));
+//     }
+//   }

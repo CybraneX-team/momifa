@@ -104,10 +104,12 @@ const FallingRectangles = () => {
       const parent = sceneRef.current?.parentElement;
       if (parent) {
         const newWidth = parent.clientWidth;
+        const newHeight = parent.clientHeight;
         render.canvas.width = newWidth;
-        render.canvas.height = canvasHeight;
-        Matter.Body.setPosition(ground, Matter.Vector.create(newWidth / 2, canvasHeight));
-        Matter.Body.setPosition(rightWall, Matter.Vector.create(newWidth, canvasHeight / 2));
+        render.canvas.height = newHeight;
+        Matter.Body.setPosition(ground, Matter.Vector.create(newWidth / 2, newHeight));
+        Matter.Body.setPosition(rightWall, Matter.Vector.create(newWidth, newHeight / 2));
+        Matter.Body.setPosition(leftWall, Matter.Vector.create(0, newHeight / 2));
       }
     };
 
@@ -134,11 +136,10 @@ const FallingRectangles = () => {
       const newRectangles = [];
 
       for (let i = 0; i < rectangleCount; i++) {
-        const width = 120;
+        const width = Math.min(120, window.innerWidth * 0.2); // Responsive width
         const height = 60;
-        // const borderRadius = 60;
         const rectangle = Matter.Bodies.rectangle(
-          Math.random() * (1200 - width),
+          Math.random() * (window.innerWidth - width),
           -100 - (i * 50),
           width,
           height,
@@ -146,7 +147,6 @@ const FallingRectangles = () => {
             render: {
               fillStyle: '#ffeb3b',
             },
-            // chamfer: { radius: borderRadius },
             restitution: 0.3,
             friction: 0.1,
           }
@@ -164,12 +164,12 @@ const FallingRectangles = () => {
 
   return (
     <motion.div
-      ref={sceneRef}
-      style={{ width: '100%', height: '400px', overflow: 'hidden', position: 'relative' }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isInView ? 1 : 0 }}
-      transition={{ duration: 0.5 }}
-    />
+    ref={sceneRef}
+    style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative' }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: isInView ? 1 : 0 }}
+    transition={{ duration: 0.5 }}
+  />
   );
 };
 

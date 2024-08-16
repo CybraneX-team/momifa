@@ -1,75 +1,22 @@
+// index.module.scss
+
 @use '../../../_css/queries.scss' as *;
-
-// .div {
-//   display: flex;
-//   gap: 20px;
-//   margin-left: 75px;
-//   flex-direction: row;
-// }
-
-// .card {
-//   position: relative;
-//   background-color: transparent;
-//   min-height: 550px;
-//   background-image: url(./media/01.png);
-//   width: 400px;
-//   display: flex;
-//   align-items: flex-end;
-//   justify-content: center;
-//   padding: 20px;
-//   cursor: pointer;
-//   border: 1px solid #fff;
-//   border-radius: 20px;
-
-//   background-size: cover;
-//   background-position: center;
-//   background-repeat: no-repeat;
-// }
-
-// .card2 {
-//   position: relative;
-//   background-color: transparent;
-//   min-height: 275px;
-//   background-image: url(./media/01.png);
-//   width: 600px;
-//   display: flex;
-//   align-items: flex-end;
-//   justify-content: center;
-//   padding: 20px;
-//   cursor: pointer;
-//   border: 1px solid #fff;
-//   border-radius: 20px;
-
-//   background-size: cover;
-//   background-position: center;
-//   background-repeat: no-repeat;
-// }
-
-
-// .title {
-//   border-radius: 10px;
-//   padding: 16px;
-//   width: 100%;
-//   text-align: center;
-//   background-color: white;
-// }
-
-
 
 .container {
   position: relative;
   display: flex;
   justify-content: center;
-  margin-left: 90px;
   align-items: center;
-
+  padding: 20px;
+  
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
 }
 
 .glass {
   position: relative;
-  width: 180px;
-  height: 200px;
-  background: linear-gradient(#fff2, transparent);
+  background: rgba(35, 35, 35, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -77,30 +24,13 @@
   align-items: center;
   transition: 0.5s;
   border-radius: 10px;
-  margin: 0 -45px;
-  backdrop-filter: blur(10px);
-  transform: rotate(calc(var(--r) * 1deg));
+  margin: 10px;
+  
+  @media (max-width: 1024px) {
+    width: 100% !important;
+    height: 300px !important;
+  }
 }
-
-.glass {
-  position: relative;
-  width: 180px;
-  height: 200px;
-  background: rgba(35, 35, 35, 0.5); // #232323 with 50% opacity
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.5s;
-  border-radius: 10px;
-  margin: 0 10px;
-}
-
-// .container:hover .glass {
-//   transform: rotate(0deg);
-//   margin: 0 10px;
-// }
 
 .glass::before {
   content: attr(data-text);
@@ -115,47 +45,28 @@
   color: #fff;
 }
 
-.glass svg {
-  font-size: 2.5em;
-  fill: #fff;
-}
-
-
-.image {
-  margin-top: 50px;
-}
-
-// .gradient01{
-//   background-color:hsla(326,100%,1%,1);
-//   background-image:
-//   radial-gradient(at 100% 100%, hsla(207,26%,83%,1) 0px, transparent 50%),
-//   radial-gradient(at 4% 0%, hsla(24,70%,70%,1) 0px, transparent 50%);
-// }
-
-
-// .gradient02{
-//   background-color:hsla(326,100%,1%,1);
-// background-image:
-// radial-gradient(at 0% 100%, hsla(7,92%,74%,1) 0px, transparent 50%),
-// radial-gradient(at 0% 0%, hsla(190,48%,81%,1) 0px, transparent 50%),
-// radial-gradient(at 100% 100%, hsla(357,94%,42%,1) 0px, transparent 50%),
-// radial-gradient(at 100% 0%, hsla(203,76%,52%,1) 0px, transparent 50%);
-// }
-
-.image {
+.image, .image2 {
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.8));
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 1));
+  }
 }
 
-.image:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 1));}
-
-.image2 {
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.8));
-    transition: all 0.3s ease;
+.imageContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
-.image2:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 1));}
+.cardGroup {
+  display: flex;
+  flex-direction: column;
+  
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 0 !important;
+  }
+}

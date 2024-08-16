@@ -14,7 +14,7 @@ const Categories = ({ categories }: { categories: Category[] }) => {
     <section className={classes.container}>
       <div className={classes.titleWrapper}>
         <motion.div
-        style={{ fontSize: "50px", color: "white"}}
+         class={classes.title}
          initial={{ scale: 0, opacity: 0 }}
          animate={{ scale: 1, opacity: 1 }}
          transition={{

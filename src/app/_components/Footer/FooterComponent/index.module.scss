@@ -10,7 +10,6 @@
   }
 }
 
-
 .inclusions {
   display: grid;
   justify-content: center;
@@ -28,8 +27,9 @@
     margin: 60px 0;
   }
 
-  @include extra-small-break {
+  @include small-break {
     grid-template-columns: 1fr;
+    margin: 40px 0;
   }
 }
 
@@ -38,7 +38,6 @@
   color: white;
   background: white;
 }
-
 
 :global([data-theme='dark']) {
   .footer {
@@ -54,8 +53,7 @@
   flex-wrap: wrap;
   gap: calc(var(--base) / 2) var(--base);
 
-  @include small-break {
-    margin-top: 30px;
+  @include mid-break {
     flex-direction: column;
     justify-content: center;
     text-align: center;
@@ -64,6 +62,8 @@
 
 .logo {
   width: 170px;
+  height: auto;
+  max-width: 100%;
 }
 
 .hr {
@@ -73,18 +73,25 @@
 .socialLinks {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .socialLinkItem {
-  width: 100%;
+  width: 24px;
+  height: 24px;
 }
 
 .socialIcon {
-  width: 24px;
-  height: 24px;
+  width: 100%;
+  height: 100%;
 }
 
 .hide {
   display: none;
 }
 
+.copyright {
+  text-align: center;
+  margin: 10px 0;
+}

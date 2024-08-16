@@ -9,7 +9,12 @@ import { Providers } from './_providers'
 import { InitTheme } from './_providers/Theme/InitTheme'
 import { mergeOpenGraph } from './_utilities/mergeOpenGraph'
 
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 import './_css/app.scss'
+
+gsap.registerPlugin(ScrollTrigger);
 
 const jost = Jost({
   subsets: ['latin'],

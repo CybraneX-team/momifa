@@ -21,26 +21,39 @@ import { generateMeta } from '../../_utilities/generateMeta'
 export const dynamic = 'force-dynamic'
 
 import Categories from '../../_components/Categories'
-import ScrollCards from '../../_components/ScrollCards'
+import HorizontalScroll from '../../_components/ScrollCards'
 import Promotion from '../../_components/Promotion'
 import IconScoll from '../../_components/IconScroll'
 
 import classes from './index.module.scss'
-import "./bg.scss"
-import dynamicM from 'next/dynamic';
+import './bg.scss'
+import dynamicM from 'next/dynamic'
+import Feedback from '../../_components/Feedbacks'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
 
-  loading: () => <div style={{ height: '300px' }}>Loading...</div>
-});
+  loading: () => <div style={{ height: '300px' }}>Loading...</div>,
+})
 
 const cardData = [
-  { title: "Auto-generate personalized videos in bulk", subtitle: "Video prospecting tool to personalize videos with your own face & voice", image: "/path/to/image1.jpg" },
-  { title: "Increase reply rates to cold emails by 150%+", subtitle: "Create outreach campaigns that truly stand out", image: "/path/to/image2.jpg" },
-  { title: "Improve scheduling by 80%", subtitle: "Effectively engage with qualified prospects", image: "/path/to/image3.jpg" },
+  {
+    title: 'Auto-generate personalized videos in bulk',
+    subtitle: 'Video prospecting tool to personalize videos with your own face & voice',
+    image: '/path/to/image1.jpg',
+  },
+  {
+    title: 'Increase reply rates to cold emails by 150%+',
+    subtitle: 'Create outreach campaigns that truly stand out',
+    image: '/path/to/image2.jpg',
+  },
+  {
+    title: 'Improve scheduling by 80%',
+    subtitle: 'Effectively engage with qualified prospects',
+    image: '/path/to/image3.jpg',
+  },
   // Add more cards as needed
-];
+]
 
 export default async function Page({ params: { slug = 'home' } }) {
   const { isEnabled: isDraftMode } = draftMode()
@@ -82,16 +95,18 @@ export default async function Page({ params: { slug = 'home' } }) {
         <section>
           <Hero {...hero} />
 
-            {/* <IconScoll /> */}
-            <div style={{ width: '100%', margin: '20px 0' }}>
-              <FallingRectangles />
-            </div>
+          {/* <IconScoll /> */}
+          <div className={classes.fallingRectanglesWrapper}>
+            <FallingRectangles />
+          </div>
           <Gutter className={classes.home}>
             <Categories categories={categories} />
             {/* <Promotion /> */}
           </Gutter>
-          <ScrollCards cards={cardData} />
-
+          <div className={classes.horizontalScrollWrapper}>
+            <HorizontalScroll />
+          </div>
+          <Feedback />
         </section>
       ) : (
         <>

@@ -18,7 +18,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
 
   return (
     <footer className={noHeaderFooterUrls.includes(pathname) ? classes.hide : ''}>
-      <Gutter>
+      {/* <Gutter>
         <ul className={classes.inclusions}>
           {inclusions.map(inclusion => (
             <li key={inclusion.title}>
@@ -27,25 +27,21 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
                 alt={inclusion.title}
                 width={36}
                 height={36}
-                color={"white"}
                 className={classes.icon}
               />
-
               <h5 className={classes.title}>{inclusion.title}</h5>
               <p>{inclusion.description}</p>
             </li>
           ))}
         </ul>
-      </Gutter>
+      </Gutter> */}
 
       <div className={classes.footer}>
         <Gutter>
           <div className={classes.wrap}>
             <Link href="/">
-              <Image src="/logo-white.svg" alt="logo" width={170} height={50} />
+              <Image src="/logo-white.svg" alt="logo" width={170} height={50} className={classes.logo} />
             </Link>
-
-            <p>{footer?.copyright}</p>
 
             <div className={classes.socialLinks}>
               {navItems.map(item => {
@@ -71,6 +67,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
               })}
             </div>
           </div>
+          <p className={classes.copyright}>{footer?.copyright}</p>
         </Gutter>
       </div>
     </footer>

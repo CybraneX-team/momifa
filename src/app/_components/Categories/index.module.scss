@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
+
 }
 
 .titleWrapper {
@@ -24,5 +25,15 @@
 
   @include small-break {
     grid-template-columns: 1fr;
+  }
+}
+
+.title {
+  font-size: 50px;
+  color: white;
+
+  @media (max-width: 738px) {
+    font-size: 20px;
+    margin-left: 0;
   }
 }

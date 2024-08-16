@@ -1,7 +1,0 @@
-.git
-.next
-.vscode
-media
-node_modules
-public
-src
