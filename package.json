@@ -22,6 +22,7 @@
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload/payload.config.ts payload"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.5.4",
     "@payloadcms/bundler-webpack": "^1.0.0",
     "@payloadcms/db-mongodb": "^1.0.0",
     "@payloadcms/plugin-cloud": "^2.0.0",
@@ -38,6 +39,8 @@
     "express": "^4.17.1",
     "framer-motion": "^12.0.0-alpha.0",
     "gsap": "^3.12.5",
+    "jquery": "^3.7.1",
+    "lottie-react": "^2.4.0",
     "matter-js": "^0.20.0",
     "next": "13.5.2",
     "payload": "^2.0.7",
@@ -46,6 +49,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
+    "react-lottie": "^1.2.4",
     "react-router-dom": "5.3.4",
     "stripe": "^10.2.0",
     "two.js": "^0.8.14",

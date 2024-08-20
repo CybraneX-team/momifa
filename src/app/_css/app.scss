@@ -11,6 +11,8 @@
   --gutter-h: 180px;
   --block-padding: 120px;
 
+  --size: 15px;
+
   @include large-break {
     --gutter-h: 144px;
     --block-padding: 96px;
@@ -55,6 +57,29 @@ html,
 body,
 #app {
   height: 100%;
+}
+
+.cursor-follower {
+  position: absolute;
+  background-color: rgba(255,255,255,1);
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  z-index: 10000;
+  transform: translate(5px, 5px);
+  user-select: none;
+  pointer-events: none;
+  transition: 
+    0.6s ease-in-out transform,
+    0.2s ease-in-out opacity;
+  
+  &.active {
+    opacity: 0.7;
+    transform: scale(3);
+  }
+  &.hovered {
+    opacity: 0.08;
+  }
 }
 
 body {

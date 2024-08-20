@@ -13,8 +13,8 @@
   flex-direction: row;
 
   @media (max-width: 768px) {
-    height: 40vh;
-    width: 100%;
+    height: 45vh;
+    width: 90%;
     padding-bottom: 0;
     flex-direction: column;
   }
@@ -30,6 +30,7 @@
 
   @media (max-width: 768px) {
     width: 100vw;
+    padding: 0 20px;
     height: 100%;
     margin-bottom: 2rem;
   }
@@ -41,8 +42,8 @@
   background-color: transparent;
 
   @media (max-width: 768px) {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   h1 {
@@ -62,17 +63,18 @@
   overflow: hidden;
 
   @media (max-width: 768px) {
-    height: auto;
+    height: 400px;
   }
 }
 
 .cardContent {
   flex: 1;
   padding: 4rem;
-  border-radius: 100px;
+  border-radius: 70px;
   flex-direction: row;
-  margin-top: 100px;
-  margin-left: 80px;
+  margin-top: 80px;
+  margin-left: 160px;
+  margin-right: 120px;
   display: flex;
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.9);
@@ -83,13 +85,13 @@
     margin: 0;
     padding: 2rem;
     border-radius: 20px;
-    width: calc(100% - 2rem); // Adjust for padding
+    width: 90%; // Adjust for padding
     max-width: 100vw;
   }
 
   .cardHeading {
     margin-top: 130px;
-    margin-left: -400px;
+    margin-left: -120px;
     
     @media (max-width: 768px) {
       margin: 0;
@@ -117,15 +119,38 @@
   }
 }
 
-.cardGif {
-  width: 200px;
-  height: 200px;
-  margin-top: 80px;
-  margin-left: 200px;
+.lotties {
+  margin-top: 40px;
+  margin-left: 170px;
+
+  @media (max-width: 768px) {
+    margin-left: 10px;
+  }
+}
+
+.cardLottie {
+  width: 300px;
+  height: 300px;
 
   @media (max-width: 768px) {
     width: 150px;
     height: 150px;
     margin: 2rem auto 0;
+  }
+}
+
+.moneyGuarantee{
+
+  @media (min-width: 1024px) {
+    width: 400px;
+    margin-top: 0;
+    margin-left: 70px;
+    height: 400px;
+  }
+
+  @media (max-width:738px) {
+    width: 170px;
+    height: 170px;
+    margin-left: 80px;
   }
 }

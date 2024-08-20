@@ -4,10 +4,12 @@ import { Jost } from 'next/font/google'
 
 import { AdminBar } from './_components/AdminBar'
 import { Footer } from './_components/Footer'
+import { ParallaxWrapper } from './_components/ParallaxWrapper'
 import { Header } from './_components/Header'
 import { Providers } from './_providers'
 import { InitTheme } from './_providers/Theme/InitTheme'
 import { mergeOpenGraph } from './_utilities/mergeOpenGraph'
+import CustomCursor from './_components/CustomCursor' 
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -32,6 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className={jost.variable}>
         <Providers>
+          <CustomCursor />
           <AdminBar />
           {/* @ts-expect-error */}
           <Header />

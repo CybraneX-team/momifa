@@ -1,7 +1,8 @@
-'use client'
+'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Player } from '@lottiefiles/react-lottie-player';
 import styles from './ScrollCards.module.scss';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -9,28 +10,30 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     title: 'Free Shipping',
-    description: 'Free shipping for order above $150',
-    gif: '/gif/free-shipping.gif'
+    description: 'Free shipping for orders above $150',
+    lottie: '/lottie/free-shipping.json', 
   },
   {
     title: 'Money Guarantee',
     description: 'Within 30 days for an exchange',
-    gif: '/gif/money-guarantee.gif',
+    lottie: '/lottie/money-back.json',
+    className: 'moneyGuarantee',
   },
   {
     title: 'Online Support',
     description: '24 hours a day, 7 days a week',
-    gif: '/gif/online-support.gif',
+    lottie: '/lottie/online-support.json',
   },
   {
     title: 'Flexible Payment',
     description: 'Pay with multiple credit cards',
-    gif: '/gif/flexible-payment.gif',
+    lottie: '/lottie/flexible-payment.json',
   },
 ];
 
 const backgroundColors = ['#80024c', '#dfa0f0', '#4e2b9b', '#01d9fa'];
 const textColors = ['#ffffff', '#000000'];
+
 const HorizontalScroll = () => {
   const sectionRef = useRef(null);
   const triggerRef = useRef(null);
@@ -91,17 +94,23 @@ const HorizontalScroll = () => {
         {services.map((service, index) => (
           <div key={index} className={styles.scrollSection}>
             <div className={styles.card}>
-              <div className={styles.cardContent} style={{ backgroundColor: backgroundColors[index] }}>
-               <div className={styles.cardHeading}>
-               <h2 style={{ color: textColors[index % textColors.length] }}>{service.title}</h2>
-               <p>{service.description}</p>
-               </div>
-                <div>
-                <img
-                  src={service.gif}
-                  alt={`${service.title} GIF`}
-                  className={styles.cardGif}
-                />
+              <div
+                className={styles.cardContent}
+                style={{ backgroundColor: backgroundColors[index] }}
+              >
+                <div className={styles.cardHeading}>
+                  <h2 style={{ color: textColors[index % textColors.length] }}>
+                    {service.title}
+                  </h2>
+                  <p>{service.description}</p>
+                </div>
+                <div className={`${styles.lotties} ${styles[service.className]}`}>
+                  <Player
+                    autoplay
+                    loop
+                    src={service.lottie}
+                    className={`${styles.cardLottie} ${styles[service.className]}`}
+                  />
                 </div>
               </div>
             </div>

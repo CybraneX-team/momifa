@@ -29,6 +29,7 @@ import classes from './index.module.scss'
 import './bg.scss'
 import dynamicM from 'next/dynamic'
 import Feedback from '../../_components/Feedbacks'
+import FAQ from '../../_components/FAQ'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
@@ -107,6 +108,9 @@ export default async function Page({ params: { slug = 'home' } }) {
             <HorizontalScroll />
           </div>
           <Feedback />
+          <div className={classes.faq}>
+            <FAQ />
+          </div>
         </section>
       ) : (
         <>

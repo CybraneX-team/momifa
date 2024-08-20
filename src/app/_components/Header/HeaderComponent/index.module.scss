@@ -1,40 +1,3 @@
-// .mainHeader{
-//   background-color: aqua;
-// }
-
-// .header {
-  // padding: 15px 70px;
-  // width: 900px;
-  // margin-left: 320px;
-  // position: fixed;
-//   z-index: 999;
-// }
-
-// .svg {
-//   width: 100px;
-// }
-
-// .hide {
-//   padding-right: 40px !important;
-
-// }
-
-// .wrap {
-//   display: flex;
-  // padding-left: 40px !important;
-  // padding-right: 40px !important;
-//   padding: 20px 0;
-//   align-items: center;
-//   justify-content: space-between;
-//   border-radius: 160px;
-//   background: #0a0a0a;
-//   flex-wrap: wrap;
-// }
-
-// .hide { 
-//   display: none;
-// }
-
 .mainHeader {
   background-color: aqua;
 }
@@ -68,6 +31,7 @@
   justify-content: space-between;
   border-radius: 160px;
   background: #0a0a0a;
+  box-shadow: 5px 5px 10px #1a1a1a, inset 5px 5px 10px #1a1a1a ;
   flex-wrap: wrap;
 }
 
@@ -76,6 +40,7 @@
     padding: 15px;
     width: 100%;
     margin-left: 0px;
+    position: fixed;
   }
 
   .wrap {
@@ -93,12 +58,11 @@
   .header {
     padding: 10px;
     width: 90%;
+    position: fixed;
     margin-left: 0px;
   }
 
   .wrap {
-    padding: 15px !important;
-    padding-left: 40px !important;
     border-radius: 40px;
   }
 
@@ -109,10 +73,10 @@
 
 @media (max-width: 480px) {
   .wrap {
-    flex-direction: column;
-    gap: 15px;
-    padding: 15px !important;
-    padding-left: 40px !important;
+    // flex-direction: column;
+    // gap: 15px;
+    // padding: 15px !important;
+    // padding-left: 40px !important;
 
   }
 

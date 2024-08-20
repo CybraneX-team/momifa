@@ -23,10 +23,23 @@ radial-gradient(at 40% 0%, hsla(259,55%,32%,1) 0px, transparent 50%);
     z-index: 1;
 
     @media (max-width: 738px) {
-      font-size: 50px;
+      font-size: 70px;
+      top: 5%;
+      --font-selector: R0Y7VW5ib3VuZGVkLXJlZ3VsYXI=;
+      --framer-text-color: var(--token-a3567fc0-2c6f-4fa8-ac8f-89ddd158e98d, rgb(255, 255, 255));
+      --framer-font-family: "Unbounded", "Unbounded Placeholder", sans-serif;
+      color: rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+      z-index: 1;
     }
   }
-  
+
+  .cardContent {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+    margin-top: 15px;
+  }
+
   .cardWrapper {
     height: 100%;
     overflow: hidden;
@@ -37,26 +50,34 @@ radial-gradient(at 40% 0%, hsla(259,55%,32%,1) 0px, transparent 50%);
     position: absolute;
     width: 100%;
     will-change: transform;
+
+    @media (max-width: 768px) {
+      width: 90%;
+      padding-left: 50px;
+    }
   }
   
   .card {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
     margin: 20px auto;
     width: 90%;
     max-width: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
   }
   
   .cardHeader {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
   }
   
   .profilePic {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin-right: 15px;
   }
@@ -67,26 +88,37 @@ radial-gradient(at 40% 0%, hsla(259,55%,32%,1) 0px, transparent 50%);
   
   .name {
     margin: 0;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
   }
   
   .company {
-    font-size: 12px;
+    font-size: 14px;
     color: #cccccc;
     margin: 0;
   }
   
   .stars {
-    color: gold;
-    font-size: 14px;
-    margin-bottom: 10px;
+    color: #FFD700;
+    font-size: 18px;
+    margin-bottom: 15px;
   }
   
   .feedbackText {
-    font-size: 14px;
-    line-height: 1.4;
-    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+    position: relative;
+    padding-left: 40px;
+    
+    &::before {
+      content: '"';
+      font-size: 64px;
+      position: absolute;
+      left: 0;
+      top: -20px;
+      color: rgba(255, 255, 255, 0.3);
+    }
   }
   
 //   :global {
