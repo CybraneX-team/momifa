@@ -1,14 +1,33 @@
 "use client"
-
 import { useEffect, useRef, useState } from 'react';
 import Matter from 'matter-js';
 import { motion, useInView } from 'framer-motion';
+import { fillLogic } from './filllogice';
 
-const FallingRectangles = () => {
+// Function declarations moved outside the useEffect
+function handleScroll(canvas) {
+  let scrollTimeout;
+  return () => {
+    if (canvas) {
+      canvas.style.pointerEvents = "none";
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        if (canvas) {
+          canvas.style.pointerEvents = "auto";
+        }
+      }, 200);
+    }
+  };
+}
+
+const FloatingBox = () => {
   const sceneRef = useRef(null);
   const engineRef = useRef(null);
-  const isInView = useInView(sceneRef, { once: false, amount: 0.5 });
+  const runnerRef = useRef(null);
+  const mouseConstraintRef = useRef(null);
   const [rectangles, setRectangles] = useState([]);
+
+  const isInView = useInView(sceneRef, { once: false, amount: 0.5 });
 
   useEffect(() => {
     const Engine = Matter.Engine;
@@ -18,12 +37,14 @@ const FallingRectangles = () => {
     const Runner = Matter.Runner;
     const Mouse = Matter.Mouse;
     const MouseConstraint = Matter.MouseConstraint;
+    const Events = Matter.Events;
 
     const engine = Engine.create();
     engineRef.current = engine;
     const runner = Runner.create();
+    runnerRef.current = runner;
 
-    const canvasHeight = 400;
+    const canvasHeight = 700;
     const canvasWidth = 1500;
 
     const render = Render.create({
@@ -37,140 +58,235 @@ const FallingRectangles = () => {
       },
     });
 
-    render.afterRender = () => {
-      const ctx = render.context;
-      ctx.font = 'bold 16px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      
-      rectangles.forEach((rectangle, index) => {
-        const { x, y } = rectangle.position;
-        ctx.fillStyle = 'black';
-        ctx.fillText(texts[index], x, y);
+    const canvas = render.canvas;
+    if (canvas) {
+      canvas.style.pointerEvents = 'auto'; // Set pointer-events to auto initially
+
+      const ground = Bodies.rectangle(
+        canvasWidth / 2,
+        canvasHeight,
+        canvasWidth,
+        50,
+        { isStatic: true, render: { fillStyle: 'transparent' } }
+      );
+
+      const leftWall = Bodies.rectangle(
+        0,
+        canvasHeight / 2,
+        50,
+        canvasHeight,
+        { isStatic: true, render: { fillStyle: 'transparent' } }
+      );
+
+      const rightWall = Bodies.rectangle(
+        canvasWidth,
+        canvasHeight / 2,
+        50,
+        canvasHeight,
+        { isStatic: true, render: { fillStyle: 'transparent' } }
+      );
+
+      const topWall = Bodies.rectangle(0, 0, canvasWidth, 0, {
+        isStatic: true,
+        render: { fillStyle: 'red' },
       });
-    };
 
-    // Adjust ground and wall positions
-    const ground = Bodies.rectangle(
-      canvasWidth / 2,
-      canvasHeight,
-      canvasWidth,
-      50,
-      { isStatic: true, render: { fillStyle: 'transparent' } }
-    );
+      World.add(engine.world, [ground, leftWall, rightWall, topWall]);
 
-    const leftWall = Bodies.rectangle(
-      0,
-      canvasHeight / 2,
-      50,
-      canvasHeight,
-      { isStatic: true, render: { fillStyle: 'transparent' } }
-    );
-
-    const rightWall = Bodies.rectangle(
-      canvasWidth,
-      canvasHeight / 2,
-      50,
-      canvasHeight,
-      { isStatic: true, render: { fillStyle: 'transparent' } }
-    );
-
-    World.add(engine.world, [ground, leftWall, rightWall]);
-
-    const mouse = Mouse.create(render.canvas);
-    const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false,
+      const mouse = Mouse.create(canvas);
+      const mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: 0.2,
+          render: {
+            visible: false,
+          },
         },
-      },
-    });
+      });
 
-    mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
-    mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+      mouseConstraintRef.current = mouseConstraint; // Save mouseConstraint reference
+      World.add(engine.world, mouseConstraint);
+      render.mouse = mouse;
 
-    render.canvas.addEventListener('mousedown', (e) => e.preventDefault());
+      Runner.run(runner, engine);
+      Render.run(render);
 
-    World.add(engine.world, mouseConstraint);
+      const texts = [
+        'Awesomesefsf!',
+        'Amazingfesf!',
+        'Fantasticfef',
+        'my superpowerfsef',
+        'Next-Levelsef',
+        'Whoafsefesfes',
+        'mind-blowinglyfesf',
+        'Personalized!esf',
+        'Amazing Animation!',
+        'E-commerceeee!',
+      ];
 
-    render.mouse = mouse;
+      if (isInView) {
+        const rectangleCount = 10;
+        const newRectangles = [];
 
-    Runner.run(runner, engine);
-    Render.run(render);
+        for (let i = 0; i < rectangleCount; i++) {
+          const width = 150;
+          const height = 60;
+          let fillColor = fillLogic(i);
 
-    const handleResize = () => {
-      const parent = sceneRef.current?.parentElement;
-      if (parent) {
-        const newWidth = parent.clientWidth;
-        const newHeight = parent.clientHeight;
-        render.canvas.width = newWidth;
-        render.canvas.height = newHeight;
-        Matter.Body.setPosition(ground, Matter.Vector.create(newWidth / 2, newHeight));
-        Matter.Body.setPosition(rightWall, Matter.Vector.create(newWidth, newHeight / 2));
-        Matter.Body.setPosition(leftWall, Matter.Vector.create(0, newHeight / 2));
+          const rectangle = Matter.Bodies.rectangle(
+            Math.random() * (window.innerWidth - width),
+            -100 - i * 50,
+            width,
+            height,
+            {
+              render: {
+                fillStyle: fillColor,
+              },
+              chamfer: { radius: 20 },
+              restitution: 0.3,
+              friction: 0.1,
+            }
+          );
+          newRectangles.push(rectangle);
+        }
+
+        Matter.World.add(engineRef.current.world, newRectangles);
+        setRectangles(newRectangles);
+
+        Matter.Events.on(render, 'afterRender', () => {
+          const ctx = render.context;
+          ctx.font = '12px Arial';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          newRectangles.forEach((rectangle, index) => {
+            const { x, y } = rectangle.position;
+            const angle = rectangle.angle;
+
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+
+            if (rectangle.render.fillStyle === '#8330C2') {
+              ctx.fillStyle = 'white';
+            } else {
+              ctx.fillStyle = 'black';
+            }
+
+            ctx.fillText(texts[index], 0, 0);
+            ctx.restore();
+          });
+        });
       }
-    };
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
+      const scrollHandler = handleScroll(canvas);
+      canvas.addEventListener("wheel", scrollHandler);
 
-    return () => {
-      Render.stop(render);
-      World.clear(engine.world);
-      Engine.clear(engine);
-      render.canvas.remove();
-      render.canvas = null;
-      render.context = null;
-      render.textures = {};
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+      const handleResize = () => {
+        const parent = sceneRef.current?.parentElement;
+        if (parent) {
+          const newWidth = parent.clientWidth;
+          const newHeight = parent.clientHeight;
+          canvas.width = newWidth;
+          canvas.height = newHeight;
+          Matter.Body.setPosition(
+            ground,
+            Matter.Vector.create(newWidth / 2, newHeight)
+          );
+          Matter.Body.setPosition(
+            rightWall,
+            Matter.Vector.create(newWidth, newHeight / 2)
+          );
+          Matter.Body.setPosition(
+            leftWall,
+            Matter.Vector.create(0, newHeight / 2)
+          );
+          Matter.Body.setPosition(topWall, Matter.Vector.create(0, 0));
+        }
+      };
 
-  const texts = ['React', 'Next.js', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Node.js', 'Express'];
+      window.addEventListener('resize', handleResize);
+      handleResize();
 
-  useEffect(() => {
-    if (isInView && engineRef.current) {
-      const rectangleCount = 8;
-      const newRectangles = [];
+      return () => {
+        Render.stop(render);
+        World.clear(engine.world);
+        Engine.clear(engine);
 
-      for (let i = 0; i < rectangleCount; i++) {
-        const width = Math.min(120, window.innerWidth * 0.2); // Responsive width
-        const height = 60;
-        const rectangle = Matter.Bodies.rectangle(
-          Math.random() * (window.innerWidth - width),
-          -100 - (i * 50),
-          width,
-          height,
-          {
-            render: {
-              fillStyle: '#ffeb3b',
-            },
-            restitution: 0.3,
-            friction: 0.1,
-          }
-        );
-        newRectangles.push(rectangle);
-      }
+        if (canvas) {
+          canvas.remove();
+        }
 
-      Matter.World.add(engineRef.current.world, newRectangles);
-      setRectangles(newRectangles);
-    } else if (!isInView && rectangles.length > 0) {
-      Matter.World.remove(engineRef.current.world, rectangles);
-      setRectangles([]);
+        canvas.style.pointerEvents = ''; // Clean up style changes
+        window.removeEventListener('resize', handleResize);
+
+        // Remove mouse constraint
+        if (mouseConstraintRef.current) {
+          World.remove(engine.world, mouseConstraintRef.current);
+          mouseConstraintRef.current = null;
+        }
+
+        // Remove the scroll event listener
+        if (canvas) {
+          canvas.removeEventListener("wheel", scrollHandler);
+        }
+      };
     }
   }, [isInView]);
 
+  useEffect(() => {
+    const canvas = sceneRef.current?.querySelector('canvas');
+
+    const handleInteractionStart = () => {
+      if (canvas) {
+        canvas.style.pointerEvents = 'auto';
+        canvas.style.position = "relative"
+        canvas.style.zIndex = "9999"
+      }
+    };
+
+    const handleInteractionEnd = () => {
+      if (canvas) {
+        canvas.style.pointerEvents = 'none';
+      }
+    };
+
+    const handleScrollStart = () => {
+      if (canvas) {
+        canvas.style.pointerEvents = 'none'; // Ensure scroll events are not blocked
+      }
+    };
+
+    window.addEventListener('mousedown', handleInteractionStart);
+    window.addEventListener('mouseup', handleInteractionEnd);
+    window.addEventListener('touchstart', handleInteractionStart);
+    window.addEventListener('touchend', handleInteractionEnd);
+    window.addEventListener('scroll', handleScrollStart);
+
+    return () => {
+      window.removeEventListener('mousedown', handleInteractionStart);
+      window.removeEventListener('mouseup', handleInteractionEnd);
+      window.removeEventListener('touchstart', handleInteractionStart);
+      window.removeEventListener('touchend', handleInteractionEnd);
+      window.removeEventListener('scroll', handleScrollStart);
+    };
+  }, []);
+
   return (
     <motion.div
-    ref={sceneRef}
-    style={{ width: '100%', height: '100%', overflow: 'hidden', position: 'relative' }}
-    initial={{ opacity: 0 }}
-    animate={{ opacity: isInView ? 1 : 0 }}
-    transition={{ duration: 0.5 }}
-  />
+      ref={sceneRef}
+      style={{
+        width: '100%',
+        height: '100%',
+        cursor: "grab",  
+        zIndex: "9999",
+        outline: "2px solid blue",
+        position: 'relative',
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isInView ? 1 : 0 }}
+      transition={{ duration: 1.5 }}
+    />
   );
 };
-
-export default FallingRectangles;
+export default FloatingBox
