@@ -26,6 +26,7 @@ const FloatingBox = () => {
   const runnerRef = useRef(null);
   const mouseConstraintRef = useRef(null);
   const [rectangles, setRectangles] = useState([]);
+  const [hasRectanglesFallen, setHasRectanglesFallen] = useState(false);
 
   const isInView = useInView(sceneRef, { once: false, amount: 0.5 });
 
@@ -97,7 +98,7 @@ const FloatingBox = () => {
       const mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
         constraint: {
-          stiffness: 0.2,
+          stiffness: 0.5,
           render: {
             visible: false,
           },
@@ -115,13 +116,13 @@ const FloatingBox = () => {
         'Awesomesefsf!',
         'Amazingfesf!',
         'Fantasticfef',
-        'my superpowerfsef',
-        'Next-Levelsef',
-        'Whoafsefesfes',
-        'mind-blowinglyfesf',
-        'Personalized!esf',
-        'Amazing Animation!',
-        'E-commerceeee!',
+        'superpowerfsef',
+        'Levelsef',
+        'fsefesfes',
+        'blowinglyfesf',
+        'Personalized',
+        'Animation!',
+        'commerceeee!',
       ];
 
       if (isInView) {
@@ -142,7 +143,7 @@ const FloatingBox = () => {
               render: {
                 fillStyle: fillColor,
               },
-              chamfer: { radius: 20 },
+              chamfer: { radius: 30 },
               restitution: 0.3,
               friction: 0.1,
             }
@@ -155,7 +156,7 @@ const FloatingBox = () => {
 
         Matter.Events.on(render, 'afterRender', () => {
           const ctx = render.context;
-          ctx.font = '12px Arial';
+          ctx.font = '16px Arial';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
 
@@ -233,6 +234,27 @@ const FloatingBox = () => {
       };
     }
   }, [isInView]);
+
+  useEffect(() => {
+    let prevScrollY = window.pageYOffset;
+
+    const handleScroll = () => {
+      const currentScrollY = window.pageYOffset;
+      const scrollDiff = currentScrollY - prevScrollY;
+
+      rectangles.forEach((rectangle) => {
+        Matter.Body.translate(rectangle, { x: 0, y: scrollDiff * 0.1 });
+      });
+
+      prevScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [rectangles]);
 
   useEffect(() => {
     const canvas = sceneRef.current?.querySelector('canvas');
