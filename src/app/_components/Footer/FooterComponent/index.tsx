@@ -96,7 +96,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
                 fill="#ffffff"
               />
             </svg>
-                    </Link>
+            </Link>
             <h2 className={classes.slogan}>Shop Branded Goods From Here</h2>
           </motion.div>
 

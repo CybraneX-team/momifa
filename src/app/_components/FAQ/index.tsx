@@ -62,15 +62,15 @@ const FAQ: React.FC = () => {
   
   const faqData = [
     {
-      question: "Sample Sample Sample Sample Sample ",
+      question: "Sample Sample Sample  ",
       answer: "sjgcsjfgxmfjdxhcghjbnfgxjrs"
     },
     {
-      question: "Sample Sample Sample Sample Sample ",
+      question: "Sample Sample Sample  ",
       answer: "sjgcsjfgxmfjdxhcghjbnfgxjrs"
     },
     {
-      question: "Sample Sample Sample Sample Sample ",
+      question: "Sample Sample Sample  ",
       answer: "sjgcsjfgxmfjdxhcghjbnfgxjrs"
     }
   ];

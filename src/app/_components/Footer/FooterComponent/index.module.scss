@@ -4,6 +4,23 @@
   background-color: #000;
   color: #fff;
   padding: 60px 0;
+  box-shadow: 5px 5px 10px #1a1a1a, inset 5px 5px 10px #1a1a1a ;
+  border-radius: 160px 160px 0 0;
+}
+
+@include small-break {
+  .footer {
+    padding: 40px 0;
+  }
+  .footerContent {
+    gap: 30px;
+  }
+  .linkColumn {
+    margin-top: 60px;
+  }
+  .bottomSection {
+    margin-top: 30px;
+  }
 }
 
 .footerContent {
@@ -16,6 +33,14 @@
 .logoSection {
   flex-basis: 100%;
   max-width: 300px;
+
+  @media (max-width: 738px) {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10vw;
+    flex-direction: column;
+  }
 }
 
 .logo {
@@ -23,9 +48,27 @@
   height: 50px;
 }
 
+@include small-break {
+  .logo {
+    height: 40px;
+  }
+}
+
 .slogan {
   font-size: 24px;
   margin-bottom: 20px;
+}
+
+@include small-break {
+  .slogan {
+    font-size: 18px;
+  }
+  .linkColumn h3 {
+    font-size: 16px;
+  }
+  .legalLinks a {
+    font-size: 14px;
+  }
 }
 
 .linkColumn {
@@ -33,9 +76,17 @@
   min-width: 200px;
   margin-top: 80px;
 
+  @media (max-width: 738px) {
+    margin-top: 50px;
+  }
+
   h3 {
     font-size: 18px;
     margin-bottom: 20px;
+
+    @media (max-width: 738px) {
+      font-size: 28px
+    }
   }
 
   ul {
@@ -49,6 +100,10 @@
         color: #fff;
         text-decoration: none;
         transition: color 0.3s ease;
+
+        @media (max-width: 738px) {
+          font-size: 24px
+        }
 
         &:hover {
           color: #a855f7;

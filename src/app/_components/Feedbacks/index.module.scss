@@ -2,11 +2,15 @@
     height: 100vh;
     overflow: hidden;
     position: relative;
-    background-color:hsla(0,0%,0%,1);
+//     background-color:hsla(0,0%,0%,1);
+// background-image:
+// radial-gradient(at 49% 100%, hsla(138,0%,0%,1) 0px, transparent 50%),
+// radial-gradient(at 61% 0%, hsla(325,95%,25%,1) 0px, transparent 50%),
+// radial-gradient(at 40% 0%, hsla(259,55%,32%,1) 0px, transparent 50%);
+background-color:hsla(0,0%,0%,0);
 background-image:
-radial-gradient(at 49% 100%, hsla(138,0%,0%,1) 0px, transparent 50%),
-radial-gradient(at 61% 0%, hsla(325,95%,25%,1) 0px, transparent 50%),
-radial-gradient(at 40% 0%, hsla(259,55%,32%,1) 0px, transparent 50%);
+radial-gradient(at 64% 0%, hsla(324,96%,25%,1) 0px, transparent 50%),
+radial-gradient(at 39% 0%, hsla(258,56%,38%,1) 0px, transparent 50%);
   }
   
   .backgroundText {
@@ -17,8 +21,8 @@ radial-gradient(at 40% 0%, hsla(259,55%,32%,1) 0px, transparent 50%);
     font-size: 250px;
     --font-selector: R0Y7VW5ib3VuZGVkLXJlZ3VsYXI=;
     --framer-text-color: var(--token-a3567fc0-2c6f-4fa8-ac8f-89ddd158e98d, rgb(255, 255, 255));
-    --framer-font-family: "Unbounded", "Unbounded Placeholder", sans-serif;
     color: rgba(255, 255, 255, 0.1);
+    --framer-font-family: "Unbounded", "Unbounded Placeholder", sans-serif;
     white-space: nowrap;
     z-index: 1;
 
