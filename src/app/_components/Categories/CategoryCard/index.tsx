@@ -39,36 +39,40 @@ const CategoryCard = () => {
         <Image className={classes.image} src={img} alt="Branded" layout="fill" objectFit="cover" />
       </MotionLink>
 
-      <div className={classes.cardGroup}>
+      {/* <div className={classes.cardGroup}> */}
         <MotionLink
           href="/products"
           data-text="Explore Plain"
-          style={{ height: "250px", width: "600px" }}
+          // style={{ height: "250px", width: "600px" }}
+          style={{ height: "500px", width: "400px" }}
+
           className={classes.glass} 
           variants={cardVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className={classes.imageContainer}>
+          {/* <div className={classes.imageContainer}> */}
             <Image className={classes.image2} src={img02} alt="Plain" layout="fill" objectFit="cover" />
-          </div>     
+          {/* </div>      */}
         </MotionLink>
         <MotionLink
           href="/products"
           data-text="Explore Accessories"
-          style={{ height: "250px", width: "600px" }}
+          // style={{ height: "250px", width: "600px" }}
+          style={{ height: "500px", width: "400px" }}
+
           className={classes.glass} 
           variants={cardVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <div className={classes.imageContainer}>
+          {/* <div className={classes.imageContainer}> */}
             <Image className={classes.image2} src={img03} alt="Accessories" layout="fill" objectFit="cover" />
-          </div> 
+          {/* </div>  */}
         </MotionLink>
-      </div>
+      {/* </div> */}
     </div>
   )
 }

@@ -11,6 +11,7 @@
 @include small-break {
   .footer {
     padding: 40px 0;
+    border-radius: 80px 80px 0 0;
   }
   .footerContent {
     gap: 30px;
@@ -75,7 +76,6 @@
 .linkColumn {
   flex: 1;
   min-width: 200px;
-  margin-top: 80px;
 
   @media (max-width: 738px) {
     margin-top: 50px;
@@ -156,6 +156,7 @@
 @include small-break {
   .footerContent {
     flex-direction: column;
+    margin-left: 0;
   }
 
   .bottomSection {

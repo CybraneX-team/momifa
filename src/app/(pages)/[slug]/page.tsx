@@ -20,16 +20,18 @@ import { generateMeta } from '../../_utilities/generateMeta'
 // If you are not using Payload Cloud then this line can be removed, see `../../../README.md#cache`
 export const dynamic = 'force-dynamic'
 
+import { CollectionArchive } from '../../_components/CollectionArchive'
 import Categories from '../../_components/Categories'
 import HorizontalScroll from '../../_components/ScrollCards'
 import Promotion from '../../_components/Promotion'
 import IconScoll from '../../_components/IconScroll'
 
 import classes from './index.module.scss'
-import './bg.scss'
+// import './bg.scss'
 import dynamicM from 'next/dynamic'
 import Feedback from '../../_components/Feedbacks'
 import FAQ from '../../_components/FAQ'
+import ProductsOnHome from '../../_components/ProductsOnHome'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
@@ -107,6 +109,7 @@ export default async function Page({ params: { slug = 'home' } }) {
           <div className={classes.horizontalScrollWrapper}>
             <HorizontalScroll />
           </div>
+          <ProductsOnHome />
           <Feedback />
           <div className={classes.faq}>
             <FAQ />

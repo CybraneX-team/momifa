@@ -102,7 +102,7 @@ const HorizontalScroll = () => {
                   <h2 style={{ color: textColors[index % textColors.length] }}>
                     {service.title}
                   </h2>
-                  <p>{service.description}</p>
+                  <p style={{ color: textColors[index % textColors.length] }}>{service.description}</p>
                 </div>
                 <div className={`${styles.lotties} ${styles[service.className]}`}>
                   <Player

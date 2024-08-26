@@ -113,20 +113,27 @@ const FloatingBox = () => {
       Render.run(render);
 
       const texts = [
-        'Awesomesefsf!',
-        'Amazingfesf!',
-        'Fantasticfef',
-        'superpowerfsef',
-        'Levelsef',
-        'fsefesfes',
-        'blowinglyfesf',
-        'Personalized',
-        'Animation!',
-        'commerceeee!',
+        'PremiumQuality',
+        'ClassicFit',
+        'IconicStyles',
+        'CasualChic',
+        'ComfortWear',
+        'SoftCotton',
+        'TrendyDesigns',
+        'EverydayEssentials',
+        'WardrobeStaples!',
+        'LuxuryPolos!',
+        'SignatureTees',
+        'TimelessLook',
+        'SmartCasual',
+        'ModernElegance',
+        'RefinedCasual',
+        'PolishedLook'
+        // 'Trusted by 10000+ buyers',
       ];
 
       if (isInView) {
-        const rectangleCount = 10;
+        const rectangleCount = 16;
         const newRectangles = [];
 
         for (let i = 0; i < rectangleCount; i++) {
@@ -154,6 +161,9 @@ const FloatingBox = () => {
         Matter.World.add(engineRef.current.world, newRectangles);
         setRectangles(newRectangles);
 
+        const profileImage = new Image();
+        profileImage.src = '../../../media/peoples.png';
+
         Matter.Events.on(render, 'afterRender', () => {
           const ctx = render.context;
           ctx.font = '16px Arial';
@@ -177,6 +187,29 @@ const FloatingBox = () => {
             ctx.fillText(texts[index], 0, 0);
             ctx.restore();
           });
+          ctx.font = '80px bolder josh';
+          ctx.fillStyle = 'white';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'top';
+          const textX = canvasWidth / 2 ; // instead of dividing be 2 multipy it bot 0.3 to add image
+          const textY = 20; // Change const to let if adding image
+        
+          ctx.fillText('Trusted by', textX, textY);
+
+          // textY += 30; // for Image
+
+          ctx.fillText('10000+ Buyers', textX, textY + 70);
+
+        //   const imageSize = 50; // Adjust the size of the profile image as needed
+        //   const imageX = canvasWidth * 0.7; // Position the image on the right side
+        //   const imageY = 20;
+        //   ctx.drawImage(
+        //     profileImage,
+        //     imageX - imageSize / 2, // Center the image horizontally
+        //     imageY,
+        //     imageSize,
+        //     imageSize
+        //   );
         });
       }
 

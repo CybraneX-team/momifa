@@ -9,7 +9,7 @@
   margin-left: 320px;
 
   position: fixed;
-  z-index: 999;
+  z-index: 999999999999999;
 }
 
 .svg {
@@ -47,6 +47,7 @@
     padding: 20px !important;
     padding-left: 40px !important;
     border-radius: 80px;
+    box-shadow: 2px 4px 10px #1a1a1a, inset 5px 5px 10px #1a1a1a ;
   }
 
   .hide {
@@ -57,7 +58,7 @@
 @media (max-width: 768px) {
   .header {
     padding: 10px;
-    width: 90%;
+    width: 100%;
     position: fixed;
     margin-left: 0px;
   }

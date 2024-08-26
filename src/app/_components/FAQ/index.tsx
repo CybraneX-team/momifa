@@ -1,5 +1,4 @@
 "use client"
-
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import styles from './index.module.scss';
@@ -11,12 +10,15 @@ interface FAQItemProps {
 
 const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const itemRef = useRef(null);
+  const isItemInView = useInView(itemRef, { triggerOnce: false, threshold: 0.5 });
 
   return (
     <motion.div 
       className={styles.faqItem}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      ref={itemRef}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isItemInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.5 }}
     >
       <motion.div 
@@ -24,12 +26,6 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.02 }}
       >
-        <motion.span 
-          className={styles.toggleIcon}
-          animate={{ rotate: isOpen ? 45 : 0 }}
-        >
-          {isOpen ? '-' : '+'}
-        </motion.span>
         <motion.h3
           className={styles.questionText}
           initial={{ width: '100%' }}
@@ -38,6 +34,9 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
         >
           {question}
         </motion.h3>
+        <span className={styles.toggleIcon}>
+          {isOpen ? '-' : '+'}
+        </span>
       </motion.div>
       <AnimatePresence>
         {isOpen && (
@@ -57,22 +56,26 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
 };
 
 const FAQ: React.FC = () => {
-    const titleRef = useRef(null);
-    const isInView = useInView(titleRef, { once: true, amount: 0.5 });
-  
+  const titleRef = useRef(null);
+  const isTitleInView = useInView(titleRef, { triggerOnce: false, threshold: 0.5 });
+
   const faqData = [
     {
-      question: "Sample Sample Sample  ",
-      answer: "sjgcsjfgxmfjdxhcghjbnfgxjrs"
+      question: "WHY CHOOSE MOMIFA?",
+      answer: "Choose MOMIFA for its premium quality clothing that combines trendsetting designs with timeless style, crafted from the finest materials for durability and comfort. We are committed to sustainable fashion, using eco-friendly practices and ethical manufacturing. With versatile collections that cater to all aspects of your lifestyle, MOMIFA ensures you look and feel your best while making a positive impact on the environment."
     },
     {
-      question: "Sample Sample Sample  ",
-      answer: "sjgcsjfgxmfjdxhcghjbnfgxjrs"
+      question: "What is the return policy for MOMIFA?",
+      answer: "We want you to be completely satisfied with your purchase. If for any reason you're not, we offer a 30-day return policy. Items must be unworn, unwashed, and in their original condition with tags attached. Please refer to our returns page for more details."
     },
     {
-      question: "Sample Sample Sample  ",
-      answer: "sjgcsjfgxmfjdxhcghjbnfgxjrs"
-    }
+      question: "How can I track my order?",
+      answer: "Once your order has been dispatched, you'll receive a tracking number via email. You can use this number to track your order on our website or the carrier's website."
+    },
+    {
+      question: "How can I find the right size?",
+      answer: "We provide a detailed size guide on each product page to help you find the perfect fit. If you're unsure, our customer service team is always available to assist you with any sizing questions."
+    },
   ];
 
   const titleVariants = {
@@ -96,7 +99,7 @@ const FAQ: React.FC = () => {
         <motion.h2 
           className={styles.faqTitle}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={isTitleInView ? "visible" : "hidden"}
           variants={titleVariants}
         >
           Frequently Asked Questions
