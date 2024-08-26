@@ -5,6 +5,7 @@ import { motion, useInView } from 'framer-motion';
 import { fillLogic } from './filllogice';
 
 // Function declarations moved outside the useEffect
+
 function handleScroll(canvas) {
   let scrollTimeout;
   return () => {

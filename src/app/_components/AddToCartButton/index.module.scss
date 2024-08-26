@@ -2,8 +2,32 @@
   visibility: visible;
   opacity: 1;
   transition: opacity 100ms linear;
+  display: inline;
+  bottom: 10px;
+  margin: 0 20px;
+  position: relative;
+  left: 3%;
+  background-color: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+  background: none;
+  width: 20%;
+  animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
 
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.addToCartButton:hover {
+  transform: scale(1.10); /* Scale up on hover */
+  
+}
 .green {
   color: var(--theme-success-700);
 }

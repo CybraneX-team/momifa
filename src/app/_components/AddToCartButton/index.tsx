@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation'
 import { Product } from '../../../payload/payload-types'
 import { useCart } from '../../_providers/Cart'
 import { Button, Props } from '../Button'
-
 import classes from './index.module.scss'
+import CartButton from '../CartButton'
 
 export const AddToCartButton: React.FC<{
   product: Product
@@ -30,9 +30,10 @@ export const AddToCartButton: React.FC<{
     <Button
       href={isInCart ? '/cart' : undefined}
       type={!isInCart ? 'button' : undefined}
-      label={isInCart ? `✓ View in cart` : `Add to cart`}
+      label={isInCart ? `` : ``}
       el={isInCart ? 'link' : undefined}
       appearance={appearance}
+      children={<CartButton/>}
       className={[
         className,
         classes.addToCartButton,
@@ -48,7 +49,6 @@ export const AddToCartButton: React.FC<{
                 product,
                 quantity,
               })
-
               router.push('/cart')
             }
           : undefined

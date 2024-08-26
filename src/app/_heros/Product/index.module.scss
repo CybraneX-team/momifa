@@ -1,59 +1,183 @@
-@use '../../_css/common.scss' as *;
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap');
 
-.productHero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  width: 100%;
-
-  @include small-break {
-    grid-template-columns: 1fr;
-  }
+.main {
+  display: inline-flex;
+  color: whitesmoke;
+  margin-top: 10%;
 }
-
-.mediaWrapper {
-  position: relative;
-  min-height: 400px;
-  background-color: var(--color-dark-50);
-
-  @include small-break {
-    min-height: 250px;
-  }
+.sectionn{
+  position: fixed;
+  left: 10px;
+  z-index: 9999;
+  font-size: 20px;
+  top: 50%;
+  color: rgb(78, 76, 76);
+  text-transform: capitalize;
+  transform: translateX(-4%);
 }
-
+.addToCartButton{
+  width: 20px;
+}
 .image {
-  padding: 24px;
-  object-fit: contain;
-  aspect-ratio: 1/1;
-  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  animation: slideUp 1.5s ease-out forwards; /* Animation for text */
+  border-radius: 7%; /* Optional: keeps your existing border radius */
 }
 
-.details {
-  display: flex;
-  flex-direction: column;
-  margin-top: 10px;
+.image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%; /* Adjust height for the vignette effect */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  pointer-events: none; /* Ensures the vignette doesn't interfere with any interaction */
+  z-index: 2; /* Ensures the vignette is above the image */
 }
-
-.categoryWrapper {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 16px;
-  margin-top: 8px;
-}
-
-.category {
-  font-size: 16px;
-}
-
-.stock {
-  color: var(--color-green-500);
-}
-
-.separator {
-  color: var(--color-gray-500);
-  padding: 0 10px;
-}
+// .image {
+//   margin-top: 10%;
+//   margin-left: 22%;
+//   width: 100%;
+//   display: flex;
+//   margin: auto;
+//   border-radius: 7%;
+//   height: 30%;
+//   animation: slideUp 1.5s ease-out forwards; /* Animation for text */
+//   background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+//   pointer-events: none;
+// }
 
 .description {
-  padding: 30px 0;
+  display: block;
+  -webkit-backdrop-filter: blur(5px);
+  // align-content: center;
+  // align-items: center;
+  backdrop-filter: blur(5px);
+  background-color:#f58327;
+  border-radius: 30px;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 14px;
+  height: min-content;
+  justify-content: center;
+  max-width: 1440px;
+  overflow: visible;
+  padding: 65px 40px;
+  position: relative;
+  width: 100%;
+  color: black;
+}
+.categories{
+  display: inline;
+  width: 55px;
+}
+.content{
+  align-items: center;
+  height: auto;
+}
+.catrgory{
+  width: 20px;
+  text-align: center;
+  
+}
+.wishlistBTN{
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  position: absolute;
+  width: 61px;
+  height: 45px;
+  top: 0%;
+  left: 37%;
+  /* bottom: -36px; */
+  opacity: 1;
+  display: block;
+}
+.categoryWrapper{
+  align-content: center;
+  align-items: center;
+}
+.stock{
+  color: rgb(62, 218, 62);
+  margin-left: 12px;
+}
+.title {
+  text-align: absolute;
+  position: relative;
+  font-family: "Unbounded", "Unbounded Placeholder", sans-serif;
+  letter-spacing: -0.05em;
+  line-height: 1.1em;
+  text-align: center;
+  bottom: 140px;
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  margin: 10px 0px;
+}
+// .image::after {
+//   content: '';
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   height: 50%; /* Adjust height for vignette */
+//   background: linear-gradient(to top, rgba(255, 0, 0, 0.7), transparent);
+//   z-index: 2; /* Ensure vignette is above the image */
+//   pointer-events: none;
+// }
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.wishlistButton{
+  background-color: none;
+  color: white;
+  background: none;
+  border :none
+}
+.reviewHeading{
+  font-size: 40px;
+  color: white;
+  margin: 10px;
+}
+.line{
+  margin: 15px 2%; 
+  border-top: 2px solid white none none none;
+}
+.feedbackDiv{
+  color: white;
+  padding: 10px;
+}
+.feedbackDivChild{
+  margin: 10px 30px;
+}
+.feedbackUser{
+  text-transform: capitalize;
+}
+.starRating{
+  color: yellow; 
+  font-size: 1.5rem;
+}
+.active{
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: slideInFromLeft 0.5s forwards;
+}
+@keyframes slideInFromLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
