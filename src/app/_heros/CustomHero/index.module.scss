@@ -1,13 +1,12 @@
 
 
 @import '../../_css/queries.scss';
-
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&display=swap');
 .hero {
   position: relative;
   overflow: hidden;
   display: flex;
   justify-content: center;
-  background-color: #eff0eb;
   
 
   @include small-break {
@@ -37,6 +36,7 @@
 
 .heroTextBox {
   display: flex;
+  color: white;
   flex-direction: column;
   justify-content: center;
   padding: 15% var(--gutter-h);
@@ -100,4 +100,51 @@
     padding-top: 30px;
     justify-content: center;
   }
+}
+.img{
+  position: 'relative';
+  width: '100vw';
+  height: 'auto'
+}
+.heroHeadingg{
+  position: absolute;
+  color: white;
+  font-family: "Syne", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  top: 4.5em;
+  letter-spacing: 10px;
+  line-height: 110px;
+  width: 18em;
+  left: 2em;
+  font-size: 56px;
+  z-index: 9999;
+}
+.herotagline{
+  position: absolute;
+  top: 8.5em;
+  left: 3em;
+  color: white;
+  font-family: Syne;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 48px;
+  text-align: left;
+}
+.textt{
+  position: absolute;
+  top: 16em;
+  left: 7em;
+}
+.rotatedText{
+  position: absolute; 
+  top: 10em;
+  left: 70em;
+  
+}
+.texttt{
+  top: 19em;
+  left: 7em;
+  position: absolute;
 }

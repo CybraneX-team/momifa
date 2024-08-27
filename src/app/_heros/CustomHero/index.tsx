@@ -45,41 +45,38 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
   return (
     <section className={classes.hero} ref={ref}>
       <div className={classes.heroWrapper}>
-        <motion.div
-          className={classes.heroTextBox}
-          initial="hidden"
-          animate={controls}
-          variants={textAnimation}
-        >
-          <RichText content={richText} />
-          
-          {Array.isArray(links) && links.length > 0 && (
-            <ul className={classes.links}>
-              {links.map(({ link }, i) => {
-                return (
-                  <li key={i}>
-                    <CMSLink {...link} />
-                  </li>
-                )
-              })}
-            </ul>
-          )}
-        </motion.div>
-        
-        <motion.div
+        <div
           className={classes.heroImageBox}
-          initial="hidden"
-          animate={controls}
-          variants={imageAnimation}
         >
           <Image
-            src="/media/polo-tshirt.png"
+            src="/media/hI.png"
             alt="Polo T-shirt"
-            width={1200}
-            height={900}
-            objectFit="contain"
-          />
-        </motion.div>
+            height={1080}
+            width={1920}
+            />
+             <Image 
+              src="/media/phood.png"
+              alt='MOMIFA'
+              height={350}
+               width={820}
+               className={classes.textt}
+            />
+            <Image 
+              src="/media/sl.png"
+              alt='MOMIFA'
+              height={48}
+               width={393}
+               className={classes.texttt}
+            />
+            <Image 
+              src="/media/MOMIFA.png"
+              alt='MOMIFA'
+              height={150}
+               width={70}
+               className={classes.rotatedText}
+            />
+            {/* <p className={classes.rotatedText}> MOMI/FA </p> */}
+        </div>
       </div>
     </section>
   )

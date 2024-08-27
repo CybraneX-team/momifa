@@ -8,7 +8,7 @@
   padding-right: 0 !important;
   flex-wrap: wrap;
   opacity: 1;
-  color: white;
+  // background: rgba(96, 96, 96, 0.3);
   transition: opacity 100ms linear;
   visibility: visible;
   Link {
@@ -23,6 +23,7 @@
   > * {
     text-decoration: none;
     color: white;
+    
   }
 }
 
