@@ -1,0 +1,127 @@
+'use client'
+
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import styles from './index.module.scss'
+
+const ProductDisplay: React.FC = () => {
+  const [currentColor, setCurrentColor] = useState('blue')
+  const [currentVariant, setCurrentVariant] = useState('plain')
+  
+  const variants = {
+    plain: {
+      colors: {
+        blue: '#9fcbd6',
+        red: '#f46e65',
+        white: '#ffffff',
+      },
+    },
+    polo: {
+      colors: {
+        beige: '#caba98',
+        blue: '#0000bb',
+        pink: '#d801c0',
+      },
+    },
+  }
+  const handleColorChange = (color: string) => {
+    setCurrentColor(color)
+  }
+
+  const handleVariantChange = (variant: string) => {
+    setCurrentVariant(variant)
+    setCurrentColor(Object.keys(variants[variant as keyof typeof variants].colors)[0])
+  }
+
+  const imageVariants = {
+    enter: { opacity: 0, x: 50 },
+    center: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 },
+  }
+
+  const getGradientStyle = (color: string, variant: string) => {
+    const colorHex = variants[variant as keyof typeof variants].colors[color as keyof typeof variants[keyof typeof variants]['colors']] 
+        return {
+            backgroundColor: 'hsla(0,0%,0%,0)',
+            backgroundImage: `
+              radial-gradient(at 0% 100%, ${colorHex} 0px, transparent 50%),
+              radial-gradient(at 0% 0%, ${colorHex} 0px, transparent 50%)
+            `,
+            '--bg-color': colorHex,
+          } as React.CSSProperties
+        }
+  const getTitle = (variant: string) => {
+    switch (variant) {
+      case 'polos':
+        return 'Polo T-Shirts'
+      default:
+        return 'Plain T-Shirts'
+    }
+  }
+
+  return (
+    <div className={styles.container} style={getGradientStyle(currentColor, currentVariant)}>
+      <motion.div
+        className={styles.colorText}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        key={`${currentColor}-${currentVariant}`}
+      >
+        <div className={styles.colorTextLine}>
+          <div className={styles.colorLine}></div>
+          <p>In</p>
+        </div>
+        <p>love with</p>
+        <p className={styles.colorName}>{currentColor}</p>
+      </motion.div>
+
+      <h2 className={styles.title} data-content={getTitle(currentVariant)}>
+        {getTitle(currentVariant)}
+        <motion.span
+          className={styles.titleDot}
+          animate={{ color: variants[currentVariant as keyof typeof variants].colors[currentColor as keyof typeof variants[keyof typeof variants]['colors']] }}          transition={{ duration: 0.2 }}
+        >
+          .
+        </motion.span>
+      </h2>
+
+      <div className={styles.imageContainer}>
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={`${currentColor}-${currentVariant}`}
+            className={`${styles.productImage} ${currentVariant === 'polo' ? styles.poloImage : ''}`}
+            src={`/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`}
+            alt={`T-shirt in ${currentColor} - ${currentVariant} style`}
+            variants={imageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.2 }}
+          />
+        </AnimatePresence>
+        <div className={styles.colorDots}>
+          {Object.entries(variants[currentVariant as keyof typeof variants].colors).map(([color, hex]) => (
+            <button
+              key={color}
+              className={`${styles.colorDot} ${color === currentColor ? styles.selected : ''}`}
+              style={{ backgroundColor: hex }}
+              onClick={() => handleColorChange(color)}
+            />
+          ))}
+        </div>
+      </div>
+      
+      <div className={styles.variantDots}>
+        {Object.keys(variants).map((variant) => (
+          <button
+            key={variant}
+            className={`${styles.variantDot} ${variant === currentVariant ? styles.selected : ''}`}
+            onClick={() => handleVariantChange(variant)}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default ProductDisplay
