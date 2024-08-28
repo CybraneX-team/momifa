@@ -21,6 +21,7 @@ import { generateMeta } from '../../_utilities/generateMeta'
 export const dynamic = 'force-dynamic'
 
 import { CollectionArchive } from '../../_components/CollectionArchive'
+import ProductShowCase from '../../_components/ProductShowCase'
 import Categories from '../../_components/Categories'
 import HorizontalScroll from '../../_components/ScrollCards'
 import Promotion from '../../_components/Promotion'
@@ -109,6 +110,7 @@ export default async function Page({ params: { slug = 'home' } }) {
           <div className={classes.horizontalScrollWrapper}>
             <HorizontalScroll />
           </div>
+          <ProductShowCase />
           <ProductsOnHome />
           <Feedback />
           <div className={classes.faq}>
