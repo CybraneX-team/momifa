@@ -40,14 +40,9 @@ export default async function RootLayout({
           <AdminBar />
           {/* @ts-expect-error */}
           <Header />
-          <main className="main">
-            {React.Children.map(children, child => {
-              if (React.isValidElement(child)) {
-                return React.cloneElement(child, { showFooter: true });
-              }
-              return child;
-            })}
-          </main>
+          <main className="main">{children}</main>
+          {/* @ts-expect-error */}
+          <Footer />
         </Providers>
       </body>
     </html>
