@@ -4,12 +4,10 @@ import { Jost } from 'next/font/google'
 
 import { AdminBar } from './_components/AdminBar'
 import { Footer } from './_components/Footer'
-import { ParallaxWrapper } from './_components/ParallaxWrapper'
 import { Header } from './_components/Header'
 import { Providers } from './_providers'
 import { InitTheme } from './_providers/Theme/InitTheme'
 import { mergeOpenGraph } from './_utilities/mergeOpenGraph'
-import CustomCursor from './_components/CustomCursor' 
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -24,7 +22,11 @@ const jost = Jost({
   variable: '--font-jost',
 })
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ 
+  children 
+}: { 
+  children: React.ReactNode 
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -35,13 +37,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className={jost.variable}>
         <Providers>
-          {/* <CustomCursor /> */}
           <AdminBar />
           {/* @ts-expect-error */}
           <Header />
-          <main className="main">{children}</main>
-          {/* @ts-expect-error */}
-          <Footer />
+          <main className="main">
+            {React.Children.map(children, child => {
+              if (React.isValidElement(child)) {
+                return React.cloneElement(child, { showFooter: true });
+              }
+              return child;
+            })}
+          </main>
         </Providers>
       </body>
     </html>
