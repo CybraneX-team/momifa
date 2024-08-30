@@ -7,6 +7,7 @@ import { Gutter } from '../../_components/Gutter'
 import { RenderParams } from '../../_components/RenderParams'
 import { getMeUser } from '../../_utilities/getMeUser'
 import { mergeOpenGraph } from '../../_utilities/mergeOpenGraph'
+import { HideFooter } from '../../_components/HideFooter'
 import LoginForm from './LoginForm'
 
 import classes from './index.module.scss'
@@ -18,7 +19,10 @@ export default async function Login() {
 
   return (
     <section className={classes.login}>
-      <div className={classes.heroImg}>
+      <HideFooter />
+      <LoginForm />
+
+      {/* <div className={classes.heroImg}>
         <Link href="/">
           <Image
             src="/logo-black.svg"
@@ -43,7 +47,7 @@ export default async function Login() {
 
           <LoginForm />
         </div>
-      </div>
+      </div> */}
     </section>
   )
 }

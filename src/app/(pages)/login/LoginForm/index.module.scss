@@ -24,3 +24,12 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.image{
+  display: flex;
+
+  @media (max-width: 1100px){
+
+    display: hidden;
+  }
+}

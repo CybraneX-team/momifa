@@ -4,14 +4,14 @@
   display: grid;
   grid-template-columns: 1fr 45%;
   height: 100vh;
-  overflow: auto;
+  overflow:hidden ;
 
   @include mid-break {
     grid-template-columns: 1fr;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url('/assets/images/image-2.svg');
+    // background-size: cover;
+    // background-repeat: no-repeat;
+    // background-position: center;
+    // background-image: url('/assets/images/image-2.svg');
   }
 
   p {
@@ -42,10 +42,10 @@
 .heroImg {
   height: 100%;
   width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-image: url('/assets/images/image-2.svg');
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: center;
+  // background-image: url('/assets/images/image-2.svg');
 
   @include mid-break {
     background: none;
