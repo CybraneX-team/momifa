@@ -102,7 +102,7 @@ const CreateAccountForm: React.FC = () => {
 
   return (
     <>
-      <div className="flex w-screen h-screen overflow-hidden mt-5 md:-mt-10">
+      <div className="flex w-screen  overflow-hidden mt-5 md:-mt-10">
         {/* Left Section Image*/}
 
         <motion.div
@@ -111,10 +111,10 @@ const CreateAccountForm: React.FC = () => {
           animate="visible"
           variants={containerVariants}
         >
-          <motion.div variants={containerVariants} className="flex flex-col justify-center p-10">
+          <motion.div variants={containerVariants} className="flex flex-col  justify-center p-10">
             <motion.img
               variants={itemVariants}
-              src="/media/login.png"
+              src="/media/Login.jpg"
               className="lg:h-full max-h-1/2 absolute bottom-0 pt-12 hover:scale-105 duration-300 transition"
               alt="Login illustration"
             />
@@ -123,7 +123,7 @@ const CreateAccountForm: React.FC = () => {
 
         {/* Right Section Form */}
         <motion.div
-          className=" p-10 -pt-5 px-12 h-screen w-screen "
+          className=" p-10 -pt-5 px-12  w-screen "
           initial="hidden"
           animate="visible"
           variants={containerVariants}
@@ -177,7 +177,7 @@ const CreateAccountForm: React.FC = () => {
                     variants={itemVariants}
                     placeholder="Your Full Name"
                     required
-                    className="text-[#A19B9B] mt-3 md:mt-2 text-lg focus:outline-none w-full p-2 py-3  bg-transparent border border-[#363636] rounded-lg"
+                    className="text-[#A19B9B] mt-3 md:mt-2 text-lg focus:outline-none w-full p-3  bg-transparent border border-[#363636] rounded-lg"
                   />
                 </div>
 
@@ -198,7 +198,7 @@ const CreateAccountForm: React.FC = () => {
                     variants={itemVariants}
                     placeholder="Your email address"
                     required
-                    className="text-[#A19B9B] text-lg focus:outline-none w-full p-2 py-3 mt-3 md:mt-2 bg-transparent border border-[#363636] rounded-lg"
+                    className="text-[#A19B9B] text-lg focus:outline-none w-full p-3  mt-3 md:mt-2 bg-transparent border border-[#363636] rounded-lg"
                   />
                 </div>
               </motion.div>
@@ -217,7 +217,7 @@ const CreateAccountForm: React.FC = () => {
                 placeholder="Your password"
                 variants={itemVariants}
                 required
-                className="text-[#A19B9B] text-xl font-medium focus:outline-none w-full p-2 py-3 -mt-1 bg-transparent border border-[#363636] rounded-lg"
+                className="text-[#A19B9B] text-xl font-medium focus:outline-none w-full p-3  -mt-1 bg-transparent border border-[#363636] rounded-lg"
               />
               <motion.label
                 htmlFor="password"
@@ -240,7 +240,7 @@ const CreateAccountForm: React.FC = () => {
               <motion.button
                 type="submit"
                 variants={itemVariants}
-                className="relative w-full mt-3 p-2 py-3 text-center flex items-center px-6 overflow-hidden font-medium transition-all bg-[#0F0F0F] rounded-md group"
+                className="relative w-full mt-3 p-2  text-center flex items-center px-6 overflow-hidden font-medium transition-all bg-[#0F0F0F] rounded-md group"
               >
                 <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-[#1D1D1D] rounded group-hover:-mr-4 group-hover:-mt-4">
                   <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2 bg-white"></span>

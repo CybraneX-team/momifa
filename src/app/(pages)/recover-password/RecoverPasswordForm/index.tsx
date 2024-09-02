@@ -49,18 +49,20 @@ export const RecoverPasswordForm: React.FC = () => {
   return (
     <Fragment>
       {!success && (
-        <React.Fragment>
-          <p>Enter your registered email address. We'll send you a code to reset your password.</p>
+        <div className="">
+          <p className="text-white text-xl ">
+            Enter your registered email address. We'll send you a code to reset your password.
+          </p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+          <form onSubmit={handleSubmit(onSubmit)} className="">
             <Message error={error} className={classes.message} />
-            <Input
-              name="email"
-              label="Email Address"
-              required
-              register={register}
-              error={errors.email}
+            <input
+              {...register('email', { required: true })}
               type="email"
+              id="email"
+              placeholder="Your email address"
+              required
+              className="text-[#A19B9B] text-lg focus:outline-none w-full p-3 py-4 mt-1 bg-transparent border border-[#363636] rounded-lg"
             />
             <Button
               type="submit"
@@ -69,7 +71,7 @@ export const RecoverPasswordForm: React.FC = () => {
               className={classes.submit}
             />
           </form>
-        </React.Fragment>
+        </div>
       )}
       {success && (
         <React.Fragment>

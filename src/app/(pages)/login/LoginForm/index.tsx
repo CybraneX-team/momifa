@@ -202,7 +202,7 @@ const LoginForm: React.FC = () => {
           className="flex flex-col justify-center p-10 md:px-24 mt-6"
           variants={containerVariants}
         >
-          <motion.h2 className="text-white text-4xl" variants={itemVariants}>
+          <motion.h2 className="text-white text-3xl" variants={itemVariants}>
             Welcome!
           </motion.h2>
           <p className="text-gray-500 mt-1 font-medium text-lg">Log in to MOMIFA to continue.</p>
@@ -215,7 +215,7 @@ const LoginForm: React.FC = () => {
             <motion.button
               variants={itemVariants}
               type="button"
-              className="bg-[#0F0F0F] hover:bg-[#262626] duration-300 p-3 py-4 flex items-center justify-center w-full rounded-md border border-[#1D1D1D]"
+              className="bg-[#0F0F0F] hover:bg-[#262626] duration-300 p-3 flex items-center justify-center w-full rounded-md border border-[#1D1D1D]"
             >
               <Image width={24} height={24} src="/media/google.png" alt="Google logo" />
               <h2 className="text-[#d2d1d1] font-medium text-lg mx-3 rounded-lg">
@@ -224,12 +224,12 @@ const LoginForm: React.FC = () => {
             </motion.button>
 
             <motion.div
-              className="w-full mt-5 pt-8 border-t border-[#2F2F2F]"
+              className="w-full mt-5 pt-6 border-t border-[#2F2F2F]"
               variants={containerVariants}
             >
               <motion.label
                 htmlFor="email"
-                className="text-white text-xl font-medium"
+                className="text-white text-xl font-medium "
                 variants={itemVariants}
               >
                 Email
@@ -240,7 +240,7 @@ const LoginForm: React.FC = () => {
                 id="email"
                 placeholder="Your email address"
                 required
-                className="text-[#A19B9B] text-lg focus:outline-none w-full p-3 py-4 mt-1 bg-transparent border border-[#363636] rounded-lg"
+                className="text-[#A19B9B] text-lg focus:outline-none w-full p-3  mt-1 bg-transparent border border-[#363636] rounded-lg"
                 variants={itemVariants}
               />
               <motion.div
@@ -260,7 +260,7 @@ const LoginForm: React.FC = () => {
                 id="password"
                 placeholder="Your password"
                 required
-                className="text-[#A19B9B] text-xl font-medium focus:outline-none w-full p-3 py-4 mt-1 bg-transparent border border-[#363636] rounded-lg"
+                className="text-[#A19B9B] text-xl font-medium focus:outline-none w-full p-3 mt-1 bg-transparent border border-[#363636] rounded-lg"
                 variants={itemVariants}
               />
 
@@ -268,7 +268,7 @@ const LoginForm: React.FC = () => {
                 type="submit"
                 disabled={isLoading}
                 variants={itemVariants}
-                className="relative w-full mt-6 p-3 py-4 text-center flex items-center px-6 overflow-hidden font-medium transition-all bg-[#0F0F0F] rounded-md group"
+                className="relative w-full mt-6 p-3  text-center flex items-center px-6 overflow-hidden font-medium transition-all bg-[#0F0F0F] rounded-md group"
               >
                 <span className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-[#1D1D1D] rounded group-hover:-mr-4 group-hover:-mt-4">
                   <span className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2 bg-white"></span>
@@ -321,7 +321,7 @@ const LoginForm: React.FC = () => {
         >
           <motion.img
             variants={itemVariants}
-            src="/media/loginn.jpg"
+            src="/media/Login.jpg"
             className="  lg:h-full max-h-1/2 absolute bottom-0 pt-12 hover:scale-105 duration-300 transition"
             alt="Login illustration"
           />

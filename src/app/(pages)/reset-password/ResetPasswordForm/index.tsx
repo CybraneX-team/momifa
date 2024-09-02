@@ -65,23 +65,27 @@ export const ResetPasswordForm: React.FC = () => {
   }, [reset, token])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-20 flex flex-col">
       <Message error={error} className={classes.message} />
-      <Input
-        name="password"
+      <label htmlFor="password" className="text-white text-xl font-medium">
+        New Password
+      </label>
+      <input
+        {...register('password', { required: true })}
         type="password"
-        label="New Password"
+        id="password"
+        placeholder="Your password"
         required
-        register={register}
-        error={errors.password}
+        className="text-[#A19B9B] text-xl max-w-3xl font-medium focus:outline-none w-full p-3 py-4 mt-3 bg-transparent border border-[#363636] rounded-lg"
       />
       <input type="hidden" {...register('token')} />
-      <Button
+      <button
         type="submit"
-        appearance="primary"
-        label="Reset Password"
-        className={classes.submit}
-      />
+        className="hover:bg-transparent w-40 mt-5 text-white p-2 py-3 rounded-lg hover:border hover:border-white bg-[#212121]  duration-300"
+      >
+        {' '}
+        Reset Password
+      </button>
     </form>
   )
 }

@@ -12,6 +12,7 @@ export default async function ResetPassword() {
     <Gutter className={classes.resetPassword}>
       <h1>Reset Password</h1>
       <p>Please enter a new password below.</p>
+
       <ResetPasswordForm />
     </Gutter>
   )

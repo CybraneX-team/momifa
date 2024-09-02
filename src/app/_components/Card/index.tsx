@@ -10,11 +10,14 @@ import { Price } from '../Price'
 import classes from './index.module.scss'
 
 const priceFromJSON = (priceJSON): string => {
-  let price = ''
+  let price = '$25'
 
   if (priceJSON) {
     try {
+      console.log('priceJSON:', priceJSON) // Log the raw priceJSON
+
       const parsed = JSON.parse(priceJSON)?.data[0]
+      console.log('Parsed data:', parsed) // Log the parsed data
       const priceValue = parsed.unit_amount
       const priceType = parsed.type
       price = `${parsed.currency === 'usd' ? '$' : ''}${(priceValue / 100).toFixed(2)}`
@@ -73,34 +76,25 @@ export const Card: React.FC<{
         {metaImage && typeof metaImage !== 'string' && (
           <div className={classes.imageContainer}>
             <Media imgClassName={classes.image} resource={metaImage} fill />
-          </div>
-        )}
-      </div>
+            <div className={classes.vignette}>
+              <div className={classes.titleRow}>
+                <div className={classes.titleOverlay}>
+                  <h4 className={classes.title}>{price}</h4>
+                </div>
 
-      <div className={classes.content}>
-        {titleToUse && <h4 className={classes.title}>{titleToUse}</h4>}
-        {description && (
-          <div className={classes.body}>
-            {description && <p className={classes.description}>{sanitizedDescription}</p>}
+                <div className={classes.titleOverlayP}>
+                  <h4 className={classes.title}>Go to Product</h4>
+                </div>
+
+                <div className={classes.titleOverlayG}>
+                  <h4 className={classes.title}>
+                    <img src="/media/goTo.png" alt="" className="px-0 py-1.5" />
+                  </h4>
+                </div>
+              </div>
+            </div>
           </div>
         )}
-        <div className={classes.prices}>
-        {doc && <Price product={doc} />}
-        <button className={classes.button}>
-          <div className={classes.buttonBox}>
-            <span className={classes.buttonElem}>
-              <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
-                <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
-              </svg>
-            </span>
-            <span className={classes.buttonElem}>
-              <svg viewBox="0 0 46 40">
-                <path d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"></path>
-              </svg>
-            </span>
-          </div>
-        </button>
-        </div>
       </div>
     </Link>
   )
