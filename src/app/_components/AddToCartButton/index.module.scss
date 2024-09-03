@@ -1,7 +1,42 @@
 .addToCartButton {
-  visibility: visible;
-  opacity: 1;
+  position: relative; 
+  display: inline-block;
+  padding: 12px 20px; 
+  text-align: center !important;
+  width: 15em;
+  font-size: 14px;
+  color:  #FFFFFF;
+  text-transform: none;
+  background-color: #262626 !important; 
+  border-radius: 28px; 
+  font-family: "Syne", sans-serif !important;
+  overflow: hidden; 
+  z-index: 1; 
+  border: none; 
+  cursor: pointer; 
   transition: opacity 100ms linear;
+}
+
+.addToCartButton::before {
+  content: ''; 
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  font-family: "Syne", sans-serif !important;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(92.87deg, #4FEAFF -12.13%, #FF6CF8 83.24%, #FF2D5F 111.86%); 
+  z-index: -1; 
+  border-radius: inherit; 
+  padding: 3px; 
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0); 
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out; 
+  mask-composite: exclude; 
 }
 
 .green {

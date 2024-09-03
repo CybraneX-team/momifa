@@ -106,45 +106,97 @@
   width: '100vw';
   height: 'auto'
 }
-.heroHeadingg{
+.heroHeadingg {
   position: absolute;
   color: white;
   font-family: "Syne", sans-serif;
-  font-optical-sizing: auto;
   font-weight: 700;
-  font-style: normal;
-  top: 4.5em;
-  letter-spacing: 10px;
-  line-height: 110px;
-  width: 18em;
-  left: 2em;
-  font-size: 56px;
+  top: 10vh; 
+  left: 5vw; 
+  font-size: 5vw; 
+  letter-spacing: 0.5vw;
+  line-height: 1.2;
   z-index: 9999;
 }
-.herotagline{
+
+.herotagline {
   position: absolute;
-  top: 8.5em;
-  left: 3em;
+  top: 20vh;
+  left: 6vw;
   color: white;
-  font-family: Syne;
-  font-size: 40px;
+  font-family: "Syne", sans-serif;
+  font-size: 3vw; 
   font-weight: 500;
-  line-height: 48px;
+  line-height: 1.2;
   text-align: left;
 }
-.textt{
+
+.textt {
   position: absolute;
-  top: 16em;
-  left: 7em;
+  top: 39.5vh;
+  left: 7vw;
 }
-.rotatedText{
-  position: absolute; 
-  top: 10em;
-  left: 70em;
+
+.rotatedText {
+  position: absolute;
+  top: 33vh;
+  left: 87vw;
   
 }
-.texttt{
-  top: 19em;
-  left: 7em;
+.heartIcon{
+  width: 1.5em;
+  height: 1.5em;
   position: absolute;
+  top: 3.5em;
+  left: 80em;
+  // gap: 0px;
+  opacity: 1px;
+
 }
+.texttt {
+  position: absolute;
+  top: 49vh;
+  height: 37px;
+  width: 16em;
+  left: 6.6vw;
+}
+
+.heroImageBox {
+  background-image: url('/media/heroIm.png');
+  width: 100vw;
+  // height: 80vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 50em;
+}
+@media (max-width: 480px) {
+  .heroImageBox{
+  background-image: url('/media/heroImRes.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  // background-position: ;
+  height: 50em;
+  // margin-left: 5em;
+  // top: 2;
+  // position: absolute;
+  }
+  .heroWrapper{
+    margin-top: 0px;
+    position: relative;
+    bottom: 156px;
+  }
+  .texttt, .rotatedText, .textt{
+    display: none;
+  }
+  .hero{
+    padding-top: 8em;
+  }
+}
+
+@media (min-width: 390px){
+  .heroImageBox{
+    overflow-x: hidden;
+  }
+} 
