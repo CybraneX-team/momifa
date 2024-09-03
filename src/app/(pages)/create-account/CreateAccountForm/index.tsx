@@ -103,6 +103,7 @@ const CreateAccountForm: React.FC = () => {
   return (
     <>
       <div className="flex w-screen  overflow-hidden mt-5 md:-mt-10">
+      <div className="flex w-screen  overflow-hidden mt-5 md:-mt-10">
         {/* Left Section Image*/}
 
         <motion.div
@@ -114,6 +115,7 @@ const CreateAccountForm: React.FC = () => {
           <motion.div variants={containerVariants} className="flex flex-col  justify-center p-10">
             <motion.img
               variants={itemVariants}
+              src="/media/loginn.jpg"
               src="/media/Login.jpg"
               className="lg:h-full max-h-1/2 absolute bottom-0 pt-12 hover:scale-105 duration-300 transition"
               alt="Login illustration"
@@ -123,6 +125,7 @@ const CreateAccountForm: React.FC = () => {
 
         {/* Right Section Form */}
         <motion.div
+          className=" p-10 -pt-5 px-12  w-screen "
           className=" p-10 -pt-5 px-12  w-screen "
           initial="hidden"
           animate="visible"

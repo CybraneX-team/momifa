@@ -8,28 +8,32 @@
     position: relative;
   }
   
-  .variantDots {
+  .variantPreview {
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 20px;
+    left: 20px;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
   }
   
-  .variantDot {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    border: 2px solid white;
-    cursor: pointer;
-    background-color: transparent;
-    transition: transform 0.2s ease;
+  .previewImage {
+    width: 80px;
+    height: auto;
+    margin: 0 10px;
+  }
   
-    &.selected {
-      background-color: white;
-      transform: scale(1.2);
+  .navButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    
+    &:hover {
+      color: #000;
     }
   }
   

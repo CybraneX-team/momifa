@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import styles from './index.module.scss'
+import VariantPreview from '../VariantPreview'
 
 const ProductDisplay: React.FC = () => {
   const [currentColor, setCurrentColor] = useState('blue')
@@ -24,13 +25,25 @@ const ProductDisplay: React.FC = () => {
       },
     },
   }
+
+  const variantList = Object.keys(variants)
+
   const handleColorChange = (color: string) => {
     setCurrentColor(color)
   }
 
-  const handleVariantChange = (variant: string) => {
-    setCurrentVariant(variant)
-    setCurrentColor(Object.keys(variants[variant as keyof typeof variants].colors)[0])
+  const handlePreviousVariant = () => {
+    const currentIndex = variantList.indexOf(currentVariant)
+    const newIndex = (currentIndex - 1 + variantList.length) % variantList.length
+    setCurrentVariant(variantList[newIndex])
+    setCurrentColor(Object.keys(variants[variantList[newIndex] as keyof typeof variants].colors)[0])
+  }
+
+  const handleNextVariant = () => {
+    const currentIndex = variantList.indexOf(currentVariant)
+    const newIndex = (currentIndex + 1) % variantList.length
+    setCurrentVariant(variantList[newIndex])
+    setCurrentColor(Object.keys(variants[variantList[newIndex] as keyof typeof variants].colors)[0])
   }
 
   const imageVariants = {
@@ -52,7 +65,7 @@ const ProductDisplay: React.FC = () => {
         }
   const getTitle = (variant: string) => {
     switch (variant) {
-      case 'polos':
+      case 'polo':
         return 'Polo T-Shirts'
       default:
         return 'Plain T-Shirts'
@@ -111,15 +124,12 @@ const ProductDisplay: React.FC = () => {
         </div>
       </div>
       
-      <div className={styles.variantDots}>
-        {Object.keys(variants).map((variant) => (
-          <button
-            key={variant}
-            className={`${styles.variantDot} ${variant === currentVariant ? styles.selected : ''}`}
-            onClick={() => handleVariantChange(variant)}
-          />
-        ))}
-      </div>
+      <VariantPreview
+        variants={Object.keys(variants)}
+        currentVariant={currentVariant}
+        onPrevious={handlePreviousVariant}
+        onNext={handleNextVariant}
+      />
     </div>
   )
 }
