@@ -31,7 +31,7 @@ const ProductsOnHome = () => {
     <div className="relative pt-16 md:pt-24 md:pb-20">
       <Gutter className={classes.productCards}>
         <h2
-          className={`${syne.className} text-white mb-10 md:mb-0 -rotate-90 md:text-4xl md:top-48 md:absolute md:-left-10 text-3xl font-extrabold`}
+          className={`${syne.className} text-white mb-10 md:mb-0 md:-rotate-90 md:text-4xl md:top-48 md:absolute md:-left-10 text-3xl font-extrabold`}
         >
           Polo T-Shirts
         </h2>
