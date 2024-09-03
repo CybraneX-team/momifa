@@ -1,41 +1,57 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
-import { useAuth } from '../../../_providers/Auth'
-import { Header } from '../../../../payload/payload-types'
-import { noHeaderFooterUrls } from '../../../constants'
-import { Gutter } from '../../Gutter'
-import { HeaderNav } from '../Nav'
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { useAuth } from '../../../_providers/Auth';
+import { Header } from '../../../../payload/payload-types';
+import { noHeaderFooterUrls } from '../../../constants';
+import { Gutter } from '../../Gutter';
+import { HeaderNav } from '../Nav';
 
-import classes from './index.module.scss'
+import classes from './index.module.scss';
 
 const HeaderComponent = ({ header }: { header: Header }) => {
-  const pathname = usePathname()
-  const { user } = useAuth()
-  const [isMobile, setIsMobile] = useState(false)
+  const pathname = usePathname();
+  const { user } = useAuth();
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-    handleResize()
-    window.addEventListener('resize', handleResize)
+    const handleScroll = () => {
+      // Check if the scroll position is greater than 1000px
+      if (window.scrollY > 750) {
+        setHasScrolled(true);
+      } else {
+        setHasScrolled(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [pathname]);
 
   const slideDownAnimation = {
     initial: { y: -100, opacity: 0 },
     animate: { y: 0, opacity: 1 },
     transition: { duration: 0.5, ease: 'easeOut' },
-  }
+  };
+
+ // Determine which class to apply based on the page and scroll position
+ const isHomePage = pathname === '/';
+ const wrapClass = isHomePage && !hasScrolled ? classes.wrap : classes.wrapAfter;
 
   return (
     <div className={classes.mainHeader}>
@@ -48,7 +64,7 @@ const HeaderComponent = ({ header }: { header: Header }) => {
         variants={slideDownAnimation}
       >
         <Gutter
-          className={[classes.wrap, user === undefined && classes.hide].filter(Boolean).join(' ')}
+          className={[wrapClass, user === undefined && classes.hide].filter(Boolean).join(' ')}
         >
           <Link href="/">
             <svg
@@ -89,12 +105,12 @@ const HeaderComponent = ({ header }: { header: Header }) => {
                 fill="#ffffff"
               />
             </svg>
-          </Link>
+            </Link>
           <HeaderNav header={header} />
         </Gutter>
       </motion.nav>
     </div>
-  )
-}
+  );
+};
 
-export default HeaderComponent
+export default HeaderComponent;

@@ -7,6 +7,7 @@ import RichText from '../../_components/RichText'
 import { motion, useAnimation, useInView } from "framer-motion"
 
 import classes from './index.module.scss'
+import Link from 'next/link'
 
 export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
   const controls = useAnimation()
@@ -48,17 +49,26 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
         <div
           className={classes.heroImageBox}
         >
-          <Image
-            src="/media/hI.png"
+          {/* <Image
+            src="/media/heroIm.png"
             alt="Polo T-shirt"
             height={1080}
             width={1920}
+            /> */}
+            <Link href={"/wishlist"}>
+             <Image 
+              src="/media/heartIcon.png"
+              alt='MOMIFA'
+              height={0}
+               width={0}
+               className={classes.heartIcon}
             />
+            </Link>
              <Image 
               src="/media/phood.png"
               alt='MOMIFA'
-              height={350}
-               width={820}
+              height={470}
+               width={970}
                className={classes.textt}
             />
             <Image 

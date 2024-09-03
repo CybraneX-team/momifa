@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import { Jost } from 'next/font/google'
+import { Jost, Syne } from 'next/font/google'
 
 import { AdminBar } from './_components/AdminBar'
 import { Footer } from './_components/Footer'
@@ -16,7 +16,7 @@ import './_css/app.scss'
 
 gsap.registerPlugin(ScrollTrigger);
 
-const jost = Jost({
+const jost = Syne({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-jost',

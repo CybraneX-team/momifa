@@ -4,8 +4,6 @@ import Matter from 'matter-js';
 import { motion, useInView } from 'framer-motion';
 import { fillLogic } from './filllogice';
 
-// Function declarations moved outside the useEffect
-
 function handleScroll(canvas) {
   let scrollTimeout;
   return () => {
@@ -62,7 +60,7 @@ const FloatingBox = () => {
 
     const canvas = render.canvas;
     if (canvas) {
-      canvas.style.pointerEvents = 'auto'; // Set pointer-events to auto initially
+      canvas.style.pointerEvents = 'auto';
 
       const ground = Bodies.rectangle(
         canvasWidth / 2,
@@ -106,7 +104,7 @@ const FloatingBox = () => {
         },
       });
 
-      mouseConstraintRef.current = mouseConstraint; // Save mouseConstraint reference
+      mouseConstraintRef.current = mouseConstraint;
       World.add(engine.world, mouseConstraint);
       render.mouse = mouse;
 
@@ -114,32 +112,32 @@ const FloatingBox = () => {
       Render.run(render);
 
       const texts = [
-        'PremiumQuality',
-        'ClassicFit',
-        'IconicStyles',
-        'CasualChic',
-        'ComfortWear',
-        'SoftCotton',
-        'TrendyDesigns',
-        'EverydayEssentials',
-        'WardrobeStaples!',
-        'LuxuryPolos!',
-        'SignatureTees',
-        'TimelessLook',
-        'SmartCasual',
-        'ModernElegance',
-        'RefinedCasual',
-        'PolishedLook'
-        // 'Trusted by 10000+ buyers',
+        'Premium Quality',
+        'Classic Fit',
+        'Iconic Styles',
+        'Casual Chic',
+        'Comfort Wear',
+        'Soft Cotton',
+        'Trendy Designs',
+        'Everyday Essentials',
+        'Wardrobe Staples!',
+        'Luxury Polos!',
+        'Signature Tees',
+        'Timeless Look',
+        'Smart Casual',
+        'Modern Elegance',
+        'Refined Casual',
+        'Polished Look'
       ];
 
       if (isInView) {
-        const rectangleCount = 16;
+        const isMobile = window.innerWidth <= 768; 
+        const rectangleCount = isMobile ? 8 : 16; 
+        const width = isMobile ? 130 : 150; 
+        const height = 60; 
         const newRectangles = [];
 
         for (let i = 0; i < rectangleCount; i++) {
-          const width = 150;
-          const height = 60;
           let fillColor = fillLogic(i);
 
           const rectangle = Matter.Bodies.rectangle(
@@ -179,12 +177,7 @@ const FloatingBox = () => {
             ctx.translate(x, y);
             ctx.rotate(angle);
 
-            if (rectangle.render.fillStyle === '#8330C2') {
-              ctx.fillStyle = 'white';
-            } else {
-              ctx.fillStyle = 'black';
-            }
-
+            ctx.fillStyle = rectangle.render.fillStyle === '#8330C2' ? 'white' : 'black';
             ctx.fillText(texts[index], 0, 0);
             ctx.restore();
           });
@@ -192,30 +185,20 @@ const FloatingBox = () => {
           ctx.fillStyle = 'white';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'top';
-          const textX = canvasWidth / 2 ; // instead of dividing be 2 multipy it bot 0.3 to add image
-          const textY = 20; // Change const to let if adding image
+          const textX = canvasWidth / 2;
+          const textY = 20;
         
           ctx.fillText('Trusted by', textX, textY);
-
-          // textY += 30; // for Image
-
           ctx.fillText('10000+ Buyers', textX, textY + 70);
-
-        //   const imageSize = 50; // Adjust the size of the profile image as needed
-        //   const imageX = canvasWidth * 0.7; // Position the image on the right side
-        //   const imageY = 20;
-        //   ctx.drawImage(
-        //     profileImage,
-        //     imageX - imageSize / 2, // Center the image horizontally
-        //     imageY,
-        //     imageSize,
-        //     imageSize
-        //   );
         });
       }
 
       const scrollHandler = handleScroll(canvas);
       canvas.addEventListener("wheel", scrollHandler);
+
+      // Add touch event listeners for mobile devices
+      canvas.addEventListener("touchstart", scrollHandler, { passive: true });
+      canvas.addEventListener("touchmove", scrollHandler, { passive: true });
 
       const handleResize = () => {
         const parent = sceneRef.current?.parentElement;
@@ -224,18 +207,9 @@ const FloatingBox = () => {
           const newHeight = parent.clientHeight;
           canvas.width = newWidth;
           canvas.height = newHeight;
-          Matter.Body.setPosition(
-            ground,
-            Matter.Vector.create(newWidth / 2, newHeight)
-          );
-          Matter.Body.setPosition(
-            rightWall,
-            Matter.Vector.create(newWidth, newHeight / 2)
-          );
-          Matter.Body.setPosition(
-            leftWall,
-            Matter.Vector.create(0, newHeight / 2)
-          );
+          Matter.Body.setPosition(ground, Matter.Vector.create(newWidth / 2, newHeight));
+          Matter.Body.setPosition(rightWall, Matter.Vector.create(newWidth, newHeight / 2));
+          Matter.Body.setPosition(leftWall, Matter.Vector.create(0, newHeight / 2));
           Matter.Body.setPosition(topWall, Matter.Vector.create(0, 0));
         }
       };
@@ -252,18 +226,18 @@ const FloatingBox = () => {
           canvas.remove();
         }
 
-        canvas.style.pointerEvents = ''; // Clean up style changes
+        canvas.style.pointerEvents = '';
         window.removeEventListener('resize', handleResize);
 
-        // Remove mouse constraint
         if (mouseConstraintRef.current) {
           World.remove(engine.world, mouseConstraintRef.current);
           mouseConstraintRef.current = null;
         }
 
-        // Remove the scroll event listener
         if (canvas) {
           canvas.removeEventListener("wheel", scrollHandler);
+          canvas.removeEventListener("touchstart", scrollHandler);
+          canvas.removeEventListener("touchmove", scrollHandler);
         }
       };
     }
@@ -283,7 +257,7 @@ const FloatingBox = () => {
       prevScrollY = currentScrollY;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -309,7 +283,7 @@ const FloatingBox = () => {
 
     const handleScrollStart = () => {
       if (canvas) {
-        canvas.style.pointerEvents = 'none'; // Ensure scroll events are not blocked
+        canvas.style.pointerEvents = 'none';
       }
     };
 
@@ -345,4 +319,4 @@ const FloatingBox = () => {
     />
   );
 };
-export default FloatingBox
+export default FloatingBox;

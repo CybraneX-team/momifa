@@ -106,9 +106,10 @@ const ProductDisplay: React.FC = () => {
             src={`/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`}
             alt={`T-shirt in ${currentColor} - ${currentVariant} style`}
             variants={imageVariants}
-            initial="enter"
+            initial="enter" 
             animate="center"
             exit="exit"
+            style={{position: "relative", top : currentColor === "red"? "1.567rem" : "1.1rem" }}
             transition={{ duration: 0.2 }}
           />
         </AnimatePresence>
