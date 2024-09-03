@@ -103,7 +103,6 @@ const CreateAccountForm: React.FC = () => {
   return (
     <>
       <div className="flex w-screen  overflow-hidden mt-5 md:-mt-10">
-      <div className="flex w-screen  overflow-hidden mt-5 md:-mt-10">
         {/* Left Section Image*/}
 
         <motion.div
