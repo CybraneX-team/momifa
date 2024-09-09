@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,8 +5,6 @@ import Link from 'next/link'
 import { Media } from '../../../_components/Media'
 import { Price } from '../../../_components/Price'
 import { RemoveFromCartButton } from '../../../_components/RemoveFromCartButton'
-
-import classes from './index.module.scss'
 
 const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
   const [quantity, setQuantity] = useState(qty)
@@ -35,53 +31,51 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
   }
 
   return (
-    <li className={classes.item} key={title}>
-      <Link href={`/products/${product.slug}`} className={classes.mediaWrapper}>
+    <li className="grid grid-cols-[120px_1fr] my-5 bg-[#212121b9] rounded-xl shadow-lg shadow-[#000000]">
+      <Link
+        href={`/products/${product.slug}`}
+        className="relative min-h-[100px] min-w-[120px] p-3 rounded-xl"
+      >
         {!metaImage && <span>No image</span>}
         {metaImage && typeof metaImage !== 'string' && (
-          <Media className={classes.media} imgClassName={classes.image} resource={metaImage} fill />
+          <Media
+            className="relative h-full w-full rounded-xl"
+            imgClassName="object-cover w-full rounded-xl aspect-square"
+            resource={metaImage}
+            fill
+          />
         )}
       </Link>
 
-      <div className={classes.itemDetails}>
-        <div className={classes.titleWrapper}>
-          <h6>{title}</h6>
+      <div className="flex flex-col justify-between p-3 gap-4">
+        <div>
+          <h6 className="text-white font-medium overflow-ellipsis">{title}</h6>
           <Price product={product} button={false} />
         </div>
 
-        <div className={classes.quantity}>
-          <div className={classes.quantityBtn} onClick={decrementQty}>
-            <Image
-              src="/assets/icons/minus.svg"
-              alt="minus"
-              width={24}
-              height={24}
-              className={classes.qtnBt}
+        <div className="flex items-center justify-between">
+          <div className=" rounded-md flex items-center h-[45px] max-w-[100px] w-full">
+            <div
+              className="flex justify-center items-center w-full h-full cursor-pointer "
+              onClick={decrementQty}
+            >
+              <Image src="/assets/icons/minus.svg" alt="minus" width={24} height={24} />
+            </div>
+            <input
+              type="text"
+              className="text-center text-white bg-[#292929b9] rounded-md h-full w-full min-w-[30px] border-none outline-none font-bold text-base"
+              value={quantity}
+              onChange={enterQty}
             />
+            <div
+              className="flex justify-center items-center w-full h-full cursor-pointer"
+              onClick={incrementQty}
+            >
+              <Image src="/assets/icons/plus.svg" alt="plus" width={24} height={24} />
+            </div>
           </div>
-
-          <input
-            type="text"
-            className={classes.quantityInput}
-            value={quantity}
-            onChange={enterQty}
-          />
-
-          <div className={classes.quantityBtn} onClick={incrementQty}>
-            <Image
-              src="/assets/icons/plus.svg"
-              alt="plus"
-              width={24}
-              height={24}
-              className={classes.qtnBt}
-            />
-          </div>
+          <RemoveFromCartButton product={product} />
         </div>
-      </div>
-
-      <div className={classes.subtotalWrapper}>
-        <Price product={product} button={false} quantity={quantity} />
-        <RemoveFromCartButton product={product} />
       </div>
     </li>
   )

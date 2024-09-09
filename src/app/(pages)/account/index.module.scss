@@ -1,19 +1,20 @@
 @import '../../_css/common';
 
-.container {
-  width: 100%;
-  margin: 50px 0;
+// .container {
+//   width: 100%;
+//   margin: 50px 0;
 
-  @include small-break {
-    margin-top: 30px;
-  }
-}
+//   @include small-break {
+//     margin-top: 30px;
+//   }
+// }
 
 .account {
   display: grid;
   grid-template-columns: 30% 1fr;
   gap: 60px;
-  margin-top: 30px;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
 
   @include small-break {
     grid-template-columns: 1fr;
@@ -23,8 +24,12 @@
 }
 
 .nav {
-  border: 1px solid var(--color-dark-50);
+  // border: 1px solid var(--color-dark-50);
   display: flex;
+  color: white;
+  border-radius: 50px;
+  background: #212121a5;
+  box-shadow: 2px 2px 8px #000;
   flex-direction: column;
   height: min-content;
   border-radius: 10px;
@@ -34,6 +39,7 @@
   display: flex;
   gap: 12px;
   padding: 20px;
+  color: white;
 }
 
 .personalInfo {

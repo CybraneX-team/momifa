@@ -30,7 +30,7 @@
 
 .title {
   margin: 0;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 700;
   color: white;
   white-space: nowrap;
@@ -85,8 +85,8 @@
 
 .mediaWrapper {
   position: relative;
-  min-height: 300px;
-  max-width: 95%;
+  min-height: 310px;
+  max-width: 97%;
   background: rgba(35, 35, 35, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: none !important;
@@ -102,7 +102,7 @@
   aspect-ratio: 1/1;
   position: absolute;
   max-width: 100%;
-max-height: 100%;
+max-height: 95%;
   overflow: hidden;
   background-color: white; // Or any color that matches your page background
   mix-blend-mode: lighten; // Removes white backgrounds, blend modes vary with background color
@@ -110,7 +110,7 @@ max-height: 100%;
   transition: transform 0.3s ease-in-out;
 
   &:hover {
-    transform: scale(1.08);
+    transform: scale(1.05);
   }
 }
 
@@ -130,22 +130,39 @@ max-height: 100%;
 .titleOverlayP,
 .titleOverlayG {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
-  // width: 14rem;
-  // text-align: center;
+  bottom: 20px;
+  left: 13px;
+  text-align: center;
   background-color: rgba(7, 7, 7, 0.548);
-  padding: 1px 8px;
+  padding: 0px 10px;
   border-radius: 50px;
   overflow: hidden;
   backdrop-filter: blur(10px)
 }
 .titleOverlayP{
-left: 5rem;
+left: 4rem;
 padding: 0px 20px;
+margin-left: 8px;
 }
 .titleOverlayG{
-  left: 14rem;
+  left: 12.5rem;
+  bottom: 23px;
+  padding: 6px 6px;
+  margin-left: 8px;
+}
+
+@media (max-width: 640px) {
+  .titleOverlayG {
+    left: 14rem; 
+    bottom: 20px;
+    padding: 1%;
+  }
+  .titleOverlay{
+    padding: 0px 8px;
+  }
+  .title{
+    font-size: 3rem;
+  }
 }
 
 .title {
@@ -158,7 +175,7 @@ padding: 0px 20px;
 }
 .titleRow {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
 }

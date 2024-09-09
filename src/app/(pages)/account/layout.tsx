@@ -7,13 +7,13 @@ import { profileNavItems } from '../../constants/'
 import { UserInfo } from './UserInfo'
 
 import classes from './index.module.scss'
-import "./bgWhite.scss"
+import './bgWhite.scss'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={classes.container}>
       <Gutter>
-        <h3>My Profile</h3>
+        <h3 className="pt-20 text-3xl font-medium text-white">My Profile</h3>
         <div className={classes.account}>
           <div className={classes.nav}>
             <UserInfo />

@@ -7,7 +7,7 @@
   gap: calc(var(--base) / 2);
   align-items: flex-start;
   width: 100%;
-
+background: transparent;
   @include mid-break {
     width: 100%;
   }
@@ -16,6 +16,7 @@
 .changePassword {
   all: unset;
   cursor: pointer;
+  
   text-decoration: underline;
 }
 

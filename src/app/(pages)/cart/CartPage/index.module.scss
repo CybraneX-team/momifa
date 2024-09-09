@@ -8,7 +8,7 @@
   display: grid;
   grid-template-columns: 65% 1fr;
   gap: 60px;
-
+margin-top: 5rem;
   @include large-break {
     grid-template-columns: 1fr;
   }

@@ -88,7 +88,7 @@ export const Card: React.FC<{
 
                 <div className={classes.titleOverlayG}>
                   <h4 className={classes.title}>
-                    <img src="/media/goTo.png" alt="" className="px-0 py-1.5" />
+                    <img src="/media/goTo.png" alt="" className=" " />
                   </h4>
                 </div>
               </div>

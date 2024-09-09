@@ -90,33 +90,41 @@ const AccountForm: React.FC = () => {
     }
   }, [user, router, reset, changePassword])
 
+  const buttonText = isLoading
+    ? 'Processing'
+    : changePassword
+    ? 'Change Password'
+    : 'Update Account'
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
       <Message error={error} success={success} className={classes.message} />
       {!changePassword ? (
-        <Fragment>
-          <Input
-            name="email"
-            label="Email Address"
-            required
-            register={register}
-            error={errors.email}
-            type="email"
-          />
-          <Input name="name" label="Name" register={register} error={errors.name} />
+        <div className="p-10 text-white">
+          <Fragment>
+            <Input
+              name="email"
+              label="Email Address"
+              required
+              register={register}
+              error={errors.email}
+              type="email"
+            />
+            <Input name="name" label="Name" register={register} error={errors.name} />
 
-          <p>
-            {'Change your account details below, or '}
-            <button
-              type="button"
-              className={classes.changePassword}
-              onClick={() => setChangePassword(!changePassword)}
-            >
-              click here
-            </button>
-            {' to change your password.'}
-          </p>
-        </Fragment>
+            <p className="mt-3">
+              {'Change your account details below, or '}
+              <button
+                type="button"
+                className={classes.changePassword}
+                onClick={() => setChangePassword(!changePassword)}
+              >
+                click here
+              </button>
+              {' to change your password.'}
+            </p>
+          </Fragment>
+        </div>
       ) : (
         <Fragment>
           <p>
@@ -149,13 +157,27 @@ const AccountForm: React.FC = () => {
           />
         </Fragment>
       )}
-      <Button
+
+      {/* <Button
         type="submit"
         label={isLoading ? 'Processing' : changePassword ? 'Change Password' : 'Update Account'}
         disabled={isLoading}
         appearance="primary"
-        className={classes.submit}
-      />
+        className="rounded-full border border-white px-3 py-2"
+      /> */}
+
+      <div className="group/button relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gray-800/30 backdrop-blur-lg px-4 py-2 text-base font-medium text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20">
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className=" border-none text-base font-medium text-white"
+        >
+          {buttonText}
+        </Button>
+        <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
+          <div className="relative h-full w-10 bg-white/20"></div>
+        </div>
+      </div>
     </form>
   )
 }
