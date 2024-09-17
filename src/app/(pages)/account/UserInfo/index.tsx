@@ -11,13 +11,12 @@ export const UserInfo = () => {
   const { user } = useAuth()
 
   return (
-    <div className="p-10">
+    <div className="p-10 ">
       <div className={classes.profile}>
-        <Image src="/assets/icons/profile.svg" alt="profile" width={50} height={50} />
+        <Image src="/media/user.png" alt="profile" width={50} height={50} />
 
         <div className={classes.profileInfo}>
           <p className={classes.name}>{user?.name}</p>
-          <p className={classes.email}>{user?.email}</p>
         </div>
       </div>
     </div>

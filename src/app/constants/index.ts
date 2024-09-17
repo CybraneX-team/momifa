@@ -27,11 +27,11 @@ export const profileNavItems = [
     url: '/account',
     icon: '/assets/icons/user.svg',
   },
-  {
-    title: 'My Purchases',
-    url: '/account/purchases',
-    icon: '/assets/icons/purchases.svg',
-  },
+  // {
+  //   title: 'My Purchases',
+  //   url: '/account/purchases',
+  //   icon: '/assets/icons/purchases.svg',
+  // },
   {
     title: 'My Orders',
     url: '/account/orders',

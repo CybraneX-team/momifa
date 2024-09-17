@@ -1,10 +1,27 @@
 @import "../../_css/common";
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
 
 .checkout {
-  margin: 50px 0;
+  margin-top: 50px 0;
+ padding-top: 6rem;
+padding: 2rem;
   width: 100%;
+  color: white;
+  min-width: 100%;
+  font-family: 'Sofia Sans', sans-serif;
+
+
 
   @include small-break {
     margin-top: 30px;
+  }
+}
+
+@media (min-width: 800px){
+  .checkout{
+    padding-left: 5rem;
+    padding-right: 5rem;
+    margin-top: 50px 0;
+    padding-top: 6rem;
   }
 }

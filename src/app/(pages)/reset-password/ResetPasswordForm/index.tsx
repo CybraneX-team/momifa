@@ -65,7 +65,7 @@ export const ResetPasswordForm: React.FC = () => {
   }, [reset, token])
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-20 flex flex-col">
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-20 flex flex-col ">
       <Message error={error} className={classes.message} />
       <label htmlFor="password" className="text-white text-xl font-medium">
         New Password

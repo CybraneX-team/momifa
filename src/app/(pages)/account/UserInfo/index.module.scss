@@ -2,8 +2,6 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 24px 20px;
-  border-bottom: 1px solid var(--color-dark-50);
   width: 100%;
 }
 
@@ -20,6 +18,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: larger;
 }
 
 .email {

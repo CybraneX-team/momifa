@@ -79,11 +79,11 @@ export const Card: React.FC<{
             <div className={classes.vignette}>
               <div className={classes.titleRow}>
                 <div className={classes.titleOverlay}>
-                  <h4 className={classes.title}>{price}</h4>
+                  <h4 className={classes.title}>25$</h4>
                 </div>
 
                 <div className={classes.titleOverlayP}>
-                  <h4 className={classes.title}>Go to Product</h4>
+                  <h4 className={classes.title}>Cherry Red</h4>
                 </div>
 
                 <div className={classes.titleOverlayG}>

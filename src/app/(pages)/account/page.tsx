@@ -1,25 +1,15 @@
-import React from 'react'
-import { Metadata } from 'next'
+'use client'
 
-import { mergeOpenGraph } from '../../_utilities/mergeOpenGraph'
+import React from 'react'
 import AccountForm from './AccountForm'
 
-import classes from './index.module.scss'
-
-export default async function Account() {
+const AccountPage = () => {
   return (
-    <div>
-      <h5 className=" text-3xl text-white">Personal Information</h5>
+    <>
+      <h2 className="text-2xl font-medium mt-12">Account Details</h2>
       <AccountForm />
-    </div>
+    </>
   )
 }
 
-export const metadata: Metadata = {
-  title: 'Account',
-  description: 'Create an account or log in to your existing account.',
-  openGraph: mergeOpenGraph({
-    title: 'Account',
-    url: '/account',
-  }),
-}
+export default AccountPage

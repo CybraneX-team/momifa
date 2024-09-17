@@ -40,11 +40,15 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(30%, 1fr));
   gap: 50px;
-  padding: 0;
+  padding-left: 4rem;
   width: 100%;
 
   @include mid-break {
     gap: 20px;
+
+    @media (max-width: 650px){
+      padding-left: 2rem;
+    }
   }
 
   @include small-break {

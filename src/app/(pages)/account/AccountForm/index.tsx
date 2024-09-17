@@ -138,23 +138,25 @@ const AccountForm: React.FC = () => {
             </button>
             .
           </p>
-          <Input
-            name="password"
-            type="password"
-            label="Password"
-            required
-            register={register}
-            error={errors.password}
-          />
-          <Input
-            name="passwordConfirm"
-            type="password"
-            label="Confirm Password"
-            required
-            register={register}
-            validate={value => value === password.current || 'The passwords do not match'}
-            error={errors.passwordConfirm}
-          />
+          <div className="w-2/3 ml-8 m-5 pb-10 ">
+            <Input
+              name="password"
+              type="password"
+              label="Password"
+              required
+              register={register}
+              error={errors.password}
+            />
+            <Input
+              name="passwordConfirm"
+              type="password"
+              label="Confirm Password"
+              required
+              register={register}
+              validate={value => value === password.current || 'The passwords do not match'}
+              error={errors.passwordConfirm}
+            />
+          </div>
         </Fragment>
       )}
 

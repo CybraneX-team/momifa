@@ -1,15 +1,16 @@
 .productCards{
   margin-bottom: 100px;
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
 }
 
 .card {
-  // flex: 1 1 200px; /* Flex-grow, flex-shrink, and flex-basis */
-  min-width: 17rem; /* Minimum width for the card */
-  max-width: 17em;
+  // flex: 1 1 200px; 
+  width: 17rem; 
+ 
 }
 
 .faqTitle {
@@ -31,4 +32,12 @@
 .heading{
   color: white;
   padding: 20px;
+}
+
+@media (max-width: 640px) {
+  .card {
+    // flex: 1 1 200px; /* Flex-grow, flex-shrink, and flex-basis */
+    width: 19rem; /* Minimum width for the card */
+   
+  }
 }

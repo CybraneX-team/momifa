@@ -31,7 +31,7 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
   }
 
   return (
-    <li className="grid grid-cols-[120px_1fr] my-5 bg-[#212121b9] rounded-xl shadow-lg shadow-[#000000]">
+    <li className="grid grid-cols-[120px_1fr] mr-3 lg:my-3 bg-gradient-to-r from-[#0000008c] to-[#7d72a847] lg:bg-[#060606b9] lg:bg-none  border border-[#3e3e3ee8] rounded-xl min-w-96 h-fit">
       <Link
         href={`/products/${product.slug}`}
         className="relative min-h-[100px] min-w-[120px] p-3 rounded-xl"
@@ -39,7 +39,7 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
         {!metaImage && <span>No image</span>}
         {metaImage && typeof metaImage !== 'string' && (
           <Media
-            className="relative h-full w-full rounded-xl"
+            className="relative lg:h-full h-[100%] w-full rounded-xl"
             imgClassName="object-cover w-full rounded-xl aspect-square"
             resource={metaImage}
             fill
@@ -47,33 +47,42 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
         )}
       </Link>
 
-      <div className="flex flex-col justify-between p-3 gap-4">
-        <div>
-          <h6 className="text-white font-medium overflow-ellipsis">{title}</h6>
+      <div className="flex flex-col lg:flex-row items-center lg:justify-between p-3 gap-4 ">
+        <div className="flex items-center justify-between">
+          <h6 className="text-white font-medium overflow-ellipsis max-w-48 ">{title}</h6>{' '}
+          <div className="md:hidden">
+            <RemoveFromCartButton product={product} />
+          </div>
           <Price product={product} button={false} />
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className=" rounded-md flex items-center h-[45px] max-w-[100px] w-full">
+        <div className="flex items-center justify-between mt-16 lg:mt-0">
+          <div className=" lg:hidden text-white font-medium mr-10">299$</div>
+          <div className=" rounded-md flex items-center h-[30px] max-w-[100px] w-full">
             <div
-              className="flex justify-center items-center w-full h-full cursor-pointer "
+              className="flex lg:bg-[#292929b9] rounded-md -py-2  items-center w-[30px] lg:w-[40px] h-full cursor-pointer "
               onClick={decrementQty}
             >
-              <Image src="/assets/icons/minus.svg" alt="minus" width={24} height={24} />
+              <Image src="/assets/icons/minus.svg" alt="minus" width={20} height={20} />
             </div>
+
             <input
               type="text"
-              className="text-center text-white bg-[#292929b9] rounded-md h-full w-full min-w-[30px] border-none outline-none font-bold text-base"
+              className="text-center text-white mx-  bg-transparent rounded-md h-full w-full min-w-[30px] border-none outline-none font-bold text-base"
               value={quantity}
               onChange={enterQty}
             />
+
             <div
-              className="flex justify-center items-center w-full h-full cursor-pointer"
+              className=" flex  lg:bg-[#292929b9] rounded-md  items-center lg:w-[40px] h-full cursor-pointer"
               onClick={incrementQty}
             >
-              <Image src="/assets/icons/plus.svg" alt="plus" width={24} height={24} />
+              <Image src="/assets/icons/plus.svg" alt="plus" width={25} height={25} />
             </div>
           </div>
+        </div>
+        <div className="hidden lg:flex text-white font-medium">299$</div>
+        <div className="hidden lg:flex">
           <RemoveFromCartButton product={product} />
         </div>
       </div>

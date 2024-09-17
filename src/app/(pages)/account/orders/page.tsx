@@ -43,7 +43,7 @@ export default async function Orders() {
 
   return (
     <div>
-      <h5>My Orders</h5>
+      {/* <h5>My Orders</h5>
       {(!orders || !Array.isArray(orders) || orders?.length === 0) && (
         <p className={classes.noOrders}>You have no orders.</p>
       )}
@@ -79,7 +79,59 @@ export default async function Orders() {
             </li>
           ))}
         </ul>
-      )}
+      )} */}
+      <h2 className="text-2xl font-medium mt-12">Your Orders</h2>
+      <div className="bg-[#181818]  border border-[#404040] p-5 mt-5 w-full md:w-2/3 rounded-lg flex justify-between items-center">
+        <div className="flex flex-col ">
+          <p className="text-[#D1D1D1] text-lg">
+            Polo T-shirt [Blue]
+            <span className="text-[#D1D1D1] text-lg mx-3">200$</span>
+            <span className="text-[#ffffff] text-sm mt-2 block">Estimated delivery by 17th</span>
+          </p>
+          <p className="text-[#D1D1D1] text-lg pt-10">
+            Order ID
+            <span className="text-white block">12345356765245</span>
+          </p>
+
+          <p className="text-[#D1D1D1] text-sm pt-10">Cencel Order</p>
+        </div>
+
+        <div className="flex flex-col items-center space-y-4">
+          <div className="flex items-center">
+            <p className="text-[#D1D1D1] text-sm mr-2">Pickup</p>
+            <div className="w-1 h-2 bg-green-500 rounded-full"></div>
+          </div>
+          <div className="w-1 h-12 bg-[#404040] rounded"></div>
+
+          <div className="flex items-center">
+            <p className="text-[#D1D1D1] text-sm mr-2">Shipped</p>
+            <div className="w-1 h-2 bg-green-500 rounded-full"></div>
+          </div>
+          <div className="w-1 h-12 bg-[#404040] rounded"></div>
+
+          <div className="flex items-center">
+            <p className="text-[#D1D1D1] text-sm mr-2">Delivered</p>
+            <div className="w-1 h-2 bg-[#404040] rounded-full"></div>
+          </div>
+        </div>
+      </div>
+
+      <h2 className="text-2xl font-medium mt-12">Past Orders</h2>
+      <div className=" border border-[#404040] p-5 mt-5 w-full md:w-2/3 rounded-lg flex justify-between items-center">
+        <div className="flex flex-col ">
+          <p className="text-[#D1D1D1] text-lg">
+            Polo T-shirt [Blue]
+            <span className="text-[#D1D1D1] text-lg mx-3">200$</span>
+          </p>
+
+          <p className="text-[#D1D1D1] text-lg pt-10">
+            Order ID
+            <span className="text-white block">12345356765245</span>
+          </p>
+
+          <p className="text-[#D1D1D1] text-sm pt-10">Deliverd on 17th</p>
+        </div>
+      </div>
     </div>
   )
 }

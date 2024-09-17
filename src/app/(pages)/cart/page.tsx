@@ -12,6 +12,7 @@ import { Hero } from '../../_components/Hero'
 import { Message } from '../../_components/Message'
 import { generateMeta } from '../../_utilities/generateMeta'
 import { CartPage } from './CartPage'
+import { HideFooter } from '../../_components/HideFooter'
 
 import classes from './index.module.scss'
 
@@ -57,11 +58,9 @@ export default async function Cart() {
   }
 
   return (
-    <div className={classes.container}>
-      <Gutter>
-        <CartPage settings={settings} page={page} />
-      </Gutter>
-      <Blocks blocks={page?.layout} disableBottomPadding />
+    <div className="w-full md:px-16 lg:px-56 h-screen  bg-[url('/media/cart-mob.jpg')] md:bg-[url('/media/cart2.png')] bg-no-repeat bg-cover overflow-x-hidden">
+      <CartPage settings={settings} page={page} />
+      <HideFooter />
     </div>
   )
 }
