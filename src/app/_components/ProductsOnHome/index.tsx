@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import React, { useRef } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { Gutter } from '../Gutter'
-import classes from './index.module.scss'
-import { CollectionArchive } from '../CollectionArchive'
-import { Syne } from 'next/font/google'
+import React, { useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { Gutter } from '../Gutter';
+import classes from './index.module.scss';
+import { CollectionArchive } from '../CollectionArchive';
+import { Syne } from 'next/font/google';
 
-const syne = Syne({ subsets: ['latin'], weight: ['800'] })
+const syne = Syne({ subsets: ['latin'], weight: ['800'] });
 
 const ProductsOnHome = () => {
-  const titleRef = useRef(null)
-  const isTitleInView = useInView(titleRef, { triggerOnce: false, threshold: 0.5 })
+  const titleRef = useRef(null);
+  const isTitleInView = useInView(titleRef, { triggerOnce: false, threshold: 0.5 });
 
   const titleVariants = {
     hidden: {
@@ -26,19 +26,23 @@ const ProductsOnHome = () => {
         ease: 'easeOut',
       },
     },
-  }
+  };
+
+  // Replace with the actual ID of the "Plain T-Shirts" category from your Payload CMS.
+  const plainTShirtsCategoryId = 'your-plain-t-shirts-category-id';
+
   return (
     <div className="relative pt-16 md:pt-24 md:pb-20">
       <Gutter className={classes.productCards}>
         <h2
-          className={`${syne.className} text-white mb-10 md:mb-0 md:-rotate-90 md:text-4xl md:top-52 md:absolute md:-left-10 text-3xl font-extrabold`}
+          className={`${syne.className} text-white mb-10 hidden sm:block lg:block md:block md:mb-0 -rotate-90 md:text-4xl md:top-48 md:absolute md:-left-10 text-3xl font-extrabold`}
         >
-          Plain T-Shirts
+          Polo T-Shirts
         </h2>
         <CollectionArchive
           relationTo="products"
           showPageRange={false}
-          limit={7} // Adjust this number as needed
+          // Pass the category ID to filter products
         />
         <img
           src="/media/MOMIFA.png"
@@ -47,7 +51,7 @@ const ProductsOnHome = () => {
         />
       </Gutter>
     </div>
-  )
-}
+  );
+};
 
-export default ProductsOnHome
+export default ProductsOnHome;

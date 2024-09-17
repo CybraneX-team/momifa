@@ -1,5 +1,4 @@
 @use '../../_css/common.scss' as *;
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
 
 .productHero {
   display: grid;
@@ -18,93 +17,122 @@
 }
 
 .btns {
-  margin-top: 5em;
+  margin-top: 2em;
+  // margin-right: 4em;
 }
 
 .mainn {
   border: 1px solid #5F5F5F;
   border-radius: 38px;
-  margin: 7em -3em;
-  width: 66em;
-  display: inline-flex;
-  
+  margin: 5em -6em;
+  height: 42em;
+  width: 73em;
+  display: flex;
   @include small-break {
-    display: inline-flex;
-    flex-direction: column; 
-    width: 100%;
-    margin: 4em 0;
-    padding: 1em;
+    border: none;
+    flex-direction: column;
+    width: 22em;
+    height: 52em;
+    margin: 11em 2em;
+  }
+}
+.vig {
+  position: relative;
+  margin: 6em 2em;
+  width: 56em;
+  border-radius: 36px;
+  height: 35em;
+  overflow: hidden;
+  box-shadow: inset 0 0 26px rgba(0, 0, 0, 1), 
+  inset 0 0 70px rgba(0, 0, 0, 1), 
+  inset 0 0 50px rgba(0, 0, 0, 1);
+  @include small-break {
+   width: 68em;
+        position: static;
+        display: flex;
+        justify-self: center;
+        margin: -5em -1.5em;
   }
 }
 
 .image {
-  border-radius: 33px;
+  border-radius: 2em;
   position: relative;
-  box-shadow: 10px 10px 20px black;
-  height: 29em;
-  z-index: 10;
-  margin: 2em 2em;
-
+  z-index: -10;
+  width: 40em;
+  height: 35em;
   @include small-break {
-    height: 18em;
-    width: auto;
-    left: 2em;
-    top: 0;
-  }
-}
-
-.mediaWrapper {
-  position: relative;
-  width: 23em;
-  box-shadow: -37px -36px 50.1px 0px #0000006B inset, 30px 47px 62px 0px #0000006B inset;
-  height: 36em;
-  z-index: 5;
-
-  @include small-break {
-    width: 100%;
-    height: auto;
-    margin: 1rem 0;
-    box-shadow: none;
+    height: 25em;
+    width: 25em;
+    position: absolute;
+    // left: 0.4em;
+    // top: 0;
   }
 }
 
 .productTitle {
   font-family: "Syne", sans-serif !important;
-  font-size: 22px;
+  font-size: 25px;
   font-weight: 400;
   text-align: left;
   color: #FFFFFF;
-  margin-top: 4em;
-
+  margin-top: 4.3em;
   @include small-break {
-    text-align: center;
-    font-size: 18px;
+    text-align: left;
+    font-size: 21px;
+    margin: 0rem 1em;
+    padding: 8px;
   }
 }
-
+.dText{
+  color: #fff;
+  @include small-break {
+    color: #fff;
+    margin: 5px 27px;
+  }
+}
 .description {
   font-family: "Syne", sans-serif !important;
-  color: white;
-  font-size: 13px;
-  margin-right: 1.5em;
-
+    color: white;
+    font-size: 17px;
+    margin-right: 1.5em;
   @include small-break {
-    margin: 1em;
-    text-align: center;
+    margin: 5px 1.8em;
+    width: 90%;
+    text-align: left;
+    font-size: 14px;
   }
 }
 
 .detailsDiv {
-  margin-left: 7em;
-  width: 40em;
-
+  width: 42em;
   @include small-break {
-    margin: 0;
+    margin: 32em 0em;
     width: 100%;
-    text-align: center;
   }
 }
-
+.responsivee{
+  @include small-break{
+    text-align: left;
+    background: #1F1F1F;
+    width: 26em;
+    position: relative;
+    padding: 1em 1em;
+    right: 2em;
+    border-radius: 20px;
+  }
+}
+.responsivee2{
+  @include small-break{
+    text-align: left;
+    background: #1F1F1F;
+    width: 26em;
+    position: relative;
+    padding: 1em 1em;
+    right: 2em;
+    border-radius: 20px;
+  }
+}
 .title {
   animation: slideInFromRight 700ms ease-out;
   color: white;
@@ -121,30 +149,84 @@
   }
 }
 
-.wishlistButton, .addToCartButton {
+
+.wishlistButton {
   display: inline-block;
   padding: 12px 20px;
   width: 15em;
   font-size: 14px;
   color: white;
-  margin: 1em;
+  margin: 0em 2em 0em 0em;
   background-color: #262626;
   border-radius: 28px;
   font-family: "Syne", sans-serif !important;
   border: none;
   cursor: pointer;
-  transition: opacity 100ms linear;
-  position: relative; /* Position relative for the gradient border */
-  overflow: hidden; /* Hide overflow for gradient effect */
+  transition: transform 1s ease, background-color 0.3s, opacity 100ms linear;
+  position: relative;
+  overflow: hidden;
   z-index: 1;
-
   @include small-break {
-    width: 70%;
-    margin: 0.7em 0;
+    width: 27.5em;
+    right: 2em;
+    top: 0.5em;
+    margin: 0px 0em;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: #3d3d3d;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(92.87deg, #4FEAFF -12.13%, #FF6CF8 83.24%, #FF2D5F 111.86%);
+    z-index: -1;
+    border-radius: 28px;
+    padding: 3px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    transition: all 0.3s ease;
+  }
+ 
+}
+
+.wishlistButton span {
+  display: inline-block; /* Ensures the span acts like an inline-block for animations */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0; /* Initially hidden for the fade-in effect */
+  transform: translateY(20px); /* Start position for the slide-in effect */
+  animation: textFadeIn 0.3s forwards; /* Apply animation to the text */
+}
+
+// Define animation keyframes for the text fade-in and slide-in
+@keyframes textFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.wishlistButton::before, .addToCartButton::before {
+// Apply animations for different states with delay for smoother transitions
+.wishlistButton.added span {
+  animation: textFadeIn 0.3s forwards; /* Slide down animation */
+}
+
+.wishlistButton.not-added span {
+  animation: textFadeIn 0.3s forwards; /* Slide up animation */
+}
+
+
+.wishlistButton::before {
   content: ''; 
   position: absolute;
   top: -2px;
@@ -211,5 +293,122 @@
     flex-direction: column;
     align-items: center;
     align-self: center;
+  }
+}
+.addToCartButton {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  width: 20em;
+  margin: 0px 1em;
+  font-size: 10px;
+  color: #FFFFFF;
+  text-transform: none;
+  bottom: 0em;
+  background-color: #262626 !important;
+  text-align: center;
+  border-radius: 28px;
+  font-family: "Syne", sans-serif !important;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.7s ease, background-color 0.3s, opacity 100ms linear; /* Smooth transition for scaling */
+  &:hover {
+    transform: scale(1.05); 
+    background-color: #3d3d3d;
+  }
+  @include small-break{
+  width: 38.5em;
+  right: 3em;
+  margin: 0px 0em;
+  }
+}
+
+
+.addToCartButton::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(92.87deg, #4FEAFF -12.13%, #FF6CF8 83.24%, #FF2D5F 111.86%);
+  z-index: -1;
+  border-radius: inherit;
+  padding: 3px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  // transition: transform 1s ease, opacity 0.3s ease;
+}
+
+/* Style for the text span inside the button */
+.addToCartButton span {
+  display: inline-block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animation triggered on click */
+.animate span {
+  animation: textSlideUp 0.3s forwards; /* Slide up animation */
+}
+
+@keyframes textSlideUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px); /* Slide text up */
+  }
+}
+
+/* Slide down animation to return to original state */
+.addToCartButton span.reset {
+  animation: textSlideDown 0.3s forwards; /* Slide down animation */
+}
+
+@keyframes textSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); /* Starting position */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Return to original position */
+  }
+}
+.quan{
+  // display: block;
+  display: block;
+  @include small-break{
+    display: flex;
+    background: #1F1F1F;
+    /* text-align: center; */
+    width: 26em;
+    margin-top: 1em;
+    position: relative;
+    /* margin-right: 1em; */
+    height: 4em;
+    border-radius: 20px;
+    right: 2em;
+    flex-direction: row; 
+  }
+}
+.quan2{
+  @include small-break{
+    display: flex;
+  }
+}
+.quan h4{
+  @include small-break{
+    margin-top: 1em !important;
+    font-size: 20px;
+    margin: 0 15px;
   }
 }

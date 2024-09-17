@@ -12,6 +12,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   const itemRef = useRef(null);
   const isItemInView = useInView(itemRef, { triggerOnce: false, threshold: 0.5 });
+  
 
   return (
     <motion.div 
@@ -61,19 +62,15 @@ const FAQ: React.FC = () => {
 
   const faqData = [
     {
-      question: "WHY CHOOSE MOMIFA?",
-      answer: "Choose MOMIFA for its premium quality clothing that combines trendsetting designs with timeless style, crafted from the finest materials for durability and comfort. We are committed to sustainable fashion, using eco-friendly practices and ethical manufacturing. With versatile collections that cater to all aspects of your lifestyle, MOMIFA ensures you look and feel your best while making a positive impact on the environment."
-    },
-    {
-      question: "What is the return policy for MOMIFA?",
+      question: "MOMIFA  Fair Return  Policy",
       answer: "We want you to be completely satisfied with your purchase. If for any reason you're not, we offer a 30-day return policy. Items must be unworn, unwashed, and in their original condition with tags attached. Please refer to our returns page for more details."
     },
     {
-      question: "How can I track my order?",
+      question: "Tracking Your Orders",
       answer: "Once your order has been dispatched, you'll receive a tracking number via email. You can use this number to track your order on our website or the carrier's website."
     },
     {
-      question: "How can I find the right size?",
+      question: "Finding Right Size",
       answer: "We provide a detailed size guide on each product page to help you find the perfect fit. If you're unsure, our customer service team is always available to assist you with any sizing questions."
     },
   ];
@@ -104,6 +101,10 @@ const FAQ: React.FC = () => {
         >
           Frequently Asked Questions
         </motion.h2>
+      </div>
+      <div className={styles.WhyMomifaBox} >
+        <h1 className={styles.mTXT}>Why MOMIFA </h1>
+        <p className={styles.whytext} >Choose MOMIFA for its premium quality clothing that combines trendsetting designs with timeless style, crafted from the finest materials for durability and comfort. We are committed to sustainable fashion, using eco-friendly practices and ethical manufacturing. With versatile collections that cater to all aspects of your lifestyle, MOMIFA ensures you look and feel your best while making a positive impact on the environment.</p>
       </div>
       {faqData.map((item, index) => (
         <FAQItem key={index} question={item.question} answer={item.answer} />

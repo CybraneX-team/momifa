@@ -21,6 +21,7 @@ export interface Config {
     categories: Category;
     users: User;
     redirects: Redirect;
+    feedbacks: Feedback;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -29,6 +30,15 @@ export interface Config {
     header: Header;
     footer: Footer;
   };
+}
+export interface Feedback {
+  id: string; 
+  user: User | string; 
+  product: Product | string; 
+  rating: number; 
+  review: string; 
+  createdAt: string; 
+  updatedAt: string; 
 }
 export interface Page {
   id: string;

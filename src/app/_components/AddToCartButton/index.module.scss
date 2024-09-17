@@ -1,49 +1,85 @@
 .addToCartButton {
-  position: relative; 
+  position: relative;
   display: inline-block;
-  padding: 12px 20px; 
-  text-align: center !important;
-  width: 15em;
-  font-size: 14px;
-  color:  #FFFFFF;
+  padding: 12px 20px;
+  width: 20em;
+  font-size: 10px;
+  color: #FFFFFF;
   text-transform: none;
-  background-color: #262626 !important; 
-  border-radius: 28px; 
+  bottom: 0em;
+  background-color: #262626 !important;
+  text-align: center;
+  border-radius: 28px;
   font-family: "Syne", sans-serif !important;
-  overflow: hidden; 
-  z-index: 1; 
-  border: none; 
-  cursor: pointer; 
-  transition: opacity 100ms linear;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  cursor: pointer;
+  // transition: transform 1s ease, background-color 0.3s, opacity 100ms linear;
+  transition: transform 1s ease, background-color 0.3s, opacity 100ms linear; /* Smooth transition for scaling */
+
+  /* Scale effect on hover */
+  &:hover {
+    transform: scale(1.05); /* Slight scale-up on hover */
+    background-color: #3d3d3d;
+  }
 }
 
+
 .addToCartButton::before {
-  content: ''; 
+  content: '';
   position: absolute;
   top: -2px;
   left: -2px;
-  font-family: "Syne", sans-serif !important;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(92.87deg, #4FEAFF -12.13%, #FF6CF8 83.24%, #FF2D5F 111.86%); 
-  z-index: -1; 
-  border-radius: inherit; 
-  padding: 3px; 
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0); 
-  mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out; 
-  mask-composite: exclude; 
+  background: linear-gradient(92.87deg, #4FEAFF -12.13%, #FF6CF8 83.24%, #FF2D5F 111.86%);
+  z-index: -1;
+  border-radius: inherit;
+  padding: 3px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  // transition: transform 1s ease, opacity 0.3s ease;
 }
 
-.green {
-  color: var(--theme-success-700);
+/* Style for the text span inside the button */
+.addToCartButton span {
+  display: inline-block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.hidden {
-  visibility: hidden;
-  opacity: 0;
+/* Animation triggered on click */
+.animate span {
+  animation: textSlideUp 0.3s forwards; /* Slide up animation */
+}
+
+@keyframes textSlideUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px); /* Slide text up */
+  }
+}
+
+/* Slide down animation to return to original state */
+.addToCartButton span.reset {
+  animation: textSlideDown 0.3s forwards; /* Slide down animation */
+}
+
+@keyframes textSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); /* Starting position */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Return to original position */
+  }
 }

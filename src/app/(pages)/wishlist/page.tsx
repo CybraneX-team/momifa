@@ -71,7 +71,7 @@ const Wishlist = () => {
         <img
           src="/media/MOMIFA.png"
           alt=""
-          className="hidden md:block absolute right-24 w-14 mt-16"
+          className="hidden md:block -z-10 absolute right-24  w-12 "
         />
       </Gutter>
     </div>

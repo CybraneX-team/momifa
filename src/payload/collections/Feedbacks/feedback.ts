@@ -4,11 +4,11 @@ import { checkRole } from '../Users/checkRole'
 const Feedback: CollectionConfig = {
   slug: 'feedback',
   access: {
-    read: anyone ,
+    read: anyone,
     create: anyone,
     update: anyone,
     delete: anyone,
-    admin: ({ req: { user } }) => checkRole(['admin'], user),
+    // admin: ({ req: { user } }) => checkRole(['admin'], user),
   },
   fields: [
     {

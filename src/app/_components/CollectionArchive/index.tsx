@@ -11,6 +11,7 @@ import { PageRange } from '../PageRange'
 import { Pagination } from '../Pagination'
 
 import classes from './index.module.scss'
+import { usePathname } from 'next/navigation'
 
 type Result = {
   totalDocs: number
@@ -37,7 +38,7 @@ export type Props = {
 
 export const CollectionArchive: React.FC<Props> = props => {
   const { categoryFilters, sort } = useFilter()
-
+  const pathname = usePathname()
   const {
     className,
     relationTo,
@@ -89,8 +90,22 @@ export const CollectionArchive: React.FC<Props> = props => {
         setIsLoading(true)
       }
     }, 500)
-
-    const searchQuery = qs.stringify(
+    let searchQuery 
+    {pathname === "/" ?   searchQuery = qs.stringify(
+      {
+        sort,
+        where: {
+          categories: {
+            equals: ["66d84c39de430483fc1cb4c1"],
+          },
+        },
+        limit,
+        page,
+        depth: 1,
+      },
+      { encode: false }
+    ) : 
+     searchQuery = qs.stringify(
       {
         sort,
         where: {
@@ -109,8 +124,10 @@ export const CollectionArchive: React.FC<Props> = props => {
         page,
         depth: 1,
       },
-      { encode: false },
-    )
+      { encode: false }
+    );
+  }
+    
 
     const makeRequest = async () => {
       try {

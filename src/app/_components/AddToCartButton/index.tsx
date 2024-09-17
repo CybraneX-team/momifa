@@ -20,39 +20,50 @@ export const AddToCartButton: React.FC<{
   const { cart, addItemToCart, isProductInCart, hasInitializedCart } = useCart()
 
   const [isInCart, setIsInCart] = useState<boolean>()
+  const [animate, setAnimate] = useState<boolean>(false) // State for animation
+  const [reset, setReset] = useState<boolean>(false) // State for reset animation
   const router = useRouter()
 
   useEffect(() => {
     setIsInCart(isProductInCart(product))
   }, [isProductInCart, product, cart])
 
+  const handleClick = () => {
+    if (!isInCart) {
+      addItemToCart({
+        product,
+        quantity,
+      })
+
+      setAnimate(true) 
+      setTimeout(() => {
+        setAnimate(false) 
+        setReset(true) 
+        setTimeout(() => setReset(false), 300) 
+      }, 300)
+
+      router.push('/cart')
+    }
+  }
+
   return (
     <Button
       href={isInCart ? '/cart' : undefined}
       type={!isInCart ? 'button' : undefined}
-      label={isInCart ? `✓ View in cart` : `Add to cart`}
-      el={isInCart ? 'link' : undefined}
+      label={isInCart ? `View in cart ✓` : `Add to cart`}
+      el={isInCart ? 'button' : undefined}
       appearance={appearance}
       className={[
         className,
         classes.addToCartButton,
         appearance === 'default' && isInCart && classes.green,
         !hasInitializedCart && classes.hidden,
+        animate && classes.animate, // Apply slide-up animation class
+        reset && classes.reset, // Apply slide-down animation class
       ]
         .filter(Boolean)
         .join(' ')}
-      onClick={
-        !isInCart
-          ? () => {
-              addItemToCart({
-                product,
-                quantity,
-              })
-
-              router.push('/cart')
-            }
-          : undefined
-      }
+      onClick={!isInCart ? handleClick : undefined}
     />
   )
 }

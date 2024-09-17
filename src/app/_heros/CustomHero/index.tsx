@@ -55,14 +55,17 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
             height={1080}
             width={1920}
             /> */}
-            <Link href={"/wishlist"}>
-             <Image 
-              src="/media/heartIcon.png"
-              alt='MOMIFA'
-              height={0}
-               width={0}
-               className={classes.heartIcon}
-            />
+            <Link href={"/wishlist"} >
+            <Image src="/media/heart.png" 
+            alt='wishlistIcon'
+             height={40}
+             width={40}
+             style={{position: "absolute", left: "80em", top: "2em"}} 
+              />
+            {/* <button className={classes.button}  style={{width: "4.7em", position: "relative" , left: "90%", top: "1em"}} >
+              <svg height="25" width="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0H24V24H0z" fill="none"></path><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z"></path></svg>
+            </button> */}
             </Link>
              <Image 
               src="/media/phood.png"
