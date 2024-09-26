@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import React, { useRef } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { Gutter } from '../Gutter';
-import classes from './index.module.scss';
-import { CollectionArchive } from '../CollectionArchive';
-import { Syne } from 'next/font/google';
+import React, { useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { Gutter } from '../Gutter'
+import classes from './index.module.scss'
+import { CollectionArchive } from '../CollectionArchive'
+import { Syne } from 'next/font/google'
 
-const syne = Syne({ subsets: ['latin'], weight: ['800'] });
+const syne = Syne({ subsets: ['latin'], weight: ['800'] })
 
 const ProductsOnHome = () => {
-  const titleRef = useRef(null);
-  const isTitleInView = useInView(titleRef, { triggerOnce: false, threshold: 0.5 });
+  const titleRef = useRef(null)
+  const isTitleInView = useInView(titleRef, { triggerOnce: false, threshold: 0.5 })
 
   const titleVariants = {
     hidden: {
@@ -26,10 +26,10 @@ const ProductsOnHome = () => {
         ease: 'easeOut',
       },
     },
-  };
+  }
 
   // Replace with the actual ID of the "Plain T-Shirts" category from your Payload CMS.
-  const plainTShirtsCategoryId = 'your-plain-t-shirts-category-id';
+  const plainTShirtsCategoryId = 'your-plain-t-shirts-category-id'
 
   return (
     <div className="relative pt-16 md:pt-24 md:pb-20">
@@ -39,19 +39,21 @@ const ProductsOnHome = () => {
         >
           Polo T-Shirts
         </h2>
-        <CollectionArchive
-          relationTo="products"
-          showPageRange={false}
-          // Pass the category ID to filter products
-        />
+        <div className="-pr-20">
+          <CollectionArchive
+            relationTo="products"
+            showPageRange={false}
+            // Pass the category ID to filter products
+          />
+        </div>
         <img
           src="/media/MOMIFA.png"
           alt=""
-          className="hidden md:block absolute right-24 w-16 -mt-[560px]"
+          className="hidden md:block absolute md:right-24 md:w-16 md:-mt-[560px]"
         />
       </Gutter>
     </div>
-  );
-};
+  )
+}
 
-export default ProductsOnHome;
+export default ProductsOnHome

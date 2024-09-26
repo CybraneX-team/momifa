@@ -20,14 +20,14 @@ const priceFromJSON = (priceJSON): string => {
       console.log('Parsed data:', parsed) // Log the parsed data
       const priceValue = parsed.unit_amount
       const priceType = parsed.type
-      price = `${parsed.currency === 'usd' ? '$' : ''}${(priceValue / 100).toFixed(2)}`
-      if (priceType === 'recurring') {
-        price += `/${
-          parsed.recurring.interval_count > 1
-            ? `${parsed.recurring.interval_count} ${parsed.recurring.interval}`
-            : parsed.recurring.interval
-        }`
-      }
+      price = `${parsed.currency === 'usd' ? '$' : ''}${Math.floor(priceValue / 100)}`
+      // if (priceType === 'recurring') {
+      //   price += `/${
+      //     parsed.recurring.interval_count > 1
+      //       ? `${parsed.recurring.interval_count} ${parsed.recurring.interval}`
+      //       : parsed.recurring.interval
+      //   }`
+      // }
     } catch (e) {
       console.error(`Cannot parse priceJSON`) // eslint-disable-line no-console
     }
@@ -79,11 +79,11 @@ export const Card: React.FC<{
             <div className={classes.vignette}>
               <div className={classes.titleRow}>
                 <div className={classes.titleOverlay}>
-                  <h4 className={classes.title}>25$</h4>
+                  <h4 className={classes.title}>{price}</h4>
                 </div>
 
                 <div className={classes.titleOverlayP}>
-                  <h4 className={classes.title}>Cherry Red</h4>
+                  <h4 className={classes.title}>{title}</h4>
                 </div>
 
                 <div className={classes.titleOverlayG}>

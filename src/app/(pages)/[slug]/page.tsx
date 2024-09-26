@@ -110,7 +110,9 @@ export default async function Page({ params: { slug = 'home' } }) {
           <div className={classes.horizontalScrollWrapper}>
             <HorizontalScroll />
           </div>
-          <ProductShowCase />
+          <div className="">
+            <ProductShowCase />
+          </div>
           <ProductsOnHome />
           <Feedback />
           <div className={classes.faq}>

@@ -95,39 +95,44 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           <div className="md:w-1/3 space-y-8 ">
-            <div className="bg-[#181818] border border-[#404040] md:bg-transparent rounded-xl p-6">
-              <h4 className="text-2xl font-medium mb-4">Your Cart</h4>
-              <ul className="space-y-2">
-                {items.length > 0 ? (
-                  items.map((item, index) => (
-                    <li key={index} className="flex justify-between">
-                      <span className="text-[#B7B7B7] text-sm">{item?.product?.title}</span>
+            <Link href={'/cart'}>
+              <div className="bg-[#181818] border border-[#404040] md:bg-transparent rounded-xl p-6">
+                <h4 className="text-2xl font-medium mb-4 text-white">Your Cart</h4>
+                <ul className="space-y-2">
+                  {items.length > 0 ? (
+                    items.map((item, index) => (
+                      <li key={index} className="flex justify-between">
+                        <span className="text-[#B7B7B7] text-sm">{item?.product?.title}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <p>Your cart is empty.</p>
+                  )}
+                </ul>
+                <Link
+                  href={user ? '/checkout' : '/login?redirect=%2Fcheckout'}
+                  className="flex md:hidden justify-end"
+                >
+                  <button className="w-fit px-5 bg-gradient-to-r from-blue-400 to-purple-500 text-white py-2 rounded mt-8">
+                    Checkout
+                  </button>
+                </Link>
+              </div>
+            </Link>
+
+            <Link href={'/wishlist'}>
+              <div className="bg-[#181818] border border-[#404040] md:bg-transparent rounded-xl p-6 mt-10">
+                <h4 className="text-2xl font-medium mb-4 text-white">Wishlist ❤️</h4>
+                <ul className="space-y-2">
+                  {wishlistItems.map((item, index) => (
+                    <li key={index} className="flex justify-between text-[#B7B7B7] text-sm">
+                      <span>{item}</span>
+                      <span>$199</span>
                     </li>
-                  ))
-                ) : (
-                  <p>Your cart is empty.</p>
-                )}
-              </ul>
-              <Link
-                href={user ? '/checkout' : '/login?redirect=%2Fcheckout'}
-                className="flex md:hidden justify-end"
-              >
-                <button className="w-fit px-5 bg-gradient-to-r from-blue-400 to-purple-500 text-white py-2 rounded mt-8">
-                  Checkout
-                </button>
-              </Link>
-            </div>
-            <div className="bg-[#181818] border border-[#404040] md:bg-transparent rounded-xl p-6">
-              <h4 className="text-2xl font-medium mb-4">Wishlist ❤️</h4>
-              <ul className="space-y-2">
-                {wishlistItems.map((item, index) => (
-                  <li key={index} className="flex justify-between text-[#B7B7B7] text-sm">
-                    <span>{item}</span>
-                    <span>$199</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                  ))}
+                </ul>
+              </div>
+            </Link>
             <div className="bg-transparent rounded-xl p-6">
               <h4 className="text-2xl font-medium mb-4">Saved Information</h4>
               <p className="text-[#B7B7B7]">Address : Lalbagh, north bangalore, 560027</p>

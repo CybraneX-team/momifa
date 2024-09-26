@@ -1,6 +1,10 @@
 .productCards{
     margin-bottom: 100px;
     width: 90%;
+
+    @media (max-width: 650px){
+      width: 100%;
+    }
   }
 
   .faqTitle {

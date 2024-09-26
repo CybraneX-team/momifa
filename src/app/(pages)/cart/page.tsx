@@ -58,7 +58,7 @@ export default async function Cart() {
   }
 
   return (
-    <div className="w-full md:px-16 lg:px-56 h-screen  bg-[url('/media/cart-mob.jpg')] md:bg-[url('/media/cart2.png')] bg-no-repeat bg-cover overflow-x-hidden">
+    <div className="w-full md:px-16 lg:px-20 lg:py-10 xl:px-48 xl:py-0 h-screen  bg-[url('/media/cart-mob.jpg')] md:bg-[url('/media/cart2.png')] bg-no-repeat bg-cover overflow-x-hidden">
       <CartPage settings={settings} page={page} />
       <HideFooter />
     </div>

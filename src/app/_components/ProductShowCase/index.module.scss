@@ -4,8 +4,13 @@
     align-items: center;
     background: linear-gradient(to left, transparent 50%, var(--bg-color) 50%);
     padding: 20px;
-    min-height: 100vh;
+    min-height: 107vh;
     position: relative;
+
+    @media (max-width: 650px){
+      padding-top: -10rem;
+      min-height: 0;
+    }
   }
   
   .variantPreview {
@@ -44,7 +49,7 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    margin-top: 550px;
+    margin-top: 650px;
 
     &::after {
         content: attr(data-content);
@@ -53,6 +58,13 @@
         z-index: 10;
         -webkit-text-stroke: 2px white;
         color: transparent;
+      }
+
+      @media (max-width: 650px){
+    font-size: 60px;
+    margin-top: 500px;
+
+       
       }
   }
 
@@ -64,7 +76,12 @@
   
   .imageContainer {
     position: relative;
-    margin-top: 100px;
+    margin-top: 200px;
+
+    @media (max-width: 650px){
+      margin-top: 100px;
+      margin-bottom: -4px;
+    }
   } 
   
   .productImage {
@@ -81,13 +98,17 @@
     margin-right: 350px;
     flex-direction: column;
     align-items: flex-end;
+
+    @media (max-width: 650px){
+      margin-top: 0px;
+    }
 }
 
 .poloImage {
   max-width: 170% !important; // Increase size by 20%
   height: auto;
   transform: translateX(-16.67%); 
-  transform: translateX(-10%); // Center the enlarged image
+  // transform: translateX(-10%); // Center the enlarged image
 }
 
 .colorText p {
@@ -114,10 +135,16 @@
   
   .colorDots {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 3px;
+    right: -5rem;
     display: flex;
+    flex-direction: column;
     gap: 15px;
+
+    @media (max-width: 650px){
+      top: -5rem;
+      right: 10px;
+    }
   }
   
   .colorDot {
@@ -143,6 +170,11 @@
         border-radius: 50%;
         animation: pulse 1.5s infinite;
       }
+    }
+
+    @media (max-width: 650px){
+      width: 15px;
+      height: 15px;
     }
   }
   
