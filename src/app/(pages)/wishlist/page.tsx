@@ -49,7 +49,7 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="relative pt-16 md:pt-32 px-5 md:px-0">
+    <div className="relative pt-16 md:pt-32 px-5 md:px-0 ">
       <Gutter className={classes.productCards}>
         <h2
           className={`${syne.className} text-white mt-10 md:mb-0 md:-rotate-90 md:text-4xl md:top-52 md:mt-20 md:absolute md:-left-10 text-3xl font-extrabold`}

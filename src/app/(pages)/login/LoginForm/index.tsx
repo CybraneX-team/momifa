@@ -148,17 +148,17 @@ const LoginForm: React.FC = () => {
   )
 
   return (
-    <div className="flex w-screen overflow-hidden -mr-10">
+    <div className="flex w-screen overflow-hidden -mr-10 ">
       {/* Left Section Form */}
       <motion.div
-        className="bg-transparent h-screen text-white w-full p-10"
+        className="bg-transparent h-screen text-white w-full p-10 "
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
         <Link href="/">
           <motion.svg
-            className="w-40"
+            className="max-w-36"
             xmlns="http://www.w3.org/2000/svg"
             id="Layer_1"
             data-name="Layer 1"
@@ -199,7 +199,7 @@ const LoginForm: React.FC = () => {
         </Link>
 
         <motion.div
-          className="flex flex-col justify-center p-10 md:px-24 mt-6"
+          className="flex flex-col justify-center p-10 md:px-24 mt-3"
           variants={containerVariants}
         >
           <motion.h2 className="text-white text-3xl" variants={itemVariants}>
@@ -321,8 +321,8 @@ const LoginForm: React.FC = () => {
         >
           <motion.img
             variants={itemVariants}
-            src="/media/Login.jpg"
-            className="  lg:h-full max-h-1/2 absolute bottom-0 pt-12 hover:scale-105 duration-300 transition"
+            src="/media/loginImg.png"
+            className="  lg:h-[90%] max-h-1/2 absolute bottom-0 pt-12 hover:scale-105 duration-300 transition"
             alt="Login illustration"
           />
         </motion.div>

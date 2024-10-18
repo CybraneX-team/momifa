@@ -72,6 +72,10 @@ export const Card: React.FC<{
   return (
     <Link href={href} className={[classes.card, className].filter(Boolean).join(' ')}>
       <div className={classes.mediaWrapper}>
+        <div className={classes.discountWrapper}>
+          <div className={classes.discountBadge}>-22%</div>
+          <div className={classes.strikethroughPrice}>$40.00</div>
+        </div>
         {!metaImage && <div className={classes.placeholder}>No image</div>}
         {metaImage && typeof metaImage !== 'string' && (
           <div className={classes.imageContainer}>

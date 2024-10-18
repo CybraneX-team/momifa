@@ -32,10 +32,10 @@ const ProductsOnHome = () => {
   const plainTShirtsCategoryId = 'your-plain-t-shirts-category-id'
 
   return (
-    <div className="relative pt-16 md:pt-24 md:pb-20">
+    <div className="relative pt-16 md:pt-24 pb-1 md:pb-10  bg-[url('/media/cart-mob.jpg')] md:bg-[url('/media/cart2.png')] bg-no-repeat bg-cover">
       <Gutter className={classes.productCards}>
         <h2
-          className={`${syne.className} text-white mb-10 hidden sm:block lg:block md:block md:mb-0 -rotate-90 md:text-4xl md:top-48 md:absolute md:-left-10 text-3xl font-extrabold`}
+          className={` text-white mb-10 sm:mx-auto sm:block lg:block md:block md:mb-0 md:-rotate-90 md:text-5xl md:top-48 md:absolute md:-left-5 text-3xl font-bold`}
         >
           Polo T-Shirts
         </h2>

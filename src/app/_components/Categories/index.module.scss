@@ -11,25 +11,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 600;
 
   h3 {
-    font-weight: 400;
+    font-weight: 500;
   }
 }
 
 .list {
-  display: grid;
-  gap: 30px;
-  padding: 0;
-  grid-template-columns: repeat(3, 1fr);
+  // display: grid;
+  // gap: 30px;
+  // padding: 0;
+  // grid-template-columns: repeat(3, 2fr);
 
-  @include small-break {
-    grid-template-columns: 1fr;
-  }
+  // @include small-break {
+  //   grid-template-columns: 1fr;
+  // }
 }
 
 .title {
-  font-size: 50px;
+  font-size: 40px;
   color: white;
 
   @media (max-width: 738px) {
