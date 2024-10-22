@@ -28,21 +28,32 @@
 }
 @media (max-width: 480px) {
   .fallingRectanglesWrapper{
-   margin-top:  -159px;
+   margin-top:  -1px;
+   height: 300px;
   }
 }
 // Add this new class
 .horizontalScrollWrapper {
   margin-bottom: 40px; // Add some bottom margin
+  
 
   @include mid-break {
     margin-bottom: 20px; // Reduce bottom margin for mobile devices
+  }
+  @media (max-width: 650px) {
+  
+  margin-left: 20px;
   }
 }
 
 
 .faq {
-  margin-top: 20px;
+
+  @media (max-width: 650px) {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+    margin-right: 30px;
+    }
 }
 
 .productCards{

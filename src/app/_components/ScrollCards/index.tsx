@@ -1,17 +1,17 @@
-'use client';
-import React, { useRef, useEffect, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Player } from '@lottiefiles/react-lottie-player';
-import styles from './ScrollCards.module.scss';
+'use client'
+import React, { useRef, useEffect, useState } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Player } from '@lottiefiles/react-lottie-player'
+import styles from './ScrollCards.module.scss'
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
 const services = [
   {
     title: 'Free Shipping',
     description: 'Free shipping for orders above $150',
-    lottie: '/lottie/free-shipping.json', 
+    lottie: '/lottie/free-shipping.json',
   },
   {
     title: 'Money Guarantee',
@@ -29,28 +29,28 @@ const services = [
     description: 'Pay with multiple credit cards',
     lottie: '/lottie/flexible-payment.json',
   },
-];
+]
 
-const backgroundColors = ['#80024c', '#dfa0f0', '#4e2b9b', '#01d9fa'];
-const textColors = ['#ffffff', '#000000'];
+const backgroundColors = ['#80024c', '#dfa0f0', '#4e2b9b', '#01d9fa']
+const textColors = ['#ffffff', '#000000']
 
 const HorizontalScroll = () => {
-  const sectionRef = useRef(null);
-  const triggerRef = useRef(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const sectionRef = useRef(null)
+  const triggerRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+      setIsMobile(window.innerWidth <= 768)
+    }
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
 
     return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
-  }, []);
+      window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
 
   useEffect(() => {
     if (!isMobile) {
@@ -77,18 +77,20 @@ const HorizontalScroll = () => {
               ease: 'power1.inOut',
             },
           },
-        }
-      );
+        },
+      )
       return () => {
-        pin.kill();
-      };
+        pin.kill()
+      }
     }
-  }, [isMobile]);
+  }, [isMobile])
 
   return (
     <section className={styles.scrollSectionOuter} ref={triggerRef}>
       <div ref={sectionRef} className={styles.scrollSectionInner}>
-        <div className={`${styles.scrollSection} ${styles.introSection}`}>
+        <div
+          className={`${styles.scrollSection} ${styles.introSection} text-center md:text-left -mb-10 md:-mb-0`}
+        >
           <h1>Why Choose Momifa?</h1>
         </div>
         {services.map((service, index) => (
@@ -99,10 +101,10 @@ const HorizontalScroll = () => {
                 style={{ backgroundColor: backgroundColors[index] }}
               >
                 <div className={styles.cardHeading}>
-                  <h2 style={{ color: textColors[index % textColors.length] }}>
-                    {service.title}
-                  </h2>
-                  <p style={{ color: textColors[index % textColors.length] }}>{service.description}</p>
+                  <h2 style={{ color: textColors[index % textColors.length] }}>{service.title}</h2>
+                  <p style={{ color: textColors[index % textColors.length] }}>
+                    {service.description}
+                  </p>
                 </div>
                 <div className={`${styles.lotties} ${styles[service.className]}`}>
                   <Player
@@ -118,7 +120,7 @@ const HorizontalScroll = () => {
         ))}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default HorizontalScroll;
+export default HorizontalScroll
