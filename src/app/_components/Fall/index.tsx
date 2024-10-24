@@ -110,7 +110,7 @@ const FloatingBox = () => {
         'Comfort Wear',
         'Soft Cotton',
         'Trendy Designs',
-        'Everyday Essentials',
+        'Essentials',
         'Wardrobe Staples!',
         'Luxury Polos!',
         'Signature Tees',
@@ -119,13 +119,17 @@ const FloatingBox = () => {
         'Modern Elegance',
         'Refined Casual',
         'Polished Look',
+        'Handmade',
+        'New Collections',
+        'Modern Style',
+        'Perfect Fit',
       ]
 
       if (isInView) {
         const isMobile = window.innerWidth <= 768
-        const rectangleCount = isMobile ? 8 : 16
-        const width = isMobile ? 130 : 150
-        const height = 60
+        const rectangleCount = isMobile ? 16 : 20
+        const width = isMobile ? 140 : 150
+        const height = isMobile ? 55 : 60
         const newRectangles = []
 
         for (let i = 0; i < rectangleCount; i++) {
@@ -155,6 +159,33 @@ const FloatingBox = () => {
         profileImage.src = '../../../media/peoples.png'
 
         Matter.Events.on(render, 'afterRender', () => {
+          // const ctx = render.context
+          // ctx.font = '16px Arial'
+          // ctx.textAlign = 'center'
+          // ctx.textBaseline = 'middle'
+
+          // newRectangles.forEach((rectangle, index) => {
+          //   const { x, y } = rectangle.position
+          //   const angle = rectangle.angle
+
+          //   ctx.save()
+          //   ctx.translate(x, y)
+          //   ctx.rotate(angle)
+
+          //   ctx.fillStyle = rectangle.render.fillStyle === '#8330C2' ? 'white' : 'black'
+          //   ctx.fillText(texts[index], 0, 0)
+          //   ctx.restore()
+          // })
+          // const textFontSize = window.innerWidth <= 768 ? '2rem' : '4rem'
+          // ctx.font = `${textFontSize} 'Sofia Sans Condensed', sans-serif`
+          // ctx.fillStyle = 'white'
+          // ctx.textAlign = 'center'
+          // ctx.textBaseline = 'top'
+          // const textX = canvasWidth / 2
+          // const textY = 20
+          // ctx.font = " 4rem 'Sofia Sans Condensed', sans-serif"
+          // ctx.fillText('Trusted by', textX, textY)
+          // ctx.fillText('10000+ Buyers', textX, textY + 70)
           const ctx = render.context
           ctx.font = '16px Arial'
           ctx.textAlign = 'center'
@@ -172,15 +203,23 @@ const FloatingBox = () => {
             ctx.fillText(texts[index], 0, 0)
             ctx.restore()
           })
-          ctx.font = '80px bolder josh'
+
+          // Improved mobile text handling
+          const isMobile = window.innerWidth <= 768
+          const textFontSize = isMobile ? '2rem' : '4rem'
+          const textY = isMobile ? 40 : 50 // text vertical position
+          const lineHeight = isMobile ? 60 : 70 // Adjust line height for mobile
+
+          ctx.font = `${textFontSize} 'Sofia Sans Condensed', sans-serif`
           ctx.fillStyle = 'white'
           ctx.textAlign = 'center'
           ctx.textBaseline = 'top'
-          const textX = canvasWidth / 2
-          const textY = 20
-          ctx.font = " 4rem 'Sofia Sans Condensed', sans-serif"
+
+          const textX = isMobile ? canvas.width / 2 : canvasWidth / 2
+
+          // Render the text
           ctx.fillText('Trusted by', textX, textY)
-          ctx.fillText('10000+ Buyers', textX, textY + 70)
+          ctx.fillText('10000+ Buyers', textX, textY + lineHeight)
         })
       }
 
