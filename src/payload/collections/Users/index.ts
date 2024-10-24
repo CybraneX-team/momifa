@@ -18,7 +18,7 @@ const Users: CollectionConfig = {
     defaultColumns: ['name', 'email'],
   },
   access: {
-    read: adminsAndUser,
+    read: anyone,
     create: anyone,
     update: adminsAndUser,
     delete: admins,

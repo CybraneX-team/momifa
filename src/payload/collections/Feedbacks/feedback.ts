@@ -8,7 +8,7 @@ const Feedback: CollectionConfig = {
     create: anyone,
     update: anyone,
     delete: anyone,
-    // admin: ({ req: { user } }) => checkRole(['admin'], user),
+    admin: ({ req: { user } }) => checkRole(['admin'], user),
   },
   fields: [
     {

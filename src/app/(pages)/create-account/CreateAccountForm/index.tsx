@@ -77,7 +77,7 @@ const CreateAccountForm: React.FC = () => {
         toast.error('There was an error creating the account.')
         return
       } else {
-        toast.success('Account created successfully!')
+        toast.success( `Account created, ${data.name}! Welcome aboard!`)
       }
 
       const redirect = searchParams.get('redirect')

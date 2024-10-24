@@ -116,24 +116,10 @@ const Products: CollectionConfig = {
               blocks: [CallToAction, Content, MediaBlock, Archive],
             },
             {
-              name: 'colors',
-              label: 'Colors',
-              type: 'array',
-              fields: [
-                {
-                  name: 'color',
-                  type: 'text',
-                },
-              ],
-              admin: {
-                condition: (data, siblingData) => {
-                  return (
-                    siblingData?.categories?.some(
-                      category => category === '66ca0e183b709b65bd7f7e53'
-                    ) ?? false
-                  );
-                },
-              },
+              name: 'color',
+              label: 'Color',
+              type: 'text',
+              required: true,
             },
             {
               name: 'images', // Updated to allow multiple images

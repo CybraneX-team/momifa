@@ -33,6 +33,7 @@ import dynamicM from 'next/dynamic'
 import Feedback from '../../_components/Feedbacks'
 import FAQ from '../../_components/FAQ'
 import ProductsOnHome from '../../_components/ProductsOnHome'
+import Head from 'next/head'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
@@ -96,6 +97,10 @@ export default async function Page({ params: { slug = 'home' } }) {
   return (
     <React.Fragment>
       {slug === 'home' ? (
+        <>
+        <Head>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       </Head>
         <section>
           <Hero {...hero} />
 
@@ -119,8 +124,12 @@ export default async function Page({ params: { slug = 'home' } }) {
             <FAQ />
           </div>
         </section>
+        </>
       ) : (
         <>
+        <Head>
+         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </Head>
           <Hero {...hero} />
           <Blocks
             blocks={layout}

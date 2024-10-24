@@ -134,8 +134,10 @@ const LoginForm: React.FC = () => {
   const onSubmit = useCallback(
     async (data: FormData) => {
       try {
-        await login(data)
-        toast.success('Logged in successfully!')
+        const dataa = await login(data)
+        if(dataa){
+          toast.success(`Welcome, ${dataa?.name}! Happy shopping`)
+        }
 
         if (redirect) router.push(redirect)
         else router.push('/')
@@ -281,7 +283,7 @@ const LoginForm: React.FC = () => {
                   Log in
                 </span>
               </motion.button>
-              <p className="text-gray-500 mt-3 font-medium text-lg text-center">
+              <p className="text-gray-500 mt-2 font-medium text-lg text-center">
                 Don't have an account?
                 <Link href="/create-account" className="underline ml-1 text-[#9777E9]">
                   Sign up

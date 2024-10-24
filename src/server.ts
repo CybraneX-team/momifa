@@ -39,7 +39,18 @@ const start = async (): Promise<void> => {
 
     return
   }
-
+  app.get('/api/images', async (req, res) => {
+    try {
+      const productId : string = req.query.productId
+      const products = await payload.findByID({id: productId, collection: "products"})
+      
+      const filteredProducts = products.images?.map(image=> image.image.url)
+      
+      res.json(filteredProducts)
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch products' })
+    }
+  })
   const nextApp = next({
     dev: process.env.NODE_ENV !== 'production',
   })

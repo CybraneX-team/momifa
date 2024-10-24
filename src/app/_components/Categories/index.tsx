@@ -14,7 +14,7 @@ const Categories = ({ categories }: { categories: Category[] }) => {
     <section className="flex flex-col lg:-mx-20">
       <div className={classes.titleWrapper}>
         <motion.div
-          class={classes.title}
+          className={classes.title}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{

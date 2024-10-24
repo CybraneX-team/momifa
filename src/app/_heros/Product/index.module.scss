@@ -25,7 +25,7 @@
   border: 1px solid #5F5F5F;
   border-radius: 38px;
   margin: 5em -6em;
-  height: 42em;
+  height: 44em;
   width: 73em;
   display: flex;
   @include small-break {
@@ -33,34 +33,49 @@
     flex-direction: column;
     width: 22em;
     height: 52em;
-    margin: 11em 2em;
+    margin: 13em 2em;
   }
 }
 .vig {
   position: relative;
   margin: 6em 2em;
-  width: 56em;
+  width: 36em;
   border-radius: 36px;
-  height: 35em;
+  height: 29em;
   overflow: hidden;
-  box-shadow: inset 0 0 26px rgba(0, 0, 0, 1), 
-  inset 0 0 70px rgba(0, 0, 0, 1), 
-  inset 0 0 50px rgba(0, 0, 0, 1);
+  box-shadow: inset 0 0 1em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0);
+
   @include small-break {
-   width: 68em;
+          width: 68em;
         position: static;
         display: flex;
         justify-self: center;
         margin: -5em -1.5em;
+        box-shadow: inset 0 0 1em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0);
   }
 }
+
+
 
 .image {
   border-radius: 2em;
   position: relative;
   z-index: -10;
-  width: 40em;
-  height: 35em;
+  width: 30em;
+  height: 29em;
+  border-radius: 26px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 10px;
+  padding-bottom: 0px;
+  overflow: hidden !important;
+  background-color: white;
+  mix-blend-mode: lighten;
+  filter: brightness(1.1) contrast(1.2);
   @include small-break {
     height: 25em;
     width: 25em;
@@ -118,6 +133,7 @@
     width: 26em;
     position: relative;
     padding: 1em 1em;
+    margin-top: 6em;
     right: 2em;
     border-radius: 20px;
   }
@@ -195,7 +211,50 @@
   }
  
 }
+.postReviewButton {
+  display: inline-block;
+  padding: 12px 20px;
+  width: 15em;
+  font-size: 14px;
+  color: white;
+  margin: 0em 2em 0em 0em;
+  background-color: #262626;
+  border-radius: 28px;
+  font-family: "Syne", sans-serif !important;
+  border: none;
+  cursor: pointer;
+  transition: transform 1s ease, background-color 0.3s, opacity 100ms linear;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  @include small-break {
+    width: 15em;
+    left: 1em;
+    margin: -5px 0em;
+  }
 
+  &:hover {
+    transform: scale(1.05);
+    background-color: #3d3d3d;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(92.87deg, #4FEAFF -12.13%, #FF6CF8 83.24%, #FF2D5F 111.86%);
+    z-index: -1;
+    border-radius: 28px;
+    padding: 3px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    transition: all 0.3s ease;
+  }
+ 
+}
 .wishlistButton span {
   display: inline-block; /* Ensures the span acts like an inline-block for animations */
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -391,7 +450,7 @@
     background: #1F1F1F;
     /* text-align: center; */
     width: 26em;
-    margin-top: 1em;
+    margin-top: 2em;
     position: relative;
     /* margin-right: 1em; */
     height: 4em;
@@ -411,4 +470,115 @@
     font-size: 20px;
     margin: 0 15px;
   }
+}
+.imagess{
+    display: flex;
+    flex-direction: column;
+    margin: 9em 9px;
+    @include small-break{
+      flex-direction: row;
+        margin-right: 2;
+        z-index: 1;
+        margin-bottom: -16em;
+        position: relative;
+        top: 10em;
+    }
+}
+
+.imageclass{
+  border-radius: 1em;
+  cursor: pointer;
+  margin: 0.2rem 2rem;
+  border: 2px solid red;
+  @include small-break{
+    margin: 0em 0.5rem;
+  }
+}
+.sizeChart {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sizeButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sizeButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(61, 61, 61, 0.7);
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &.activeSize {
+    background: #C71E90;
+  }
+}
+.sliderContainer {
+  margin-bottom: 0.8rem;
+}
+
+.sliderLabel {
+  display: block;
+  color: #CCCCCC;
+  margin-bottom: 0.3rem;
+  font-size: 14px;
+}
+
+.slider {
+  width: 95%;
+  -webkit-appearance: none;
+  height: 4px;
+  background: rgba(61, 61, 61, 0.7);
+  border-radius: 4px;
+  outline: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #C71E90;
+    cursor: pointer;
+  }
+}
+
+.quantitySection {
+  margin-bottom: 1rem;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  background: rgba(38, 38, 38, 0.5);
+  border-radius: 20px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.quantityButton {
+  width: 40px;
+  height: 40px;
+  background: #3D3D3D;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.quantityDisplay {
+  width: 40px;
+  text-align: center;
+  color: #FFFFFF;
+  font-size: 18px;
 }
