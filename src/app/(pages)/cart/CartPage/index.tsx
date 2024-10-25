@@ -1,5 +1,5 @@
 'use client'
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, ReactEventHandler } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { loadStripe } from '@stripe/stripe-js'
@@ -7,9 +7,12 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { Page, Settings } from '../../../../payload/payload-types'
 import { Button } from '../../../_components/Button'
 import { LoadingShimmer } from '../../../_components/LoadingShimmer'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../../../_providers/Auth'
 import { useCart } from '../../../_providers/Cart'
 import CartItem from '../CartItem'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
@@ -114,11 +117,29 @@ export const CartPage: React.FC<{
   const [savedCard, setSavedCard] = useState(null)
   const [selectedCard, setSelectedCard] = useState('')
   const [loadingSavedCards, setLoadingSavedCards] = useState(false)
+  const [addresses, setAddresses] = useState([])
+  const [showAddAddress, setShowAddAddress] = useState(false)
+  const [showSavedPayment, setShowSavedPayment] = useState(false)
+  const [newAddress, setNewAddress] = useState({
+    street: '',
+    city: '',
+    state: '',
+    postalCode: '',
+    country: '',
+  })
+  const [saveAddress, setSaveAddress] = useState(false);
+  const [cardDetails, setCardDetails] = useState({
+    cardHolder: '',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+  });
 
-  const addresses = [
-    { id: '1', address: 'sector 123, Lalbagh, Bangalore 560027' },
-    { id: '2', address: 'sector 123, Lalbagh, Bangalore 560027' },
-  ]
+
+  // const addresses = [
+  //   { id: '1', address: 'sector 123, Lalbagh, Bangalore 560027' },
+  //   { id: '2', address: 'sector 123, Lalbagh, Bangalore 560027' },
+  // ]
 
   useEffect(() => {
     if (cartIsEmpty && hasInitializedCart) {
@@ -157,6 +178,7 @@ export const CartPage: React.FC<{
   }, [showCardDetails, user])
 
   const handleNextClick = () => {
+    console.log('Current selected address:', selectedAddress);
     if (selectedAddress) {
       setShowCardDetails(true)
     } else {
@@ -180,7 +202,98 @@ export const CartPage: React.FC<{
   const handleCardSelect = (cardId) => {
     setSelectedCard(cardId)
   }
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/address?where[user][equals]=${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAddresses(data.docs); // Assuming the API returns an array of address objects in 'docs'
+        } else {
+          throw new Error('Failed to fetch addresses');
+        }
+      } catch (error) {
+        console.error('Error fetching addresses:', error);
+        toast.error('Failed to load addresses.');
+      }
+    };
 
+    if (user?.id) {
+      fetchAddresses(); // Call the function if user is logged in
+    }
+  }, [user]);
+  
+  const handleAddAddress = async () => {
+    if (
+      newAddress.street &&
+      newAddress.city &&
+      newAddress.state &&
+      newAddress.postalCode &&
+      newAddress.country
+    ) {
+        const addressDetails = {
+          user: user.id, // Assuming `user.id` is the correct way to access the user's ID
+          street: newAddress.street,
+          city: newAddress.city,
+          state: newAddress.state,
+          postalCode: newAddress.postalCode,
+          country: newAddress.country
+        };
+      if (saveAddress) {
+        try {
+          const response = await fetch('http://localhost:3000/api/address', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(addressDetails)
+          });
+  
+          if (response.ok) {
+            const data = await response.json();
+            const newAddressWithId = { ...addressDetails, id: data.id };
+            setAddresses(prevAddresses => [...prevAddresses, newAddressWithId]);
+            setSelectedAddress(data.id);
+            setShowAddAddress(false);
+            setNewAddress({ street: '', city: '', state: '', postalCode: '', country: '' });
+            toast.success('Address saved successfully!', {
+              className: 'bg-transparent',
+            });
+          } else {
+            throw new Error('Failed to save address');
+          }
+        } catch (error) {
+          console.error('Error saving address:', error);
+          toast.error('Failed to save address.');
+        }
+      }
+    } else {
+      toast.error('Please fill all address fields.', {
+        className: 'bg-transparent',
+      })
+    }
+  }
+
+  const handleDeleteAddress = async (addressId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/address/${addressId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+  
+      if (!response.ok) throw new Error('Failed to delete the address');
+  
+      // Remove the address from local state to update UI immediately
+      setAddresses(currentAddresses => currentAddresses.filter(addr => addr.id !== addressId));
+      setSelectedAddress(''); // Clear any selected address
+      toast.success('Address deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting address:', error);
+      toast.error('Failed to delete the address.');
+    }
+  };
   const handlePayWithSelectedCard = async () => {
     if (!selectedCard) {
       alert('Please select a card before proceeding.')
@@ -205,6 +318,8 @@ export const CartPage: React.FC<{
     }
   }
 
+
+
   const handleSaveCard = () => {
     fetch("/api/get-saved-cards")
       .then((res) => res.json())
@@ -223,7 +338,15 @@ export const CartPage: React.FC<{
     }
   }, [])
 
+
+
   let cartLength = cart.items.length
+  const slideAnimation = {
+    initial: { x: 20, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    exit: { x: -20, opacity: 0 },
+    transition: { duration: 0.5 },
+  }
   return (
     <Fragment>
       <style jsx global>{`
@@ -329,6 +452,75 @@ export const CartPage: React.FC<{
                   background: 'linear-gradient(to bottom, #0000008d 65%, #7d72a847 100%)',
                 }}
               >
+                {showAddAddress && (
+                      <motion.div {...slideAnimation}>
+                        
+                        <h2 className="text-[#BDBDBD] font-semibold mb-4">Add New Address</h2>
+                        <input
+                          type="text"
+                          placeholder="Street"
+                          value={newAddress.street}
+                          onChange={e => setNewAddress({ ...newAddress, street: e.target.value })}
+                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                        />
+                        <input
+                          type="text"
+                          placeholder="City"
+                          value={newAddress.city}
+                          onChange={e => setNewAddress({ ...newAddress, city: e.target.value })}
+                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                        />
+                        <input
+                          type="text"
+                          placeholder="State"
+                          value={newAddress.state}
+                          onChange={e => setNewAddress({ ...newAddress, state: e.target.value })}
+                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Postal Code"
+                          value={newAddress.postalCode}
+                          onChange={e =>
+                            setNewAddress({ ...newAddress, postalCode: e.target.value })
+                          }
+                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Country"
+                          value={newAddress.country}
+                          onChange={e => setNewAddress({ ...newAddress, country: e.target.value })}
+                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                        />
+
+                        <div className="flex justify-center items-center mb-3 mt-2">
+                          <input
+                            type="checkbox"
+                            id="saveAddress"
+                            checked={saveAddress}
+                            onChange={() => setSaveAddress(!saveAddress)}
+                            className="mr-2 accent-[#C71E90]"
+                          />
+                          <label htmlFor="saveAddress" className="text-[#BDBDBD]">
+                            Save this information for next time
+                          </label>
+                        </div>
+                        <div className="flex flex-col justify-center">
+                          <Button
+                            className="bg-gradient-to-r from-[#C71E90] to-[#6B14D0] text-white py-3 px-6 rounded-md mt-2 w-full"
+                            label="Add Address"
+                            onClick={handleAddAddress}
+                          />
+                          <button
+                            className="text-[#BDBDBD] mt-2 underline "
+                            onClick={() => setShowAddAddress(false)}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
                 <div className="flex flex-col p-3 pt-5 h-full overflow-y-auto custom-scrollbar">
                   {paymentSuccess ? (
                     <div className="flex flex-col items-center justify-center h-full">
@@ -341,10 +533,10 @@ export const CartPage: React.FC<{
                         onClick={() => window.location.href = '/'}
                       />
                     </div>
-                  ) : !showCardDetails ? (
+                  ) : !showCardDetails && !showAddAddress ? (
                     <div className="flex flex-col p-3 pt-5 border-[#252525]">
                       <h2 className="text-[#BDBDBD] font-semibold mb-4">Select Address</h2>
-                      <div onChange={(e) => setSelectedAddress(e.target.value)}>
+                      <div onChange={(e : React.ChangeEvent<HTMLInputElement>) => setSelectedAddress(e.target.value)}>
                         {addresses.map(addr => (
                           <div key={addr.id} className="flex items-center space-x-2 mb-2">
                             <input
@@ -353,16 +545,27 @@ export const CartPage: React.FC<{
                               name="address"
                               value={addr.id}
                               checked={selectedAddress === addr.id}
+                              // onChange={() => setSelectedAddress(addr.id)}
                               className="text-[#C71E90]"
                             />
-                            <label htmlFor={`address-${addr.id}`} className="text-white">{addr.address}</label>
+                            <label htmlFor={`address-${addr.id}`} className="text-white">{`${addr.street}, ${addr.city}, ${addr.state} ${addr.postalCode}, ${addr.country}`}</label>
                           </div>
                         ))}
                       </div>
                       <h3 className="text-[#BDBDBD] mt-2 text-sm pb-3">
                         Or add address{' '}
-                        <span className="inline-flex underline cursor-pointer">here</span>
+                        <span className="inline-flex underline cursor-pointer" onClick={() => setShowAddAddress(true)}>here</span>
                       </h3>
+                      {selectedAddress && (
+                          <button
+                          onClick={() => handleDeleteAddress(selectedAddress)}
+                          className="ml-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                          style={{ transition: 'background-color 0.3s ease' }}
+                        >
+                          Delete
+                        </button>
+                          
+                        )}
                       <div className="block lg:hidden">
                         <div className="flex justify-between items-center border-t border-[#252525] pt-5 ">
                           <h6 className="text-white pt-1">Subtotal</h6>
@@ -383,7 +586,7 @@ export const CartPage: React.FC<{
                         onClick={handleNextClick}
                       />
                     </div>
-                  ) : (
+                  ) : showCardDetails && (
                     <div className="pb-3">
                       <div className="flex items-center">
                         <button
