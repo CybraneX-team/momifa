@@ -26,6 +26,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const [underlineStyle, setUnderlineStyle] = useState({})
   const navRefs = useRef([])
+  const [addresses, setAddresses] = useState([])
 
   useEffect(() => {
     if (!user?.id) return
@@ -60,6 +61,25 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
       })
     }
   }, [activeIndex])
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/address?where[user][equals]=${user.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAddresses(data.docs); // Assuming the API returns an array of address objects in 'docs'
+        } else {
+          throw new Error('Failed to fetch addresses');
+        }
+      } catch (error) {
+        console.error('Error fetching addresses:', error);
+      }
+    };
+
+    if (user?.id) {
+      fetchAddresses(); // Call the function if user is logged in
+    }
+  }, [user]);
 
   return (
     <div className="bg-black min-h-screen text-white w-full md:px-5 pb-10">
@@ -135,7 +155,12 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
             </Link>
             <div className="bg-transparent rounded-xl p-6">
               <h4 className="text-2xl font-medium mb-4">Saved Information</h4>
-              <p className="text-[#B7B7B7]">Address : Lalbagh, north bangalore, 560027</p>
+              <h5> Saved Addresses</h5>
+                {addresses.map(addr => (
+                  <div key={addr.id} className="flex items-center space-x-2 mb-2">
+                    <label htmlFor={`address-${addr.id}`} className="text-white">{`${addr.street}, ${addr.city}, ${addr.state} ${addr.postalCode}, ${addr.country}`}</label>
+                  </div>
+                ))}
             </div>
           </div>
         </div>
