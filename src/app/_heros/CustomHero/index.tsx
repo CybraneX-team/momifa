@@ -526,7 +526,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
   return (
     <div className="relative w-full overflow-hidden">
       {/* Desktop View */}
-      <div className="hidden md:block px-28 bg-[url('/media/hero-bg.png')] bg-no-repeat bg-cover">
+      <div className="hidden md:block px-8 lg:px-28 bg-[url('/media/hero-bg.png')] bg-no-repeat bg-cover">
         <div className="relative w-full h-[40rem]">
           <div className="absolute top-0 left-0 w-1/2 h-2/3 p-8">
             <div className="relative w-full h-full">
