@@ -50,7 +50,7 @@ const ProductsOnHome = () => {
         <img
           src="/media/MOMIFA.png"
           alt=""
-          className="hidden md:block absolute md:-right-2 md:w-16 md:-mt-[30em]"
+          className="hidden md:block absolute md:-right-[0rem] md:w-16 md:-mt-[32em]"
         />
       </Gutter>
     </div>
