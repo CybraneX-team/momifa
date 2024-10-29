@@ -35,25 +35,53 @@ const backgroundColors = ['#80024c', '#dfa0f0', '#4e2b9b', '#01d9fa']
 const textColors = ['#ffffff', '#000000']
 
 const HorizontalScroll = () => {
-  const sectionRef = useRef(null)
-  const triggerRef = useRef(null)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const scrollTriggerInstance = useRef<ScrollTrigger | null>(null)
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
+    let resizeTimer: NodeJS.Timeout
+
+    const handleResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        const newIsMobile = window.innerWidth <= 768
+
+        if (newIsMobile !== isMobile) {
+          if (scrollTriggerInstance.current) {
+            scrollTriggerInstance.current.kill()
+          }
+
+          window.scrollTo(0, 0)
+
+          if (sectionRef.current) {
+            gsap.set(sectionRef.current, { clearProps: 'all' })
+          }
+
+          setIsMobile(newIsMobile)
+        }
+      }, 250)
     }
 
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
+    handleResize()
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', checkMobile)
+      window.removeEventListener('resize', handleResize)
+      clearTimeout(resizeTimer)
+      if (scrollTriggerInstance.current) {
+        scrollTriggerInstance.current.kill()
+      }
+      ScrollTrigger.getAll().forEach(st => st.kill())
     }
-  }, [])
+  }, [isMobile])
 
   useEffect(() => {
-    if (!isMobile) {
+    if (!isMobile && sectionRef.current && triggerRef.current) {
+      // Reset position
+      gsap.set(sectionRef.current, { clearProps: 'all' })
+
       const pin = gsap.fromTo(
         sectionRef.current,
         {
@@ -66,7 +94,7 @@ const HorizontalScroll = () => {
           scrollTrigger: {
             trigger: triggerRef.current,
             start: 'top top',
-            end: () => `+=${window.innerWidth * services.length}`,
+            end: () => `+=${window.innerWidth * services.length}px`, // Added 'px' here
             scrub: 1,
             pin: true,
             anticipatePin: 1,
@@ -76,18 +104,53 @@ const HorizontalScroll = () => {
               delay: 0,
               ease: 'power1.inOut',
             },
+            onUpdate: (self) => {
+              sessionStorage.setItem('scrollProgress', self.progress.toString())
+            },
+            onRefresh: (self) => {
+              self.scroll(0)
+              // Remove the progress setting as it's read-only
+            }
           },
-        },
+        }
       )
+
+      scrollTriggerInstance.current = pin.scrollTrigger
+
       return () => {
         pin.kill()
+        ScrollTrigger.getAll().forEach(st => st.kill())
+        gsap.set(sectionRef.current, { clearProps: 'all' })
       }
     }
   }, [isMobile])
 
+  useEffect(() => {
+    if (!isMobile) {
+      document.body.style.overflow = 'auto'
+      document.body.style.height = '100%'
+    } else {
+      document.body.style.overflow = ''
+      document.body.style.height = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.height = ''
+    }
+  }, [isMobile])
+
   return (
-    <section className={styles.scrollSectionOuter} ref={triggerRef}>
-      <div ref={sectionRef} className={styles.scrollSectionInner}>
+    <section 
+      className={styles.scrollSectionOuter} 
+      ref={triggerRef}
+      data-scroll-container
+    >
+      <div 
+        ref={sectionRef} 
+        className={styles.scrollSectionInner}
+        data-scroll-section
+      >
         <div
           className={`${styles.scrollSection} ${styles.introSection} text-center md:text-left -mb-10 md:-mb-0`}
         >
@@ -106,12 +169,12 @@ const HorizontalScroll = () => {
                     {service.description}
                   </p>
                 </div>
-                <div className={`${styles.lotties} ${styles[service.className]}`}>
+                <div className={`${styles.lotties} ${styles[service.className] || ''}`}>
                   <Player
                     autoplay
                     loop
                     src={service.lottie}
-                    className={`${styles.cardLottie} ${styles[service.className]}`}
+                    className={`${styles.cardLottie} ${styles[service.className] || ''}`}
                   />
                 </div>
               </div>

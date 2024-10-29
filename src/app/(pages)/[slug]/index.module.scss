@@ -1,5 +1,6 @@
 @import '../../_css/queries.scss';
-
+$tablet-min: 600px;
+$tablet-max: 1024px;
 .home {
   display: flex;
   flex-direction: column;
@@ -23,7 +24,8 @@
   overflow: hidden;
 
   @include mid-break {
-    margin-top: 500px;
+    margin-top: 28px;
+    
   }
 }
 @media (max-width: 650px) {
@@ -34,17 +36,47 @@
 }
 // Add this new class
 .horizontalScrollWrapper {
-  margin-bottom: 40px; // Add some bottom margin
-  
+  margin-bottom: 20px; /* Add some bottom margin */
+  height: 387em;
 
-  @include mid-break {
-    margin-bottom: 20px; // Reduce bottom margin for mobile devices
+  /* Tablet screen sizes */
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    height: 368vh;
   }
+
+  /* Medium screens */
+  @media screen and (min-width: 820px) and (max-width: 1180px) {
+    height: 304em;
+  }
+
+  /* Large tablet screens */
+  @media screen and (min-width: 1024px) and (max-width: 1366px) {
+    height: 358em;
+  }
+
+  /* Small screen breakpoint */
+  @include small-break {
+    height: 290vh;
+  }
+
+  /* Small screen heights */
+  @media screen and (min-width: 414px) and (max-width: 896px) {
+    height: 377vh;
+  }
+
+  /* Medium screen breakpoint */
+  @include mid-break {
+    margin-bottom: 20px;
+  }
+
+  /* Mobile screens */
   @media (max-width: 650px) {
-  
-  margin-left: 20px;
+    margin-left: 20px;
+    height: 290vh;
+
   }
 }
+
 
 
 .faq {
@@ -74,4 +106,5 @@
   justify-content: center;
   text-align: center;
   margin-right: 70px;
+  
 }

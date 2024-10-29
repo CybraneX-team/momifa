@@ -35,10 +35,11 @@ const ProductsOnHome = () => {
     <div className="relative pt-16 md:pt-24 pb-1 md:pb-10  bg-[url('/media/cart-mob.jpg')] md:bg-[url('/media/cart2.png')] bg-no-repeat bg-cover">
       <Gutter className={classes.productCards}>
         <h2
-          className={` text-white mb-10 sm:mx-auto sm:block lg:block md:block md:mb-0 md:-rotate-90 md:text-5xl md:top-48 md:absolute md:-left-5 text-3xl font-bold`}
-        >
-          Polo T-Shirts
-        </h2>
+    className={`text-white mb-10 sm:mx-auto sm:block lg:block md:block md:mb-0 md:-rotate-90 md:top-48 md:absolute md:-left-5 font-bold text-xl sm:text-2xl lg:text-3xl`}
+     >
+    Polo T-Shirts
+  </h2>
+
         <div className="-pr-20">
           <CollectionArchive
             relationTo="products"
@@ -49,7 +50,7 @@ const ProductsOnHome = () => {
         <img
           src="/media/MOMIFA.png"
           alt=""
-          className="hidden md:block absolute md:right-24 md:w-16 md:-mt-[560px]"
+          className="hidden md:block absolute md:-right-2 md:w-16 md:-mt-[30em]"
         />
       </Gutter>
     </div>

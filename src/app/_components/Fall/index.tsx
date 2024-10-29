@@ -555,7 +555,9 @@ const FloatingBox = () => {
           const textFontSize = isMobileView ? '3rem' : '4rem' // font
           const textY = isMobileView ? 40 : 50 // positioning
           const lineHeight = isMobileView ? 70 : 70 // line height 
-
+          const isTabletView = window.innerWidth > 768 && window.innerWidth < 1024;
+          const ipadPRO = window.innerWidth >= 1024 && window.innerWidth <= 1366;
+          console.log(ipadPRO)
           ctx.font = `${textFontSize} 'Sofia Sans Condensed', sans-serif`
           ctx.fillStyle = 'white'
           ctx.textAlign = 'center'
@@ -572,7 +574,19 @@ const FloatingBox = () => {
             ctx.fillText(trustedByText, textX, textY)
             ctx.font = `3rem 'Sofia Sans Condensed', sans-serif` 
             ctx.fillText(buyersText, textX, textY + lineHeight)
-          } else {
+          }else if(isTabletView){
+            ctx.font = `4rem 'Sofia Sans Condensed', sans-serif` 
+            ctx.fillText(trustedByText, 400, 50)
+            ctx.font = `3.5rem 'Sofia Sans Condensed', sans-serif` 
+            ctx.fillText(buyersText, 400, 100)
+          } else if (ipadPRO){
+            console.log("true")
+            ctx.font = `4rem 'Sofia Sans Condensed', sans-serif` 
+            ctx.fillText(trustedByText, 500, 150)
+            ctx.font = `3rem 'Sofia Sans Condensed', sans-serif` 
+            ctx.fillText(buyersText, 500, 110)
+          }
+          else {
             ctx.font = `4rem 'Sofia Sans Condensed', sans-serif`
             ctx.fillText(trustedByText, textX, textY)
             ctx.fillText(buyersText, textX, textY + lineHeight)
@@ -697,7 +711,6 @@ const FloatingBox = () => {
         height: '100%',
         cursor: 'grab',
         zIndex: '9999',
-        outline: '2px solid blue',
         position: 'relative',
       }}
       initial={{ opacity: 0 }}

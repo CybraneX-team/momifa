@@ -36,6 +36,7 @@ export const ProductHero: React.FC<{
   const [displayedImage, setdisplayedImage] = useState(metaImage)
   const [sleeveLength, setSleeveLength] = useState(17)
   const [chest, setChest] = useState(19)
+  const [imagesLoding, setimagesLoading] = useState(true)
 
   console.log(cart)
   function setvalue(op){
@@ -63,6 +64,7 @@ export const ProductHero: React.FC<{
       const images = await fetch(`http://localhost:3000/api/images?productId=${id}`)
       const imagesArray = await images.json()
       setimagess(imagesArray)
+      setimagesLoading(prev=> prev === true ?false : prev)
     }
     getImages()
   }, [])
@@ -185,6 +187,7 @@ export const ProductHero: React.FC<{
     />
     <Gutter className={classes.productHero}>
       <div className={classes.mainn}>
+      {imagesLoding ? <div className={classes.loading} /> :
       <div className={classes.imagess}>
           {imagess.map((image)=>{
             return <div onClick={()=>{swapImage(image)}} className={`${classes.imagessImage} rounded-lg`}>
@@ -192,6 +195,7 @@ export const ProductHero: React.FC<{
             </div>
           })}
       </div>
+      }
       <div className={classes.vig}>
       <Media imgClassName={classes.image}  resource={displayedImage}   / >
       </div>

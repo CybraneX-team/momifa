@@ -45,7 +45,7 @@
 
   @include mid-break {
     gap: 20px;
-
+    grid-template-columns: repeat(2, 1fr) ;
     @media (max-width: 650px){
       padding-left: 0rem;
       padding-right: -2rem;
