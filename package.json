@@ -42,6 +42,7 @@
     "gsap": "^3.12.5",
     "jquery": "^3.7.1",
     "lottie-react": "^2.4.0",
+    "lucide-react": "^0.454.0",
     "matter-js": "^0.20.0",
     "next": "13.5.2",
     "payload": "^2.0.7",
