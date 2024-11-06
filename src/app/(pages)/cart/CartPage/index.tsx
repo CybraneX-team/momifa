@@ -26,7 +26,7 @@ const dummyProduct = {
   image: '/path/to/dummy-image.jpg'
 }
 
-const SavedCard = ({ id, last4, expMonth, expYear, brand, isSelected, onClick }) => (
+const SavedCard = ({ id, last4, expMonth, expYear, brand, isSelected, onClick, onDelete }) => (
   <div 
     className={`w-full p-4 border rounded-lg shadow cursor-pointer mb-2 ${
       isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
@@ -35,6 +35,12 @@ const SavedCard = ({ id, last4, expMonth, expYear, brand, isSelected, onClick })
   >
     <div className="flex justify-between items-center mb-2">
       <h5 className="text-lg font-bold text-white">{brand} **** {last4}</h5>
+      <button 
+        onClick={(e) => { e.stopPropagation(); onDelete(id); }}
+        className="text-red-500 hover:text-red-700"
+        style={{ backgroundColor: "#FF1744", color: "white", border: "none", borderRadius: "4px", padding: '4px 8px', fontSize: '14px', fontWeight: "600", cursor: "pointer", transition: "background-color 0.2s" }}>
+        Delete
+      </button>
     </div>
     <p className="text-sm text-gray-400">Expires: {expMonth}/{expYear}</p>
   </div>
@@ -114,7 +120,7 @@ export const CartPage: React.FC<{
   const [selectedAddress, setSelectedAddress] = useState('')
   const [clientSecret, setClientSecret] = useState('')
   const [paymentSuccess, setPaymentSuccess] = useState(false)
-  const [savedCard, setSavedCard] = useState(null)
+  const [savedCards, setSavedCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState('')
   const [loadingSavedCards, setLoadingSavedCards] = useState(false)
   const [addresses, setAddresses] = useState([])
@@ -166,7 +172,10 @@ export const CartPage: React.FC<{
         .then((res) => res.json())
         .then((data) => {
           if (data.savedCards && data.savedCards.length > 0) {
-            setSavedCard(data.savedCards[0])
+            setSavedCards(data.savedCards)
+          }
+          else {
+            setSavedCards([]);
           }
           setLoadingSavedCards(false)
         })
@@ -176,6 +185,29 @@ export const CartPage: React.FC<{
         })
     }
   }, [showCardDetails, user])
+  const fetchSavedCards = () => {
+    setLoadingSavedCards(true);
+    fetch("/api/get-saved-cards")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.savedCards) {
+          setSavedCards(data.savedCards);
+        } else {
+          setSavedCards([]);
+        }
+        setLoadingSavedCards(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching saved cards:', error);
+        setLoadingSavedCards(false);
+      });
+  }
+
+  useEffect(() => {
+    if (user) {
+      fetchSavedCards();
+    }
+  }, [user]);
 
   const handleNextClick = () => {
     console.log('Current selected address:', selectedAddress);
@@ -188,15 +220,15 @@ export const CartPage: React.FC<{
 
   const handlePaymentSuccess = () => {
     setPaymentSuccess(true)
-    const mockSavedCard = {
-      id: 'card_mock123',
-      brand: 'Visa',
-      last4: '5556',
-      expMonth: '12',
-      expYear: '2025'
-    }
-    setSavedCard(mockSavedCard)
-    localStorage.setItem('savedCard', JSON.stringify(mockSavedCard))
+    // const mockSavedCard = {
+    //   id: 'card_mock123',
+    //   brand: 'Visa',
+    //   last4: '5556',
+    //   expMonth: '12',
+    //   expYear: '2025'
+    // }
+    // setSavedCard(mockSavedCard)
+    // localStorage.setItem('savedCard', JSON.stringify(mockSavedCard))
   }
 
   const handleCardSelect = (cardId) => {
@@ -325,18 +357,40 @@ export const CartPage: React.FC<{
       .then((res) => res.json())
       .then((data) => {
         if (data.savedCards && data.savedCards.length > 0) {
-          setSavedCard(data.savedCards[0])
+          setSavedCards(data.savedCards)
         }
       })
       .catch((error) => console.error('Error fetching saved cards:', error))
   }
-
-  useEffect(() => {
-    const savedCardData = localStorage.getItem('savedCard')
-    if (savedCardData) {
-      setSavedCard(JSON.parse(savedCardData))
+  const handleDeleteCard = async (cardId) => {
+    try {
+      const response = await fetch('/api/delete-saved-card', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ paymentMethodId: cardId }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        // Update local state to remove the card from the list or refetch the list
+        toast.success('Card deleted successfully');
+        fetchSavedCards(); // Assuming you have a function to refresh the saved cards list
+      } else {
+        toast.error('Failed to delete the card');
+      }
+    } catch (error) {
+      console.error('Error deleting the card:', error);
+      toast.error('Error deleting the card');
     }
-  }, [])
+  }
+
+  // useEffect(() => {
+  //   const savedCardData = localStorage.getItem('savedCard')
+  //   if (savedCardData) {
+  //     setSavedCard(JSON.parse(savedCardData))
+  //   }
+  // }, [])
 
 
 
@@ -616,18 +670,22 @@ export const CartPage: React.FC<{
                         <h3 className="text-[#BDBDBD] font-semibold mb-2">Saved Card</h3>
                         
                         {loadingSavedCards ? (
-                          <p className="text-white">Loading saved card...</p>
-                        ) : savedCard ? (
-                          <SavedCard
-                            {...savedCard}
-                            isSelected={selectedCard === savedCard.id}
-                            onClick={handleCardSelect}
-                          />
+                        <p>Loading saved cards...</p>
+                        ) : savedCards.length > 0 ? (
+                            savedCards.map((card) => (
+                                <SavedCard
+                                    key={card.id}
+                                    {...card}
+                                    isSelected={selectedCard === card.id}
+                                    onClick={() => handleCardSelect(card.id)}
+                                    onDelete={handleDeleteCard}
+                                />
+                            ))
                         ) : (
-                          <p className="text-white mb-4">No saved card found.</p>
+                            <p>No saved cards found.</p>
                         )}
                         
-                        {savedCard && (
+                        {savedCards && (
                           <Button
                             className="bg-gradient-to-r from-[#C71E90] to-[#6B14D0] text-white py-2 px-4 rounded-md mt-2 w-full"
                             label="Pay with Saved Card"

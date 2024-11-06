@@ -20,7 +20,7 @@ import Products from './collections/Products'
 import Users from './collections/Users'
 import BeforeDashboard from './components/BeforeDashboard'
 import BeforeLogin from './components/BeforeLogin'
-import { createPaymentIntent } from './endpoints/create-payment-intent'
+import { createPaymentIntent, deleteSavedCard, getSavedCards, payWithSavedCard } from './endpoints/create-payment-intent'
 import { customersProxy } from './endpoints/customers'
 import { productsProxy } from './endpoints/products'
 import { seed } from './endpoints/seed'
@@ -69,6 +69,9 @@ export default buildConfig({
               mockModulePath,
             [path.resolve(__dirname, 'collections/Users/endpoints/customer')]: mockModulePath,
             [path.resolve(__dirname, 'endpoints/create-payment-intent')]: mockModulePath,
+            [path.resolve(__dirname, 'endpoints/get-saved-cards')]: mockModulePath,
+            [path.resolve(__dirname, 'endpoints/pay-with-saved-card')]: mockModulePath,
+            [path.resolve(__dirname, 'endpoints/delete-saved-card')]: mockModulePath,
             [path.resolve(__dirname, 'endpoints/customers')]: mockModulePath,
             [path.resolve(__dirname, 'endpoints/products')]: mockModulePath,
             [path.resolve(__dirname, 'endpoints/seed')]: mockModulePath,
@@ -111,6 +114,21 @@ export default buildConfig({
   ].filter(Boolean),
   
   endpoints: [
+    {
+      path: '/delete-saved-card',
+      method: 'post',
+      handler: deleteSavedCard,
+    },
+    {
+      path: '/pay-with-saved-card',
+      method: 'post',
+      handler: payWithSavedCard,
+    },
+    {
+      path: '/get-saved-cards',
+      method: 'get',
+      handler: getSavedCards
+    },
     {
       path: '/create-payment-intent',
       method: 'post',
