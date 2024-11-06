@@ -61,16 +61,16 @@
 .image {
   border-radius: 26px;
   object-fit: cover;
-  aspect-ratio: 1/1;
+  // aspect-ratio: 1/1;
   position: absolute;
   max-width: 100%;
 max-height: 100%;
 padding: 10px;
 padding-bottom: 0px;
   overflow: hidden !important;
-  background-color: white; // Or any color that matches your page background
-  mix-blend-mode: lighten; // Removes white backgrounds, blend modes vary with background color
-  filter: brightness(1.1) contrast(1.2); // Adjust to remove any remnants of the background
+  background-color: white; 
+  mix-blend-mode: lighten; 
+  filter: brightness(1.1) contrast(1.2);
   transition: transform 0.3s ease-in-out;
 
   &:hover {
@@ -125,7 +125,7 @@ padding-bottom: 0px;
 
   @media (max-width: 650px){
     backdrop-filter: blur(0px);
-    background: none;
+    background: transparent;
   }
 }
 
@@ -145,6 +145,7 @@ padding-bottom: 0px;
   font-size: 16px;
   font-weight: 500;
   color: white;
+  text-align: center;
 }
 
 @media (max-width: 640px) {
@@ -153,7 +154,7 @@ padding-bottom: 0px;
   }
 
   .titleOverlay{
-    padding: 5px 10px;
+    padding: 5px 12px;
   }
   .titleOverlayP {
 
@@ -196,6 +197,7 @@ padding-bottom: 0px;
     padding: 2px 4px;
     font-size: 10px;
     border-radius: 10px;
+    top: -6px;
   }
 }
 
@@ -212,6 +214,7 @@ padding-bottom: 0px;
   padding: 4px 4px; // Add padding to create space around the text
 
   @media (max-width: 640px) {
-    font-size: 10px;
+    font-size: 13px;
+    top: -10px;
   }
 }

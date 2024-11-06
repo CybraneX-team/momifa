@@ -3,6 +3,7 @@
 
 .nav {
   display: flex;
+  height: 20px;
   gap: calc(var(--base) / 4) var(--base);
   align-items: center;
   padding-right: 0 !important;
@@ -11,6 +12,7 @@
   // background: rgba(96, 96, 96, 0.3);
   transition: opacity 100ms linear;
   visibility: visible;
+  color: white;
   Link {
     color: white;
   }

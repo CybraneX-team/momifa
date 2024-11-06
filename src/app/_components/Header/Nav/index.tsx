@@ -31,9 +31,12 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
         <p> {value} </p>
       </div>
       </Link> */}
-      {user && <Link href="/account">Account</Link>}
-      {!user && <CartLink />}
+      <div className="-mt-3 flex items-center justify-center text-white">
+      {user && <Link href="/account" className='bg-[#7c2c71a1] px-4 py-2 rounded-full font-bold text-white mx-3'>{user.name.charAt(0)}</Link>}
       {user && <CartLink />}
+      
+      <div className="mt-2 flex items-center justify-center text-white">
+      {!user && <CartLink />}
       {!user && (
         <Button
           el="link"
@@ -42,8 +45,11 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
           children={"Login"}
           appearance="primary"
           onClick={() => (window.location.href = '/login')}
+          className='ml-3'
         />
       )}
+      </div>
+      </div>
     </nav>
   )
 }

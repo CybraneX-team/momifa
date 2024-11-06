@@ -33,7 +33,9 @@ const Products = async () => {
     <div className={classes.container}>
       <Gutter className={classes.products}>
         <Filters categories={categories} />
+        <div className="-pl-20 lg:-pl-0">
         <Blocks blocks={page?.layout} disableTopPadding={true} />
+        </div>
       </Gutter>
       <HR />
     </div>
@@ -41,3 +43,4 @@ const Products = async () => {
 }
 
 export default Products
+

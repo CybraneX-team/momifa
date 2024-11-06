@@ -34,6 +34,7 @@ import Feedback from '../../_components/Feedbacks'
 import FAQ from '../../_components/FAQ'
 import ProductsOnHome from '../../_components/ProductsOnHome'
 import Head from 'next/head'
+import Hoodies from '../../_components/Hoodies'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
@@ -99,7 +100,7 @@ export default async function Page({ params: { slug = 'home' } }) {
       {slug === 'home' ? (
         <>
         <Head>
-         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
        </Head>
         <section>
           <Hero {...hero} />
@@ -118,6 +119,9 @@ export default async function Page({ params: { slug = 'home' } }) {
           <div className="">
             <ProductShowCase />
           </div>
+<div className={classes.hoodies}>
+          <Hoodies />
+          </div>
           <ProductsOnHome />
           <Feedback />
           <div className={classes.faq}>
@@ -128,7 +132,7 @@ export default async function Page({ params: { slug = 'home' } }) {
       ) : (
         <>
         <Head>
-         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no" />
         </Head>
           <Hero {...hero} />
           <Blocks

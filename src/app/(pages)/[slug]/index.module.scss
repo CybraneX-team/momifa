@@ -36,7 +36,7 @@ $tablet-max: 1024px;
    height: 700px;
   }
 }
-// Add this new class
+
 .horizontalScrollWrapper {
   margin-bottom: 20px; /* Add some bottom margin */
   height: 387em;
@@ -51,7 +51,7 @@ $tablet-max: 1024px;
     height: 304em;
   }
 
-  /* Large tablet screens */
+  /* Large tablet  */
   @media screen and (min-width: 1024px) and (max-width: 1366px) {
     height: 358em;
   }
@@ -84,7 +84,7 @@ $tablet-max: 1024px;
 .faq {
 
   @media (max-width: 650px) {
-  margin-top: 3rem;
+    margin-top: 3rem;
   margin-bottom: 3rem;
     margin-right: 30px;
     }
@@ -95,7 +95,8 @@ $tablet-max: 1024px;
 }
 
 .faqTitle {
-  font-size: 96px;
+  font-size: 70px;
+  min-width: 150px;
   color: white;
   font-weight: 600;
   line-height: 90%;
@@ -109,4 +110,8 @@ $tablet-max: 1024px;
   text-align: center;
   margin-right: 70px;
   
+}
+
+.hoodies{
+  width: 100%;
 }
