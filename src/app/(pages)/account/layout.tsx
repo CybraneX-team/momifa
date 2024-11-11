@@ -27,6 +27,22 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const [underlineStyle, setUnderlineStyle] = useState({})
   const navRefs = useRef([])
   const [addresses, setAddresses] = useState([])
+  const [loadingSavedCards, setLoadingSavedCards] = useState(false)
+  const [savedCards, setSavedCards] = useState([]);
+
+  const SavedCard = ({ id, last4, expMonth, expYear, brand, isSelected }) => (
+    <div 
+      className={`w-full p-4 shadow cursor-pointer mb-2 ${
+        isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
+      }`}
+    >
+      <div className="flex justify-between items-center mb-2">
+        <h5 className="text-lg text-white">{brand} **** {last4}</h5>
+      </div>
+      <p className="text-sm text-gray-400">Expires: {expMonth}/{expYear}</p>
+    </div>
+  )
+
 
   useEffect(() => {
     if (!user?.id) return
@@ -78,6 +94,29 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
 
     if (user?.id) {
       fetchAddresses(); // Call the function if user is logged in
+    }
+  }, [user]);
+  const fetchSavedCards = () => {
+    setLoadingSavedCards(true);
+    fetch("/api/get-saved-cards")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.savedCards) {
+          setSavedCards(data.savedCards);
+        } else {
+          setSavedCards([]);
+        }
+        setLoadingSavedCards(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching saved cards:', error);
+        setLoadingSavedCards(false);
+      });
+  }
+
+  useEffect(() => {
+    if (user) {
+      fetchSavedCards();
     }
   }, [user]);
 
@@ -154,13 +193,26 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </Link>
             <div className="bg-transparent rounded-xl p-6">
-              <h4 className="text-2xl font-medium mb-4">Saved Information</h4>
-              <h5> Saved Addresses</h5>
+              <h4 className="text-2xl font-medium font-bold mb-4">Saved Information</h4>
+              <h5 style={{ textDecoration: 'underline' }}> Saved Addresses</h5>
                 {addresses.map(addr => (
                   <div key={addr.id} className="flex items-center space-x-2 mb-2">
                     <label htmlFor={`address-${addr.id}`} className="text-white">{`${addr.street}, ${addr.city}, ${addr.state} ${addr.postalCode}, ${addr.country}`}</label>
                   </div>
                 ))}
+              <h5 style={{ textDecoration: 'underline' }}>Saved Cards</h5>
+              {loadingSavedCards ? (
+                <p>Loading saved cards...</p>
+                ) : savedCards.length > 0 ? (
+                    savedCards.map((card) => (
+                        <SavedCard
+                            key={card.id}
+                            {...card}
+                        />
+                    ))
+                ) : (
+                    <p>No saved cards found.</p>
+                )}
             </div>
           </div>
         </div>
