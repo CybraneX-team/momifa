@@ -1,8 +1,8 @@
-FROM node:18.8-alpine as base
+FROM node:18-alpine as base
 
 FROM base as builder
 
-WORKDIR /home/node/app
+WORKDIR /home/node
 COPY package*.json ./
 
 COPY . .
@@ -11,17 +11,22 @@ RUN yarn build
 
 FROM base as runtime
 
+ENV PAYLOAD_CONFIG_PATH=./dist/payload/payload.config.js
+ENV DATABASE_URI=mongodb+srv://trishrko99:3FAUqf5gwOtNklNG@momifadb.9aqtg.mongodb.net/?retryWrites=true&w=majority&appName=momifaDB
+ENV PAYLOAD_SECRET=dc4e658f7w64fe5df4w6e5e
+ENV STRIPE_SECRET_KEY=sk_test_51PoNVLCkli4RA0fycVeApzvhEfS97FFcpk2ZuAAOu8E5HV490tzMBcboSNvvCuYOToFwHF6WvyYtdfGGyHb6LLFs00dSAPymzq
+ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51PoNVLCkli4RA0fy996ZUh17S82OPyQi8CI45g6rw44ab7uA7Cv2MDMBc9X8q17WdxIaHhq1Lp2abu0qResgEPAJ00AZHisFrX
+ENV OPENCAGE_API_KEY=ebda9b98fede49c0b6088d76200eeff8
+ENV PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3000
+ENV NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 ENV NODE_ENV=production
-ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
-
-WORKDIR /home/node/app
+WORKDIR /home/node
 COPY package*.json  ./
-COPY yarn.lock ./
 
 RUN yarn install --production
-COPY --from=builder /home/node/app/dist ./dist
-COPY --from=builder /home/node/app/build ./build
-
+COPY --from=builder /home/node/dist ./dist
+COPY --from=builder /home/node/build ./build
+COPY ./.next ./.next
 EXPOSE 3000
 
 CMD ["node", "dist/server.js"]

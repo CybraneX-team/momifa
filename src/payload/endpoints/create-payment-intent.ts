@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import { PayloadHandler } from 'payload/config';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2023-08-16',
+  apiVersion: '2022-08-01',
 });
 
 const dummyProduct = {

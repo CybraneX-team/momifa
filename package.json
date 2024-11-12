@@ -82,6 +82,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "mongodb-memory-server": "^10.1.2",
     "nodemon": "^2.0.6",
     "postcss": "^8.4.41",
     "prettier": "^2.7.1",

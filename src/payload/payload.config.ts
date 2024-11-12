@@ -61,6 +61,12 @@ export default buildConfig({
         ...config,
         resolve: {
           ...config.resolve,
+          fallback: {
+            ...config.resolve?.fallback,
+            fs: false,
+            net: false,
+            readline: false,
+          },
           alias: {
             ...config.resolve?.alias,
             dotenv: path.resolve(__dirname, './dotenv.js'),
