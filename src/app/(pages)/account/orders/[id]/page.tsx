@@ -21,6 +21,7 @@ export default async function Order({ params: { id } }) {
   })
 
   let order: Order | null = null
+  let trackingInfo = null
 
   try {
     order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}`, {
@@ -35,8 +36,20 @@ export default async function Order({ params: { id } }) {
       if ('errors' in json && json.errors) notFound()
       return json
     })
+
+    if (order?.trackingNumber) {
+      trackingInfo = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/tracking/${order.trackingNumber}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${token}`,
+          },
+        }
+      ).then(res => res.json())
+    }
   } catch (error) {
-    console.error(error) // eslint-disable-line no-console
+    console.error(error)
   }
 
   if (!order) {
@@ -44,78 +57,158 @@ export default async function Order({ params: { id } }) {
   }
 
   return (
-    <div>
-      <h5>
-        {`Order`}
-        <span className={classes.id}>{` ${order.id}`}</span>
-      </h5>
-      <div className={classes.itemMeta}>
-        <p>{`ID: ${order.id}`}</p>
-        <p>{`Payment Intent: ${order.stripePaymentIntentID}`}</p>
-        <p>{`Ordered On: ${formatDateTime(order.createdAt)}`}</p>
-        <p className={classes.total}>
-          {'Total: '}
-          {new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'usd',
-          }).format(order.total / 100)}
-        </p>
-      </div>
+    <div className="p-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-[#181818] rounded-lg p-6">
+          <h1 className="text-2xl font-semibold mb-6">
+            Order Details
+            <span className="text-[#D1D1D1] ml-2">#{order.id}</span>
+          </h1>
 
-      <div className={classes.order}>
-        {order.items?.map((item, index) => {
-          if (typeof item.product === 'object') {
-            const {
-              quantity,
-              product,
-              product: { id, title, meta, stripeProductID },
-            } = item
+          <div className="mb-8">
+            <div className="grid grid-cols-2 gap-4 text-[#D1D1D1]">
+              <div>
+                <p className="text-sm">Order Date</p>
+                <p className="font-medium">{formatDateTime(order.createdAt)}</p>
+              </div>
+              <div>
+                <p className="text-sm">Total Amount</p>
+                <p className="font-medium">
+                  {new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'usd',
+                  }).format(order.total / 100)}
+                </p>
+              </div>
+              {order.trackingNumber && (
+                <div className="col-span-2">
+                  <p className="text-sm">Tracking Number</p>
+                  <p className="font-medium">{order.trackingNumber}</p>
+                </div>
+              )}
+            </div>
+          </div>
 
-            const metaImage = meta?.image
+          {order.trackingNumber && (
+            <div className="mb-8">
+              <div className="bg-[#202020] rounded-lg p-6">
+                <h3 className="text-lg font-medium mb-6">Shipping Status</h3>
+                
+                <div className="relative">
+                  <div className="flex justify-between items-center mb-8">
+                    <div className="flex flex-col items-center text-center w-1/3">
+                      <div className={`w-4 h-4 rounded-full mb-2 ${
+                        order.status !== 'pending' ? 'bg-green-500' : 'bg-[#404040]'
+                      }`}></div>
+                      <div className="text-sm text-[#D1D1D1]">Pickup</div>
+                      {trackingInfo?.pickupDate && (
+                        <div className="text-xs text-[#909090] mt-1">
+                          {formatDateTime(trackingInfo.pickupDate)}
+                        </div>
+                      )}
+                    </div>
 
-            return (
-              <Fragment key={index}>
-                <div className={classes.row}>
-                  <Link href={`/products/${product.slug}`} className={classes.mediaWrapper}>
-                    {!metaImage && <span className={classes.placeholder}>No image</span>}
-                    {metaImage && typeof metaImage !== 'string' && (
-                      <Media
-                        className={classes.media}
-                        imgClassName={classes.image}
-                        resource={metaImage}
-                        fill
-                      />
-                    )}
-                  </Link>
-                  <div className={classes.rowContent}>
-                    {!stripeProductID && (
-                      <p className={classes.warning}>
-                        {'This product is not yet connected to Stripe. To link this product, '}
-                        <Link
-                          href={`${process.env.NEXT_PUBLIC_SERVER_URL}/admin/collections/products/${id}`}
-                        >
-                          edit this product in the admin panel
-                        </Link>
-                        {'.'}
-                      </p>
-                    )}
-                    <h6 className={classes.title}>
-                      <Link href={`/products/${product.slug}`} className={classes.titleLink}>
-                        {title}
-                      </Link>
-                    </h6>
-                    <p>{`Quantity: ${quantity}`}</p>
-                    <Price product={product} button={false} quantity={quantity} />
+                    <div className="flex flex-col items-center text-center w-1/3">
+                      <div className={`w-4 h-4 rounded-full mb-2 ${
+                        order.status === 'shipped' ? 'bg-green-500' : 'bg-[#404040]'
+                      }`}></div>
+                      <div className="text-sm text-[#D1D1D1]">In Transit</div>
+                      {trackingInfo?.inTransitDate && (
+                        <div className="text-xs text-[#909090] mt-1">
+                          {formatDateTime(trackingInfo.inTransitDate)}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col items-center text-center w-1/3">
+                      <div className={`w-4 h-4 rounded-full mb-2 ${
+                        order.status === 'delivered' ? 'bg-green-500' : 'bg-[#404040]'
+                      }`}></div>
+                      <div className="text-sm text-[#D1D1D1]">Delivered</div>
+                      {trackingInfo?.deliveryDate && (
+                        <div className="text-xs text-[#909090] mt-1">
+                          {formatDateTime(trackingInfo.deliveryDate)}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="absolute top-2 left-0 right-0 h-0.5 bg-[#404040] -z-10">
+                    <div 
+                      className="h-full bg-green-500 transition-all duration-500"
+                      style={{
+                        width: order.status === 'delivered' ? '100%' : 
+                               order.status === 'shipped' ? '66%' :
+                               order.status !== 'pending' ? '33%' : '0%'
+                      }}
+                    ></div>
                   </div>
                 </div>
-              </Fragment>
-            )
-          }
 
-          return null
-        })}
+                {trackingInfo && (
+                  <div className="mt-6 p-4 bg-[#181818] rounded">
+                    <h4 className="text-md font-medium mb-2">Latest Update</h4>
+                    <p className="text-sm text-[#D1D1D1]">{trackingInfo.currentStatus}</p>
+                    <p className="text-xs text-[#909090] mt-1">{trackingInfo.location}</p>
+                    <p className="text-xs text-[#909090]">{formatDateTime(trackingInfo.timestamp)}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium">Order Items</h3>
+            {order.items?.map((item, index) => {
+              if (typeof item.product === 'object') {
+                const {
+                  quantity,
+                  product,
+                  product: { id, title, meta, stripeProductID },
+                } = item
+
+                const metaImage = meta?.image
+
+                return (
+                  <div key={index} className="border border-[#404040] rounded-lg p-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-20 h-20 relative flex-shrink-0">
+                        <Link href={`/products/${product.slug}`}>
+                          {!metaImage && (
+                            <div className="w-full h-full bg-[#202020] rounded flex items-center justify-center">
+                              <span className="text-sm text-[#909090]">No image</span>
+                            </div>
+                          )}
+                          {metaImage && typeof metaImage !== 'string' && (
+                            <Media
+                              resource={metaImage}
+                              fill
+                              className="rounded object-cover"
+                            />
+                          )}
+                        </Link>
+                      </div>
+
+                      <div className="flex-grow">
+                        <Link href={`/products/${product.slug}`}>
+                          <h4 className="font-medium hover:text-[#D1D1D1]">{title}</h4>
+                        </Link>
+                        <div className="text-sm text-[#D1D1D1] mt-1">Quantity: {quantity}</div>
+                        <Price 
+                          product={product}
+                          button={false}
+                          quantity={quantity}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+              return null
+            })}
+          </div>
+        </div>
       </div>
-      <HR className={classes.hr} />
     </div>
   )
 }

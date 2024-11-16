@@ -27,7 +27,8 @@ export const ArchiveBlock: React.FC<
     <div id={`block-${id}`} className={classes.archiveBlock}>
       {introContent && (
         <Gutter className={classes.introContent}>
-          <RichText content={introContent} />
+          <span></span>
+          {/* <RichText content={introContent} /> */}
         </Gutter>
       )}
       <CollectionArchive
@@ -36,7 +37,7 @@ export const ArchiveBlock: React.FC<
         populatedDocs={populatedDocs}
         populatedDocsTotal={populatedDocsTotal}
         categories={categories}
-        limit={limit}
+        limit={100}
         sort="-publishedOn"
       />
     </div>

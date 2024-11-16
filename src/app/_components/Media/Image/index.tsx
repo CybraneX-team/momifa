@@ -5,9 +5,7 @@ import NextImage, { StaticImageData } from 'next/image'
 
 import cssVariables from '../../../cssVariables'
 import { Props as MediaProps } from '../types'
-
 import classes from './index.module.scss'
-
 const { breakpoints } = cssVariables
 
 export const Image: React.FC<MediaProps> = props => {
@@ -43,20 +41,20 @@ export const Image: React.FC<MediaProps> = props => {
 
     const filename = fullFilename
 
-    src = `${process.env.NEXT_PUBLIC_SERVER_URL}/media/${filename}`
+    src = `media/${filename}`
   }
-
+  // console.log("srccccccc",)
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = Object.entries(breakpoints)
     .map(([, value]) => `(max-width: ${value}px) ${value}px`)
     .join(', ')
-
+  console.log("ccccccccccccccccccc", typeof(src))
   return (
     <NextImage
       className={[isLoading && classes.placeholder, classes.image, imgClassName]
         .filter(Boolean)
         .join(' ')}
-      src={src}
+      src={`/media/${src.toString().split("/")[1]}`}
       alt={alt || ''}
       onClick={onClick}
       onLoad={() => {

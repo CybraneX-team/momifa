@@ -11,7 +11,7 @@ import classes from './index.module.scss'
 import { useAuth } from '../../_providers/Auth'
 import { addToWishlist } from '../../../payload/utilities/addToWishlist'
 import Image from 'next/image'
-import toHex from 'colornames'
+// import toHex from 'colornames'
 import Link from 'next/link'
 import ReviewForm from '../../_components/ReviewForm'
 import { useCart } from '../../_providers/Cart'
@@ -38,7 +38,7 @@ export const ProductHero: React.FC<{
   const [chest, setChest] = useState(19)
   const [imagesLoding, setimagesLoading] = useState(true)
 
-  console.log(cart)
+  console.log("metaImage", metaImage)
   function setvalue(op){
     if(op === "reduce" && cartvalue !== 0){
       setcartvalue(prev=>prev-1)
@@ -148,9 +148,9 @@ export const ProductHero: React.FC<{
       const splittedURLArray = image.split("/");
   
       if (metaImage) {
-        const indexToReplace = imagess.indexOf(`http://localhost:3000/media/${splittedURLArray[splittedURLArray.length - 1]}`)
+        const indexToReplace = imagess.indexOf(`/media/${splittedURLArray[splittedURLArray.length - 1]}`)
         imagess.splice(indexToReplace, 1)
-        const newImages = [...imagess, `http://localhost:3000/media/${displayedImage.filename}`]
+        const newImages = [...imagess, `/media/${displayedImage.filename}`]
         setimagess(newImages)
         const newObjext  = {...displayedImage, filename: splittedURLArray[splittedURLArray.length - 1]}
         setdisplayedImage(newObjext)

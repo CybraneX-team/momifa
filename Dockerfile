@@ -3,10 +3,17 @@ FROM node:18-alpine as base
 FROM base as builder
 
 WORKDIR /home/node
+# Copy package files first to leverage cache
 COPY package*.json ./
+COPY yarn.lock ./
 
-COPY . .
+# Install all dependencies (including dev dependencies)
 RUN yarn install
+
+# Copy all source files
+COPY . .
+
+# Build both Payload and Next.js
 RUN yarn build
 
 FROM base as runtime
@@ -20,13 +27,22 @@ ENV OPENCAGE_API_KEY=ebda9b98fede49c0b6088d76200eeff8
 ENV PAYLOAD_PUBLIC_SERVER_URL=http://localhost:3000
 ENV NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 ENV NODE_ENV=production
-WORKDIR /home/node
-COPY package*.json  ./
 
+WORKDIR /home/node
+
+# Copy package files
+COPY package*.json yarn.lock ./
+# Install only production dependencies
 RUN yarn install --production
+
+# Copy built files from builder
 COPY --from=builder /home/node/dist ./dist
+COPY --from=builder /home/node/.next ./.next
 COPY --from=builder /home/node/build ./build
-COPY ./.next ./.next
+COPY --from=builder /home/node/public/media ./public/media
+# Add public folder if you have one
+COPY --from=builder /home/node/public ./public
+
 EXPOSE 3000
 
 CMD ["node", "dist/server.js"]

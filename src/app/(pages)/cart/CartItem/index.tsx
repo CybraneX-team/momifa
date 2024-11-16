@@ -63,7 +63,7 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
               className="flex lg:bg-[#292929b9] rounded-md -py-2  items-center w-[30px] lg:w-[40px] h-full cursor-pointer "
               onClick={decrementQty}
             >
-              <Image src="/assets/icons/minus.svg" alt="minus" width={20} height={20} />
+              <Image src="./assets/icons/minus.svg" alt="minus" width={20} height={20} />
             </div>
 
             <input
@@ -77,7 +77,7 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
               className=" flex  lg:bg-[#292929b9] rounded-md  items-center lg:w-[40px] h-full cursor-pointer"
               onClick={incrementQty}
             >
-              <Image src="/assets/icons/plus.svg" alt="plus" width={25} height={25} />
+              <Image src="./assets/icons/plus.svg" alt="plus" width={25} height={25} />
             </div>
           </div>
         </div>

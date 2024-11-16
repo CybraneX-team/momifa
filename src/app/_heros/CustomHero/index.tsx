@@ -481,7 +481,8 @@ import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion'
 
 import classes from './index.module.scss'
 import Link from 'next/link'
-
+import hero1 from '../../../../public/media/hero.jpg'
+import hero2 from '../../../../public/media/hero2.jpg'
 export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
   const controls = useAnimation()
   const ref = useRef(null)
@@ -540,7 +541,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
               </h1>
               <div className="relative w-[35rem] h-full mt-16">
                 <Image
-                  src="/media/hero2.jpg"
+                  src={hero1}
                   alt="Fashion Collection"
                   layout="fill"
                   objectFit="cover"
@@ -554,7 +555,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
           <div className="absolute top-0 right-0 w-[45%] h-[37rem] p-8 pl-0 rounded-lg -ml-16">
             <div className="relative w-full h-full rounded-lg mt-16">
               <Image
-                src="/media/hero.jpg"
+                src={hero2}
                 alt="Premium Hoodies"
                 layout="fill"
                 objectFit="cover"

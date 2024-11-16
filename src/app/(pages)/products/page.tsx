@@ -1,7 +1,7 @@
 import React from 'react'
 import { draftMode } from 'next/headers'
 
-import { Category, Page } from '../../../payload/payload-types'
+import { Category, Page, Product } from '../../../payload/payload-types'
 import { fetchDoc } from '../../_api/fetchDoc'
 import { fetchDocs } from '../../_api/fetchDocs'
 import { Blocks } from '../../_components/Blocks'
@@ -16,6 +16,7 @@ const Products = async () => {
 
   let page: Page | null = null
   let categories: Category[] | null = null
+  let proudctColors: Product[] | null = null
 
   try {
     page = await fetchDoc<Page>({
@@ -25,22 +26,20 @@ const Products = async () => {
     })
 
     categories = await fetchDocs<Category>('categories')
+    proudctColors = await fetchDocs('products')
+    // console.log("proudctColors", proudctColors)
   } catch (error) {
     console.log(error)
   }
-
   return (
     <div className={classes.container}>
       <Gutter className={classes.products}>
-        <Filters categories={categories} />
-        <div className="-pl-20 lg:-pl-0">
+        <Filters categories={categories} productColors={proudctColors}  />
         <Blocks blocks={page?.layout} disableTopPadding={true} />
-        </div>
       </Gutter>
-      <HR />
+      {/* <HR /> */}
     </div>
   )
 }
 
 export default Products
-

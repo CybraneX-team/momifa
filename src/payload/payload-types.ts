@@ -411,6 +411,7 @@ export interface Order {
   }[];
   updatedAt: string;
   createdAt: string;
+  shipping: any;
 }
 export interface User {
   id: string;

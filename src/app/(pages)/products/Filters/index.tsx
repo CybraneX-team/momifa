@@ -1,26 +1,68 @@
 'use client'
-import { useState } from 'react';
-import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
-const Filters = () => {
+
+import { useEffect, useRef, useState } from 'react';
+import { Check } from 'lucide-react';
+import { Category, Product } from '../../../../payload/payload-types'
+import { useFilter } from '../../../_providers/Filter';
+import { Checkbox } from '../../../_components/Checkbox'
+import { fetchDocs } from '../../../_api/fetchDocs';
+
+const Filters =   ({ categories, productColors }: { categories: Category[], productColors : Product[] }) => {
   const [priceRange, setPriceRange] = useState(200);
   const [sizeRange, setSizeRange] = useState(15);
-  const [selectedTypes, setSelectedTypes] = useState(['Polo T-Shirts', 'T-shirts']);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-
-  const colors = [
-    { color: '#333333', label: 'Black' },
-    { color: '#9FDFFF', label: 'Sky Blue' },
-    { color: '#d11212', label: 'Cherry Red' },
-    { color: '#E39FFF', label: 'Purple' },
-    { color: '#FF9F9F', label: 'Coral' },
-    { color: '#FFFFFF', label: 'White' },
-    { color: '#2e5c32', label: 'Green' },
-    { color: '#ff2e4f', label: 'French Pink' }
-  ];
-
-  const types = ['Polo T-shirts', 'T-shirts'];
-
+  const [allColors, setallColors] = useState(productColors);
+  const [isSelected, setisSelected] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState(categories);
+  // const [selectedColor, setSelectedColor] = useState<[] | null>(null);
+  const { categoryFilters, sort, setCategoryFilters, setSort } = useFilter()
+  const colorButtonRef = useRef(null)
+  
+  // console.log("productColors",productColors)
+  useEffect(() => {
+    if(categoryFilters.length === 0){
+      setallColors(productColors)
+    }
+  }, [categoryFilters]);
+  
+  const handleColorClick = (colorObj) => {
+    handleCategoriesColor(colorObj.id, colorObj.color);  
+  };
+  const handleCategories = (categoryId: string) => {
+    
+    setallColors(productColors.filter((e) => e.categories[0].id === categoryId));
+    if(categoryFilters.length){
+      setCategoryFilters([])
+    }
+    if (categoryFilters.includes(categoryId)) {
+      const updatedCategories = categoryFilters.filter((id) => id !== categoryId);
+      setCategoryFilters(updatedCategories);
+    } else {
+      setCategoryFilters([...categoryFilters, categoryId]);
+    }
+  };
+  
+  
+  const handleCategoriesColor = (categoryId: string, colorName: string) => {
+    // Remove the first element if it is a string
+    let updatedFilters = [...categoryFilters];
+    if (typeof updatedFilters[0] === "string") {
+      updatedFilters = updatedFilters.slice(1);
+    }
+  
+    // Check if the category already exists
+    const exists = updatedFilters.some(e => e.categoryId === categoryId);
+  
+    if (exists) {
+      // Remove the existing category
+      const filteredCategories = updatedFilters.filter(e => e.categoryId !== categoryId);
+      setCategoryFilters(filteredCategories);
+    } else {
+      // Add the new category
+      setCategoryFilters([...updatedFilters, { categoryId, colorName }]);
+    }
+  };
+  
   const handleTypeSelect = (type) => {
     if (selectedTypes.includes(type)) {
       setSelectedTypes(selectedTypes.filter(t => t !== type));
@@ -28,57 +70,71 @@ const Filters = () => {
       setSelectedTypes([...selectedTypes, type]);
     }
   };
-
-  const handlePrice = (e) => {
+  
+  const handlePriceChange = (e) => {
     setPriceRange(Number(e.target.value));
   };
 
-  const handleSize = (e) => {
+  const handleSizeChange = (e) => {
     setSizeRange(Number(e.target.value));
   };
+  
 
-  const FilterContent = () => (
-    <div className="space-y-6">
-      <div className="mb-6">
+  return (
+    <div className="w-64 h-fit bg-black p-6 text-white -ml-24 mt-10 pt-16">
+      <div className="border-r border-[#8b8b8b] pr-10 -mr-6">
+      <div className="mb-8 ">
+        {/* <h1 className="text-2xl font-bold mb-4">Polo T-Shirts</h1> */}
+        <h2 className="text-lg mb-4">Filters</h2>
+      </div>
+      <div className="mb-8">
         <h3 className="text-sm mb-4">Colors</h3>
         <div className="grid grid-cols-4 gap-2">
-          {colors.map((colorObj) => (
+          {allColors.map((colorObj) => (
             <button
               key={colorObj.color}
-              className="w-8 h-8 rounded-full border-2 border-white"
+              className={`w-8 h-8 rounded-full border-2 border-white`}
               style={{ backgroundColor: colorObj.color }}
+              ref={colorButtonRef}
+              onClick={
+                ()=>{
+                  {
+                    handleColorClick(colorObj)
+                  }
+                }
+              }              
             />
           ))}
         </div>
       </div>
 
-      <div className="mb-6">
-        <h3 className="text-sm mb-4">Type</h3>
-        <div className="space-y-3">
-          {types.map((type) => (
-            <div key={type} className="flex items-center">
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    className="hidden"
-                    checked={selectedTypes.includes(type)}
-                    onChange={() => handleTypeSelect(type)}
-                  />
-                  <div className="w-4 h-4 border border-white flex items-center justify-center">
-                    {selectedTypes.includes(type) && (
-                      <Check size={14} className="text-[#5F96FF]" />
-                    )}
-                  </div>
-                </div>
-                <span className="text-sm">{type}</span>
-              </label>
+    
+  <div className="mb-8">
+  <h3 className="text-sm mb-4">Type</h3>
+  <div className="space-y-3">
+    {categories.map((type) => {
+      return (
+        <div key={type.id} className="flex items-center">
+          <label className="flex items-center space-x-2 cursor-pointer">
+            <div >
+              <Checkbox
+                key={type.id}
+                label={type.title}
+                value={type.id}
+                isSelected={isSelected}
+                onClickHandler={handleCategories}
+              />
             </div>
-          ))}
+          </label>
         </div>
-      </div>
+      );
+    })}
+  </div>
+</div>
 
-      <div className="mb-6">
+
+      
+      <div className="mb-8">
         <h3 className="text-sm mb-4">Price range</h3>
         <div className="relative">
           <input
@@ -86,8 +142,8 @@ const Filters = () => {
             min="10"
             max="400"
             value={priceRange}
-            onChange={handlePrice}
-            className="w-full h-0.5 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+            onChange={handlePriceChange}
+            className="w-full h-0.5 bg-gray-600 rounded-lg appearance-none  cursor-pointer"
           />
           <div className="flex justify-between text-xs mt-2">
             <span>10$</span>
@@ -97,6 +153,7 @@ const Filters = () => {
         </div>
       </div>
 
+    
       <div>
         <h3 className="text-sm mb-4">Size</h3>
         <div className="relative">
@@ -105,7 +162,7 @@ const Filters = () => {
             min="10"
             max="120"
             value={sizeRange}
-            onChange={handleSize}
+            onChange={handleSizeChange}
             className="w-full h-0.5 bg-gray-600 rounded-lg appearance-none cursor-pointer"
           />
           <div className="flex justify-between text-xs mt-2">
@@ -116,45 +173,7 @@ const Filters = () => {
         </div>
       </div>
     </div>
-  );
-
-  return (
-    <>
-       {/* Mobile */}
-      <div className="lg:hidden w-full bg-black text-white pt-24">
-        <button
-          onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-          className="w-full px-4 py-3 flex justify-between items-center"
-        >
-          <div>
-            <h2 className="text-lg font-bold">Filters</h2>
-            <p className="text-sm text-gray-400">
-              {selectedTypes.length} selected
-            </p>
-          </div>
-          {isMobileFilterOpen ? (
-            <ChevronUp size={24} />
-          ) : (
-            <ChevronDown size={24} />
-          )}
-        </button>
-        
-        <div className={`px-4 pb-4 ${isMobileFilterOpen ? 'block' : 'hidden'}`}>
-          <FilterContent />
-        </div>
-      </div>
-
-      {/* Desktop*/}
-      <div className="hidden lg:block w-72 h-fit bg-black p-6 text-white -ml-24 pt-24">
-        <div className="border-r border-[#747474] pr-10 ">
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold mb-4">Polo T-Shirts</h1>
-            <h2 className="text-lg mb-4">Filters</h2>
-          </div>
-          <FilterContent />
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 

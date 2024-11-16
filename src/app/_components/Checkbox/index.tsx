@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import classes from './index.module.scss'
+import { useFilter } from '../../_providers/Filter'
 
 interface CheckboxProps {
   label: string
@@ -11,8 +12,17 @@ interface CheckboxProps {
 
 export const Checkbox: React.FC<CheckboxProps> = ({ label, value, isSelected, onClickHandler }) => {
   const [isChecked, setIsChecked] = useState(isSelected)
-
+  const { categoryFilters, sort, setCategoryFilters, setSort } = useFilter()
+  useEffect(() => {
+    if(categoryFilters.length === 0){
+      setIsChecked(false)
+    }
+  }, [categoryFilters])
+  
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if(categoryFilters.length){
+      setCategoryFilters([])
+    }
     setIsChecked(e.target.checked)
     onClickHandler(value)
   }

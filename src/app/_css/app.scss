@@ -36,7 +36,8 @@
 }
 html {
   @extend %body;
-  background-image: url(../../../media/bg-momifa.jpg);
+  // background-image: url(../../../media/bg-momifa.jpg);
+  background-image: url(../../../public/media/bg-momifa.jpg) ;
   background-attachment: fixed;
   background-position: center center;
   background-repeat: no-repeat;
@@ -51,7 +52,7 @@ html {
     opacity: initial;
   }
   @media (max-width: 738px) {
-    background-image: url(../../../media/mobile-bg.png);
+    background-image: url(../../../public/media/mobile-bg.png);
     background-attachment: fixed;
     background-position: center center;
     background-repeat: no-repeat;

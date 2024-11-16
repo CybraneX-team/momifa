@@ -6,7 +6,12 @@ export const PRODUCTS = `
   query Products {
     Products(limit: 300) {
       docs {
+          id
         slug
+        color
+        categories {
+        id
+      }
       }
     }
   }

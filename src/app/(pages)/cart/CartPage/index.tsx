@@ -459,7 +459,7 @@ export const CartPage: React.FC<{
                   <p className="text-[#BDBDBD] md:text-white text-sm flex items-center pb-3 pt-2 cursor-pointer border-[#4a4a4ae8] font-bold">
                     <span className="inline-flex mr-3 p-2 md:p-4 bg-[#494949] rounded-full">
                       <Image
-                        src="/assets/icons/arrow-left.svg"
+                        src="./assets/icons/arrow-left.svg"
                         alt="minus"
                         width={24}
                         height={24}

@@ -85,51 +85,76 @@ export const CollectionArchive: React.FC<Props> = props => {
     // hydrate the block with fresh content after first render
     // don't show loader unless the request takes longer than x ms
     // and don't show it during initial hydration
+    console.log("categoryFilters", categoryFilters)
     const timer: NodeJS.Timeout = setTimeout(() => {
       if (hasHydrated) {
         setIsLoading(true)
       }
     }, 500)
     let searchQuery 
-    {pathname === "/" ?   searchQuery = qs.stringify(
-      {
-        sort,
-        where: {
-          categories: {
-            equals: ["66d84c39de430483fc1cb4c1"],
+    if (pathname === "/") {
+      searchQuery = qs.stringify(
+        {
+          sort,
+          where: {
+            categories: {
+              equals: ["66d84c39de430483fc1cb4c1"],
+            },
           },
+          limit,
+          page,
+          depth: 1,
         },
-        limit,
-        page,
-        depth: 1,
-      },
-      { encode: false }
-    ) : 
-     searchQuery = qs.stringify(
-      {
-        sort,
-        where: {
-          ...(categoryFilters && categoryFilters?.length > 0
-            ? {
-                categories: {
-                  in:
-                    typeof categoryFilters === 'string'
-                      ? [categoryFilters]
-                      : categoryFilters.map((cat: string) => cat).join(','),
-                },
-              }
-            : {}),
+        { encode: false }
+      );
+    } else if (categoryFilters[0] && typeof categoryFilters[0] === 'string') {
+      searchQuery = qs.stringify(
+        {
+          sort,
+          where: {
+            ...(categoryFilters && categoryFilters?.length > 0
+              ? {
+                  categories: {
+                    in:
+                      typeof categoryFilters === 'string'
+                        ? [categoryFilters]
+                        : categoryFilters.map((cat: any) => cat).join(','),
+                  },
+                }
+              : {}),
+          },
+          limit,
+          page,
+          depth: 1,
+        } , 
+        { encode: false }
+      )
+    } else {
+      searchQuery = qs.stringify(
+        {
+          sort,
+          where: {
+            ...(categoryFilters && categoryFilters.length > 0
+              ? {
+                  color: {
+                    in: categoryFilters
+                    .map((cat: any) => cat.colorName)
+                    .join(",")
+                    .replace(/#/g, "%23")
+                  },
+                }
+              : {}),
+          },
+          limit,
+          page,
+          depth: 1,
         },
-        limit,
-        page,
-        depth: 1,
-      },
-      { encode: false }
-    );
-  }
+        { encode: false }
+      );      
+    }
     
-
     const makeRequest = async () => {
+      console.log("searchQuery", searchQuery)
       try {
         const req = await fetch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/${relationTo}?${searchQuery}`,

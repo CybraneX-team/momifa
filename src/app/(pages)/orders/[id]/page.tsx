@@ -23,6 +23,7 @@ export default async function Order({ params: { id } }) {
   })
 
   let order: Order | null = null
+  let trackingInfo = null
 
   try {
     order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}`, {
@@ -37,8 +38,20 @@ export default async function Order({ params: { id } }) {
       if ('errors' in json && json.errors) notFound()
       return json
     })
+
+    if (order?.trackingNumber) {
+      trackingInfo = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/tracking/${order.trackingNumber}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `JWT ${token}`,
+          },
+        },
+      ).then(res => res.json())
+    }
   } catch (error) {
-    console.error(error) // eslint-disable-line no-console
+    console.error(error)
   }
 
   if (!order) {
@@ -55,6 +68,9 @@ export default async function Order({ params: { id } }) {
         <p>{`ID: ${order.id}`}</p>
         <p>{`Payment Intent: ${order.stripePaymentIntentID}`}</p>
         <p>{`Ordered On: ${formatDateTime(order.createdAt)}`}</p>
+        {order.trackingNumber && (
+          <p>{`Tracking Number: ${order.trackingNumber}`}</p>
+        )}
         <p className={classes.total}>
           {'Total: '}
           {new Intl.NumberFormat('en-US', {
@@ -64,6 +80,46 @@ export default async function Order({ params: { id } }) {
         </p>
       </div>
       <HR />
+
+      {order.trackingNumber && (
+        <>
+          <div className="bg-[#181818] border border-[#404040] p-5 mb-6 rounded-lg">
+            <h4 className="text-xl font-medium mb-4">Tracking Status</h4>
+            <div className="flex flex-col items-start space-y-4">
+              <div className="flex items-center w-full justify-between">
+                <div className="flex items-center">
+                  <p className="text-[#D1D1D1] text-sm mr-2">Pickup</p>
+                  <div className={`w-1 h-2 ${order.status === 'pending' ? 'bg-green-500' : 'bg-[#404040]'} rounded-full`}></div>
+                </div>
+                <div className="flex-grow mx-4">
+                  <div className="h-0.5 bg-[#404040]"></div>
+                </div>
+                <div className="flex items-center">
+                  <p className="text-[#D1D1D1] text-sm mr-2">Shipped</p>
+                  <div className={`w-1 h-2 ${order.status === 'shipped' ? 'bg-green-500' : 'bg-[#404040]'} rounded-full`}></div>
+                </div>
+                <div className="flex-grow mx-4">
+                  <div className="h-0.5 bg-[#404040]"></div>
+                </div>
+                <div className="flex items-center">
+                  <p className="text-[#D1D1D1] text-sm mr-2">Delivered</p>
+                  <div className={`w-1 h-2 ${order.status === 'delivered' ? 'bg-green-500' : 'bg-[#404040]'} rounded-full`}></div>
+                </div>
+              </div>
+
+              {trackingInfo && (
+                <div className="mt-4 text-[#D1D1D1] w-full">
+                  <p className="mb-2">Current Status: {trackingInfo.status}</p>
+                  <p className="mb-2">Location: {trackingInfo.location}</p>
+                  <p>Last Update: {formatDateTime(trackingInfo.timestamp)}</p>
+                </div>
+              )}
+            </div>
+          </div>
+          <HR />
+        </>
+      )}
+
       <div className={classes.order}>
         <h4 className={classes.orderItems}>Items</h4>
         {order.items?.map((item, index) => {
@@ -75,7 +131,6 @@ export default async function Order({ params: { id } }) {
             } = item
 
             const isLast = index === (order?.items?.length || 0) - 1
-
             const metaImage = meta?.image
 
             return (
@@ -117,7 +172,6 @@ export default async function Order({ params: { id } }) {
               </Fragment>
             )
           }
-
           return null
         })}
       </div>

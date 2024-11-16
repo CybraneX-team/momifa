@@ -2,15 +2,14 @@ import dotenv from 'dotenv'
 import next from 'next'
 import nextBuild from 'next/dist/build'
 import path from 'path'
+import express from 'express'
+import payload from 'payload'
+import { seed } from './payload/seed'
+import { initializeTrackingCron } from './payload/cron/updateTrackingStatus'
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
 })
-
-import express from 'express'
-import payload from 'payload'
-
-import { seed } from './payload/seed'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -21,6 +20,7 @@ const start = async (): Promise<void> => {
     express: app,
     onInit: () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
+      initializeTrackingCron()
     },
   })
 
@@ -32,13 +32,22 @@ const start = async (): Promise<void> => {
   if (process.env.NEXT_BUILD) {
     app.listen(PORT, async () => {
       payload.logger.info(`Next.js is now building...`)
-      // @ts-expect-error
-      await nextBuild(path.join(__dirname, '../'))
+      await nextBuild(
+        path.join(__dirname, '../'), // dir
+        false,                       // reactProductionProfiling
+        false,                       // debugOutput
+        true,                        // runLint
+        false,                       // noMangling
+        false,                       // appDirOnly
+        false,                       // turboNextBuild
+        null,                        // turboNextBuildRoot
+        'default'                    // buildMode
+      )
       process.exit()
     })
-
     return
   }
+
   app.get('/api/images', async (req, res) => {
     try {
       const productId = req.query.productId as string;
@@ -47,11 +56,15 @@ const start = async (): Promise<void> => {
         collection: "products"
       }) as { images?: { image: { url: string } }[] };
       const filteredProducts = products.images?.map(image => image.image.url);
-      res.json(filteredProducts);
+      const finalImages = filteredProducts.map((e)=>{ 
+        return e.replace('http://localhost:3000', '')
+      })
+      res.json(finalImages);
     } catch (error) {
       res.status(500).json({ error: 'Failed to fetch products' });
     }
   });
+
   const nextApp = next({
     dev: process.env.NODE_ENV !== 'production',
   })
@@ -62,7 +75,6 @@ const start = async (): Promise<void> => {
 
   nextApp.prepare().then(() => {
     payload.logger.info('Starting Next.js...')
-
     app.listen(PORT, async () => {
       payload.logger.info(`Next.js App URL: ${process.env.PAYLOAD_PUBLIC_SERVER_URL}`)
     })
