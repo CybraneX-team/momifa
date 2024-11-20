@@ -234,25 +234,28 @@ export const CartPage: React.FC<{
   const handleCardSelect = (cardId) => {
     setSelectedCard(cardId)
   }
-  useEffect(() => {
-    const fetchAddresses = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/address?where[user][equals]=${user.id}`);
-        if (response.ok) {
-          const data = await response.json();
-          setAddresses(data.docs); // Assuming the API returns an array of address objects in 'docs'
-        } else {
-          throw new Error('Failed to fetch addresses');
-        }
-      } catch (error) {
-        console.error('Error fetching addresses:', error);
-        toast.error('Failed to load addresses.');
-      }
-    };
+  const fetchSavedAddresses = async () => {
+    if (!user?.id) return;
 
-    if (user?.id) {
-      fetchAddresses(); // Call the function if user is logged in
+    try {
+      const response = await fetch(`http://localhost:3000/api/address?where[user][equals]=${user.id}`, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setAddresses(data.docs);
+      } else {
+        throw new Error(data.message || 'Failed to fetch addresses');
+      }
+    } catch (error) {
+      console.error('Error fetching addresses:', error);
+      toast.error('Failed to load addresses.');
     }
+  };
+
+  // Fetch addresses on component mount or user change
+  useEffect(() => {
+    fetchSavedAddresses();
   }, [user]);
   
   const handleAddAddress = async () => {
@@ -287,6 +290,7 @@ export const CartPage: React.FC<{
             setAddresses(prevAddresses => [...prevAddresses, newAddressWithId]);
             setSelectedAddress(data.id);
             setShowAddAddress(false);
+            await fetchSavedAddresses();
             setNewAddress({ street: '', city: '', state: '', postalCode: '', country: '' });
             toast.success('Address saved successfully!', {
               className: 'bg-transparent',
