@@ -29,17 +29,35 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
   }, [controls, inView])
 
   const footerLinks = [
-    { title: 'Usefull Links', items: ['About us', 'Our Story', 'Quality', 'Contact us'] },
+    { title: 'Useful Links', items: [
+      {item:'About us', url:"/about"},         
+        {item:'Our Story', url:"#"},         
+        {item:'Quality', url:"#"},         
+        {item:'Contact us', url:"#"},   
+    ] },
     {
       title: 'Information',
-      items: ['Privacy Policy', 'Terms of Service', 'Refund Policy', 'Apply for Collabs'],
+      items: [
+        {item:'Privacy Policy', url:"#"},         
+        {item:'Terms of Service', url:"#"},         
+        {item:'Refund Policy', url:"#"},         
+        {item:'Apply for Collabs', url:"#"},         
+
+       ],
+    },
+    {
+      title: 'Contact',
+      items: [
+        {item:'+1 732-232-5549', url:"#"},     
+        {item:'hello@momifa.com', url:"mailto:support@sendpotion.com"},     
+      ]
     },
   ]
 
   const socialLinks = [
-    { icon: '/path-to-instagram-icon.svg', url: '#' },
-    { icon: '/path-to-twitter-icon.svg', url: '#' },
-    { icon: '/path-to-facebook-icon.svg', url: '#' },
+    { icon: '/media/icon.svg', url: 'https://www.instagram.com/momifa.official/profilecard/?igsh=bGg0b3d5YTJiZDVo' },
+    { icon: '/media/icon2.svg', url: 'https://x.com/MomifaOfficial' },
+    { icon: '/media/icon3.svg', url: '#' },
     { icon: '/path-to-linkedin-icon.svg', url: '#' },
     { icon: '/path-to-youtube-icon.svg', url: '#' },
   ]
@@ -69,7 +87,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
       ref={ref}
       className={noHeaderFooterUrls.includes(pathname) ? classes.hide : classes.footer}
     >
-      <Gutter>
+     
         <motion.div
           className={classes.footerContent}
           variants={containerVariants}
@@ -125,11 +143,11 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
 
           {footerLinks.map((column, index) => (
             <motion.div key={index} className={classes.linkColumn} variants={itemVariants}>
-              <motion.h3 variants={itemVariants}>{column.title}</motion.h3>
+              <motion.h3 variants={itemVariants} className={classes.title}>{column.title}</motion.h3>
               <motion.ul variants={containerVariants}>
                 {column.items.map((item, itemIndex) => (
                   <motion.li key={itemIndex} variants={itemVariants}>
-                    <Link href="#">{item}</Link>
+                    <Link href={item.url}>{item.item}</Link>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -137,12 +155,15 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
           ))}
         </motion.div>
 
+
         <motion.div
           className={classes.bottomSection}
           variants={containerVariants}
           initial="hidden"
           animate={controls}
         >
+          <motion.div className="flex flex-col -mt-10">
+          <motion.h3 variants={itemVariants} className="font-bold text-left ml-12 text-lg">Socials</motion.h3>
           <motion.div className={classes.socialLinks} variants={containerVariants}>
             {socialLinks.map((link, index) => (
               <motion.div key={index} variants={itemVariants}>
@@ -152,16 +173,9 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
               </motion.div>
             ))}
           </motion.div>
-          <motion.div className={classes.legalLinks} variants={containerVariants}>
-            <motion.div variants={itemVariants}>
-              <Link href="#">+1 732-232-5549</Link>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <a href="mailto:support@sendpotion.com">hello@momifa.com</a>
-            </motion.div>
           </motion.div>
         </motion.div>
-      </Gutter>
+   
     </footer>
   )
 }

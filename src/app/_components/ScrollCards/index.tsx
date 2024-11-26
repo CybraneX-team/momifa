@@ -36,9 +36,19 @@ const textColors = ['#ffffff', '#000000']
 
 const HorizontalScroll = () => {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const triggerRef = useRef<HTMLElement>(null)
   const [isMobile, setIsMobile] = useState(false)
   const scrollTriggerInstance = useRef<ScrollTrigger | null>(null)
+
+  useEffect(() => {
+    // Auto-play video when component mounts
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.log("Video autoplay failed:", error)
+      })
+    }
+  }, [])
 
   useEffect(() => {
     let resizeTimer: NodeJS.Timeout
@@ -152,9 +162,13 @@ const HorizontalScroll = () => {
         data-scroll-section
       >
         <div
-          className={`${styles.scrollSection} ${styles.introSection} text-center md:text-left -mb-10 md:-mb-0`}
+          className={`${styles.scrollSection} ${styles.introSection} text-center md:text-left -mb-10 md:-mb-0 flex items-center gap-8`}
         >
           <h1>Why Choose Momifa?</h1>
+        <img
+            src="/media/gif.gif" 
+            className="w-60 h-auto object-cover rounded-md"
+          />
         </div>
         {services.map((service, index) => (
           <div key={index} className={styles.scrollSection}>

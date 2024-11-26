@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -35,6 +35,7 @@ import FAQ from '../../_components/FAQ'
 import ProductsOnHome from '../../_components/ProductsOnHome'
 import Head from 'next/head'
 import Hoodies from '../../_components/Hoodies'
+import ToastNotifier from './TostNotifier'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
@@ -94,13 +95,17 @@ export default async function Page({ params: { slug = 'home' } }) {
   }
 
   const { hero, layout } = page
-
+  
   return (
     <React.Fragment>
+      <ToastNotifier />
       {slug === 'home' ? (
         <>
         <Head>
-         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          {/*  Prevent telephone number detection on iOS */}
+          <meta name="format-detection" content="telephone=no" />
        </Head>
         <section>
           <Hero {...hero} />
@@ -132,7 +137,10 @@ export default async function Page({ params: { slug = 'home' } }) {
       ) : (
         <>
         <Head>
-         <meta name="viewport" content="width=device-width, initial-scale=1.0,  user-scalable=no" />
+         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          {/* Optional: Prevent telephone number detection on iOS */}
+          <meta name="format-detection" content="telephone=no" />
         </Head>
           <Hero {...hero} />
           <Blocks

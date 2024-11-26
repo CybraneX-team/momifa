@@ -102,7 +102,7 @@ const CreateAccountForm: React.FC = () => {
 
   return (
     <>
-      <div className="flex w-screen  overflow-hidden mt-5 md:-mt-10">
+      <div className="flex w-screen h-screen overflow-hidden p-5">
         {/* Left Section Image*/}
 
         <motion.div
@@ -123,13 +123,13 @@ const CreateAccountForm: React.FC = () => {
 
         {/* Right Section Form */}
         <motion.div
-          className=" p-10 -pt-5 px-12  w-screen "
+          className=" p-5 md:overflow-y-hidden h-screen w-screen bg-transparent lg:bg-gradient-to-b lg:from-black lg:via-[#22193741] lg:to-[#2219373f]"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
           style={{
-            overflowY: 'hidden',
-            background: 'linear-gradient(to bottom, #000 10%, #392a5b 300%)',
+            // overflowY: 'hidden',
+            // background: 'transparent',
           }}
         >
           <ToastContainer
@@ -147,9 +147,9 @@ const CreateAccountForm: React.FC = () => {
           />
           <motion.div
             variants={containerVariants}
-            className="flex flex-col justify-center p-10 md:px-24 -mt-10 md:mt-14 lg:-mt-10"
+            className="flex flex-col justify-center p-5 md:px-24 -mt-6 md:mt-14 lg:-mt-10"
           >
-            <motion.h2 variants={itemVariants} className="text-white text-2xl mb-3 md:text-4xl">
+            <motion.h2 variants={itemVariants} className="text-white text-2xl mb-0 md:text-3xl">
               Create an Account!
             </motion.h2>
 
@@ -160,13 +160,13 @@ const CreateAccountForm: React.FC = () => {
             >
               <motion.div
                 variants={containerVariants}
-                className="flex flex-col md:flex-row items-center justify-center  w-full"
+                className="flex flex-col md:flex-row items-center justify-center -mt-1  w-full"
               >
                 <div className="flex flex-col  mr-2 w-full">
                   <motion.label
                     htmlFor="name"
                     variants={itemVariants}
-                    className="text-white  text-lg md:text-xl font-medium"
+                    className="text-white text-lg font-medium"
                   >
                     Full Name
                   </motion.label>
@@ -177,7 +177,7 @@ const CreateAccountForm: React.FC = () => {
                     variants={itemVariants}
                     placeholder="Your Full Name"
                     required
-                    className="text-[#A19B9B] mt-3 md:mt-2 text-lg focus:outline-none w-full p-3  bg-transparent border border-[#363636] rounded-lg"
+                    className="text-[#A19B9B] mt-3 md:mt-2 text-base focus:outline-none w-full px-3 py-2 bg-transparent border border-[#363636] rounded-lg"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ const CreateAccountForm: React.FC = () => {
                   <motion.label
                     htmlFor="email"
                     variants={itemVariants}
-                    className="text-white text-lg md:text-xl font-medium"
+                    className="text-white text-lg font-medium"
                   >
                     Email
                   </motion.label>
@@ -198,7 +198,7 @@ const CreateAccountForm: React.FC = () => {
                     variants={itemVariants}
                     placeholder="Your email address"
                     required
-                    className="text-[#A19B9B] text-lg focus:outline-none w-full p-3  mt-3 md:mt-2 bg-transparent border border-[#363636] rounded-lg"
+                    className="text-[#A19B9B] text-base focus:outline-none w-full px-3 py-2 mt-3 md:mt-2 bg-transparent border border-[#363636] rounded-lg"
                   />
                 </div>
               </motion.div>
@@ -206,7 +206,7 @@ const CreateAccountForm: React.FC = () => {
               <motion.label
                 htmlFor="password"
                 variants={itemVariants}
-                className="text-white mt-1 text-lg md:text-xl font-medium"
+                className="text-white -mt-2 text-lg font-medium"
               >
                 Password
               </motion.label>
@@ -217,12 +217,12 @@ const CreateAccountForm: React.FC = () => {
                 placeholder="Your password"
                 variants={itemVariants}
                 required
-                className="text-[#A19B9B] text-xl font-medium focus:outline-none w-full p-3  -mt-1 bg-transparent border border-[#363636] rounded-lg"
+                className="text-[#A19B9B] text-lg font-medium focus:outline-none w-full px-3 py-2 -mt-2 bg-transparent border border-[#363636] rounded-lg"
               />
               <motion.label
                 htmlFor="password"
                 variants={itemVariants}
-                className="text-white mt-1 text-lg md:text-xl font-medium"
+                className="text-white -mt-2 text-lg  font-medium"
               >
                 Confirm Password
               </motion.label>
@@ -233,7 +233,7 @@ const CreateAccountForm: React.FC = () => {
                 variants={itemVariants}
                 placeholder="Confirm password"
                 required
-                className="text-[#A19B9B] text-xl font-medium focus:outline-none w-full p-2 py-3 -mt-1 bg-transparent border border-[#363636] rounded-lg"
+                className="text-[#A19B9B] text-base font-medium focus:outline-none w-full px-3 py-2 -mt-2 bg-transparent border border-[#363636] rounded-lg"
               />
 
               {/* Submit button */}

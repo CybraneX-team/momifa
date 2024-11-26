@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import classes from './index.module.scss'
-import img from './media/img.jpg'
-import img02 from './media/img02.jpg'
-import img03 from './media/img03.jpg'
-import img04 from './media/img04.jpg'
+import img from './media/branded.png'
+import img02 from './media/plainn.png'
+import img03 from './media/polo.jpg'
+// import img03 from './media/img03.jpg'
+import img04 from './media/access.png'
 
 const CategoryCard = () => {
   const ref = React.useRef(null)

@@ -541,7 +541,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
               </h1>
               <div className="relative w-[35rem] h-full mt-16">
                 <Image
-                  src={hero1}
+                  src={hero2}
                   alt="Fashion Collection"
                   layout="fill"
                   objectFit="cover"
@@ -555,7 +555,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
           <div className="absolute top-0 right-0 w-[45%] h-[37rem] p-8 pl-0 rounded-lg -ml-16">
             <div className="relative w-full h-full rounded-lg mt-16">
               <Image
-                src={hero2}
+                src={hero1}
                 alt="Premium Hoodies"
                 layout="fill"
                 objectFit="cover"
