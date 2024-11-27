@@ -31,10 +31,9 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const [savedCards, setSavedCards] = useState([]);
 
   const SavedCard = ({ id, last4, expMonth, expYear, brand, isSelected }) => (
-    <div 
-      className={`w-full p-4 shadow cursor-pointer mb-2 ${
-        isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
-      }`}
+    <div
+      className={`w-full p-4 shadow cursor-pointer mb-2 ${isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
+        }`}
     >
       <div className="flex justify-between items-center mb-2">
         <h5 className="text-lg text-white">{brand} **** {last4}</h5>
@@ -50,7 +49,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     async function fetchWishlistData() {
       try {
         const req = await fetch(
-          `http://localhost:3000/api/wishlist?where[user][equals]=${user.id}&depth=2&populate=product`,
+          `http://145.223.74.227/api/wishlist?where[user][equals]=${user.id}&depth=2&populate=product`,
         )
         const res = await req.json()
         setWishlistItems(res.docs.map(item => item.product.title))
@@ -80,7 +79,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/address?where[user][equals]=${user.id}`);
+        const response = await fetch(`http://145.223.74.227/api/address?where[user][equals]=${user.id}`);
         if (response.ok) {
           const data = await response.json();
           setAddresses(data.docs); // Assuming the API returns an array of address objects in 'docs'
@@ -195,24 +194,24 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="bg-transparent rounded-xl p-6">
               <h4 className="text-2xl  mb-4">Saved Information</h4>
               <h5 style={{ textDecoration: 'underline' }}> Saved Addresses</h5>
-                {addresses.map(addr => (
-                  <div key={addr.id} className="flex items-center space-x-2 mb-2">
-                    <label htmlFor={`address-${addr.id}`} className="text-white">{`${addr.street}, ${addr.city}, ${addr.state} ${addr.postalCode}, ${addr.country}`}</label>
-                  </div>
-                ))}
+              {addresses.map(addr => (
+                <div key={addr.id} className="flex items-center space-x-2 mb-2">
+                  <label htmlFor={`address-${addr.id}`} className="text-white">{`${addr.street}, ${addr.city}, ${addr.state} ${addr.postalCode}, ${addr.country}`}</label>
+                </div>
+              ))}
               <h5 style={{ textDecoration: 'underline' }}>Saved Cards</h5>
               {loadingSavedCards ? (
                 <p>Loading saved cards...</p>
-                ) : savedCards.length > 0 ? (
-                    savedCards.map((card) => (
-                        <SavedCard
-                            key={card.id}
-                            {...card}
-                        />
-                    ))
-                ) : (
-                    <p>No saved cards found.</p>
-                )}
+              ) : savedCards.length > 0 ? (
+                savedCards.map((card) => (
+                  <SavedCard
+                    key={card.id}
+                    {...card}
+                  />
+                ))
+              ) : (
+                <p>No saved cards found.</p>
+              )}
             </div>
           </div>
         </div>

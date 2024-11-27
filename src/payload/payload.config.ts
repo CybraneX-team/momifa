@@ -105,7 +105,7 @@ export default buildConfig({
   },
   cors: [
     'https://checkout.stripe.com', 
-    'http://localhost:3000',  
+    'http://145.223.74.227',  
     'http://145.223.74.227',        
     'http://192.168.1.8:3000',        
     process.env.PAYLOAD_PUBLIC_SERVER_URL || ''
@@ -113,7 +113,7 @@ export default buildConfig({
   
   csrf: [
     'https://checkout.stripe.com', 
-    'http://localhost:3000',    
+    'http://145.223.74.227',    
     'http://145.223.74.227',     
     'http://192.168.1.8:3000',        
     process.env.PAYLOAD_PUBLIC_SERVER_URL || ''

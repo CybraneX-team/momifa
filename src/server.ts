@@ -57,7 +57,7 @@ const start = async (): Promise<void> => {
       }) as { images?: { image: { url: string } }[] };
       const filteredProducts = products.images?.map(image => image.image.url);
       const finalImages = filteredProducts.map((e)=>{ 
-        return e.replace('http://localhost:3000', '')
+        return e.replace('http://145.223.74.227', '')
       })
       res.json(finalImages);
     } catch (error) {

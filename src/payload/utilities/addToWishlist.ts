@@ -1,6 +1,6 @@
 export const addToWishlist = async (productId: string, userId:string) =>{
     try {
-        const response = await fetch("http://localhost:3000/api/wishlist", {
+        const response = await fetch("http://145.223.74.227/api/wishlist", {
             method: "POST", 
             headers: {
                 'Content-Type': "application/json"

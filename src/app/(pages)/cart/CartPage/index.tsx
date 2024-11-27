@@ -27,15 +27,14 @@ const dummyProduct = {
 }
 
 const SavedCard = ({ id, last4, expMonth, expYear, brand, isSelected, onClick, onDelete }) => (
-  <div 
-    className={`w-full p-4 border rounded-lg shadow cursor-pointer mb-2 ${
-      isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
-    }`}
+  <div
+    className={`w-full p-4 border rounded-lg shadow cursor-pointer mb-2 ${isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
+      }`}
     onClick={() => onClick(id)}
   >
     <div className="flex justify-between items-center mb-2">
       <h5 className="text-lg font-bold text-white">{brand} **** {last4}</h5>
-      <button 
+      <button
         onClick={(e) => { e.stopPropagation(); onDelete(id); }}
         className="text-red-500 hover:text-red-700"
         style={{ backgroundColor: "#FF1744", color: "white", border: "none", borderRadius: "4px", padding: '4px 8px', fontSize: '14px', fontWeight: "600", cursor: "pointer", transition: "background-color 0.2s" }}>
@@ -159,7 +158,7 @@ export const CartPage: React.FC<{
       fetch("/api/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           items: [{ product: dummyProduct, quantity: 1 }],
           saveCard: true
         }),
@@ -167,7 +166,7 @@ export const CartPage: React.FC<{
         .then((res) => res.json())
         .then((data) => setClientSecret(data.clientSecret))
         .catch((error) => console.error('Error creating PaymentIntent:', error))
-  
+
       fetch("/api/get-saved-cards")
         .then((res) => res.json())
         .then((data) => {
@@ -238,7 +237,7 @@ export const CartPage: React.FC<{
     if (!user?.id) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/address?where[user][equals]=${user.id}`, {
+      const response = await fetch(`http://145.223.74.227/api/address?where[user][equals]=${user.id}`, {
         headers: { 'Content-Type': 'application/json' },
       });
       const data = await response.json();
@@ -257,7 +256,7 @@ export const CartPage: React.FC<{
   useEffect(() => {
     fetchSavedAddresses();
   }, [user]);
-  
+
   const handleAddAddress = async () => {
     if (
       newAddress.street &&
@@ -266,24 +265,24 @@ export const CartPage: React.FC<{
       newAddress.postalCode &&
       newAddress.country
     ) {
-        const addressDetails = {
-          user: user.id, // Assuming `user.id` is the correct way to access the user's ID
-          street: newAddress.street,
-          city: newAddress.city,
-          state: newAddress.state,
-          postalCode: newAddress.postalCode,
-          country: newAddress.country
-        };
+      const addressDetails = {
+        user: user.id, // Assuming `user.id` is the correct way to access the user's ID
+        street: newAddress.street,
+        city: newAddress.city,
+        state: newAddress.state,
+        postalCode: newAddress.postalCode,
+        country: newAddress.country
+      };
       if (saveAddress) {
         try {
-          const response = await fetch('http://localhost:3000/api/address', {
+          const response = await fetch('http://145.223.74.227/api/address', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify(addressDetails)
           });
-  
+
           if (response.ok) {
             const data = await response.json();
             const newAddressWithId = { ...addressDetails, id: data.id };
@@ -312,15 +311,15 @@ export const CartPage: React.FC<{
 
   const handleDeleteAddress = async (addressId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/address/${addressId}`, {
+      const response = await fetch(`http://145.223.74.227/api/address/${addressId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         }
       });
-  
+
       if (!response.ok) throw new Error('Failed to delete the address');
-  
+
       // Remove the address from local state to update UI immediately
       setAddresses(currentAddresses => currentAddresses.filter(addr => addr.id !== addressId));
       setSelectedAddress(''); // Clear any selected address
@@ -335,7 +334,7 @@ export const CartPage: React.FC<{
       alert('Please select a card before proceeding.')
       return
     }
-    
+
     try {
       const response = await fetch("/api/pay-with-saved-card", {
         method: "POST",
@@ -511,74 +510,74 @@ export const CartPage: React.FC<{
                 }}
               >
                 {showAddAddress && (
-                      <motion.div {...slideAnimation}>
-                        
-                        <h2 className="text-[#BDBDBD] font-semibold mb-4">Add New Address</h2>
-                        <input
-                          type="text"
-                          placeholder="Street"
-                          value={newAddress.street}
-                          onChange={e => setNewAddress({ ...newAddress, street: e.target.value })}
-                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
-                        />
-                        <input
-                          type="text"
-                          placeholder="City"
-                          value={newAddress.city}
-                          onChange={e => setNewAddress({ ...newAddress, city: e.target.value })}
-                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
-                        />
-                        <input
-                          type="text"
-                          placeholder="State"
-                          value={newAddress.state}
-                          onChange={e => setNewAddress({ ...newAddress, state: e.target.value })}
-                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Postal Code"
-                          value={newAddress.postalCode}
-                          onChange={e =>
-                            setNewAddress({ ...newAddress, postalCode: e.target.value })
-                          }
-                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Country"
-                          value={newAddress.country}
-                          onChange={e => setNewAddress({ ...newAddress, country: e.target.value })}
-                          className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
-                        />
+                  <motion.div {...slideAnimation}>
 
-                        <div className="flex justify-center items-center mb-3 mt-2">
-                          <input
-                            type="checkbox"
-                            id="saveAddress"
-                            checked={saveAddress}
-                            onChange={() => setSaveAddress(!saveAddress)}
-                            className="mr-2 accent-[#C71E90]"
-                          />
-                          <label htmlFor="saveAddress" className="text-[#BDBDBD]">
-                            Save this information for next time
-                          </label>
-                        </div>
-                        <div className="flex flex-col justify-center">
-                          <Button
-                            className="bg-gradient-to-r from-[#C71E90] to-[#6B14D0] text-white py-3 px-6 rounded-md mt-2 w-full"
-                            label="Add Address"
-                            onClick={handleAddAddress}
-                          />
-                          <button
-                            className="text-[#BDBDBD] mt-2 underline "
-                            onClick={() => setShowAddAddress(false)}
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </motion.div>
-                    )}
+                    <h2 className="text-[#BDBDBD] font-semibold mb-4">Add New Address</h2>
+                    <input
+                      type="text"
+                      placeholder="Street"
+                      value={newAddress.street}
+                      onChange={e => setNewAddress({ ...newAddress, street: e.target.value })}
+                      className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                    />
+                    <input
+                      type="text"
+                      placeholder="City"
+                      value={newAddress.city}
+                      onChange={e => setNewAddress({ ...newAddress, city: e.target.value })}
+                      className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                    />
+                    <input
+                      type="text"
+                      placeholder="State"
+                      value={newAddress.state}
+                      onChange={e => setNewAddress({ ...newAddress, state: e.target.value })}
+                      className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Postal Code"
+                      value={newAddress.postalCode}
+                      onChange={e =>
+                        setNewAddress({ ...newAddress, postalCode: e.target.value })
+                      }
+                      className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Country"
+                      value={newAddress.country}
+                      onChange={e => setNewAddress({ ...newAddress, country: e.target.value })}
+                      className="bg-transparent border border-[#252525] rounded-lg p-2 mb-2 text-white w-full"
+                    />
+
+                    <div className="flex justify-center items-center mb-3 mt-2">
+                      <input
+                        type="checkbox"
+                        id="saveAddress"
+                        checked={saveAddress}
+                        onChange={() => setSaveAddress(!saveAddress)}
+                        className="mr-2 accent-[#C71E90]"
+                      />
+                      <label htmlFor="saveAddress" className="text-[#BDBDBD]">
+                        Save this information for next time
+                      </label>
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <Button
+                        className="bg-gradient-to-r from-[#C71E90] to-[#6B14D0] text-white py-3 px-6 rounded-md mt-2 w-full"
+                        label="Add Address"
+                        onClick={handleAddAddress}
+                      />
+                      <button
+                        className="text-[#BDBDBD] mt-2 underline "
+                        onClick={() => setShowAddAddress(false)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
                 <div className="flex flex-col p-3 pt-5 h-full overflow-y-auto custom-scrollbar">
                   {paymentSuccess ? (
                     <div className="flex flex-col items-center justify-center h-full">
@@ -594,7 +593,7 @@ export const CartPage: React.FC<{
                   ) : !showCardDetails && !showAddAddress ? (
                     <div className="flex flex-col p-3 pt-5 border-[#252525]">
                       <h2 className="text-[#BDBDBD] font-semibold mb-4">Select Address</h2>
-                      <div onChange={(e : React.ChangeEvent<HTMLInputElement>) => setSelectedAddress(e.target.value)}>
+                      <div onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSelectedAddress(e.target.value)}>
                         {addresses.map(addr => (
                           <div key={addr.id} className="flex items-center space-x-2 mb-2">
                             <input
@@ -615,15 +614,15 @@ export const CartPage: React.FC<{
                         <span className="inline-flex underline cursor-pointer" onClick={() => setShowAddAddress(true)}>here</span>
                       </h3>
                       {selectedAddress && (
-                          <button
+                        <button
                           onClick={() => handleDeleteAddress(selectedAddress)}
                           className="ml-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
                           style={{ transition: 'background-color 0.3s ease' }}
                         >
                           Delete
                         </button>
-                          
-                        )}
+
+                      )}
                       <div className="block lg:hidden">
                         <div className="flex justify-between items-center border-t border-[#252525] pt-5 ">
                           <h6 className="text-white pt-1">Subtotal</h6>
@@ -672,23 +671,23 @@ export const CartPage: React.FC<{
                       </div>
                       <div className="mt-4">
                         <h3 className="text-[#BDBDBD] font-semibold mb-2">Saved Card</h3>
-                        
+
                         {loadingSavedCards ? (
-                        <p>Loading saved cards...</p>
+                          <p>Loading saved cards...</p>
                         ) : savedCards.length > 0 ? (
-                            savedCards.map((card) => (
-                                <SavedCard
-                                    key={card.id}
-                                    {...card}
-                                    isSelected={selectedCard === card.id}
-                                    onClick={() => handleCardSelect(card.id)}
-                                    onDelete={handleDeleteCard}
-                                />
-                            ))
+                          savedCards.map((card) => (
+                            <SavedCard
+                              key={card.id}
+                              {...card}
+                              isSelected={selectedCard === card.id}
+                              onClick={() => handleCardSelect(card.id)}
+                              onDelete={handleDeleteCard}
+                            />
+                          ))
                         ) : (
-                            <p>No saved cards found.</p>
+                          <p>No saved cards found.</p>
                         )}
-                        
+
                         {savedCards && (
                           <Button
                             className="bg-gradient-to-r from-[#C71E90] to-[#6B14D0] text-white py-2 px-4 rounded-md mt-2 w-full"
@@ -700,7 +699,7 @@ export const CartPage: React.FC<{
                       <div className="mt-6">
                         <h3 className="text-[#BDBDBD] font-semibold mb-2">Or Add a New Card</h3>
                         {clientSecret && (
-                          <Elements stripe={stripePromise} options={{ 
+                          <Elements stripe={stripePromise} options={{
                             clientSecret,
                             appearance: {
                               theme: 'night',
