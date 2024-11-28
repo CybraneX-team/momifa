@@ -38,10 +38,10 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
     {
       title: 'Information',
       items: [
-        {item:'Privacy Policy', url:"#"},         
-        {item:'Terms of Service', url:"#"},         
-        {item:'Refund Policy', url:"#"},         
-        {item:'Apply for Collabs', url:"#"},         
+        {item:'Privacy Policy', url:"/privacy"},         
+        {item:'Terms of Service', url:"/terms-of-service"},         
+        {item:'Refund Policy', url:"/refund-policy"},         
+        {item:'Apply for Collabs', url:"/collab"},         
 
        ],
     },
@@ -57,9 +57,10 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
   const socialLinks = [
     { icon: '/media/icon.svg', url: 'https://www.instagram.com/momifa.official/profilecard/?igsh=bGg0b3d5YTJiZDVo' },
     { icon: '/media/icon2.svg', url: 'https://x.com/MomifaOfficial' },
-    { icon: '/media/icon3.svg', url: '#' },
-    { icon: '/path-to-linkedin-icon.svg', url: '#' },
-    { icon: '/path-to-youtube-icon.svg', url: '#' },
+    { icon: '/media/pinterest.svg', url: 'https://in.pinterest.com/momifaofficial/' },
+    { icon: '/media/fb.svg', url: 'https://www.facebook.com/MomifaOfficial?mibextid=ZbWKwL' },
+    { icon: '/media/medium.svg', url: 'https://medium.com/@momifa.official' },
+    { icon: '/media/tiktok.svg', url: 'https://www.tiktok.com/@momifa.official' },
   ]
 
   const containerVariants = {
