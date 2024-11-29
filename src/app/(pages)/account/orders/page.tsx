@@ -56,46 +56,49 @@ export default async function Orders() {
   ) || []
 
   return (
-    <div>
+    <>
       <h2 className="text-2xl font-medium mt-12">Active Orders</h2>
-      {activeOrders.map(order => {
-        const firstItem = Array.isArray(order.items) && order.items[0]?.product
-        console.log('Rendering active order:', {
-          orderId: order.id,
-          trackingNumber: order.shipping?.trackingNumber,
-          status: order.shipping?.orderStatus || order.status
-        })
-        
-        return (
-          <Link href={`/account/orders/${order.id}`} key={order.id}>
-            <div className="bg-[#181818] border border-[#404040] p-5 mt-5 w-full md:w-2/3 rounded-lg flex justify-between items-center">
-              <div className="flex flex-col">
-                <p className="text-[#D1D1D1] text-lg">
-                  {typeof firstItem === 'object' ? firstItem.title : 'Order Item'}
-                  <span className="text-[#D1D1D1] text-lg mx-3">
-                    {new Intl.NumberFormat('en-US', {
-                      style: 'currency',
-                      currency: 'usd',
-                    }).format(order.total / 100)}
-                  </span>
-                </p>
-                <p className="text-[#D1D1D1] text-lg pt-10">
-                  Order ID
-                  <span className="text-white block">{order.id}</span>
-                </p>
-                {order.shipping?.trackingNumber && (
-                  <p className="text-[#D1D1D1] text-sm pt-2">
-                    Tracking #: {order.shipping.trackingNumber}
-                  </p>
-                )}
-                {order.shipping?.estimatedDelivery && (
-                  <p className="text-[#D1D1D1] text-sm pt-2">
-                    Estimated Delivery: {formatDateTime(order.shipping.estimatedDelivery)}
-                  </p>
-                )}
-              </div>
+      <div className="flex flex-col gap-6">
+        {/* Active Orders */}
+        {activeOrders.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+            {activeOrders.map(order => {
+              const firstItem = Array.isArray(order.items) && order.items[0]?.product
+              console.log('Rendering active order:', {
+                orderId: order.id,
+                trackingNumber: order.shipping?.trackingNumber,
+                status: order.shipping?.orderStatus || order.status
+              })
 
-              <div className="flex flex-col items-center space-y-4">
+              return (
+                <Link href={`/account/orders/${order.id}`} key={order.id}>
+                  <div className="bg-[#181818] border border-[#404040] p-5 rounded-lg flex justify-between items-center">
+                    <div className="flex flex-col">
+                      <p className="text-[#D1D1D1] text-lg">
+                        {typeof firstItem === 'object' ? firstItem.title : 'Order Item'}
+                        <span className="text-[#D1D1D1] text-lg mx-3">
+                          {new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'usd',
+                          }).format(order.total)}
+                        </span>
+                      </p>
+                      <p className="text-[#D1D1D1] text-lg pt-5">
+                        Order ID
+                        <span className="text-white block">{order.id}</span>
+                      </p>
+                      {order.shipping?.trackingNumber && (
+                        <p className="text-[#D1D1D1] text-sm pt-2">
+                          Tracking #: {order.shipping.trackingNumber}
+                        </p>
+                      )}
+                      {order.shipping?.estimatedDelivery && (
+                        <p className="text-[#D1D1D1] text-sm pt-2">
+                          Estimated Delivery: {formatDateTime(order.shipping.estimatedDelivery)}
+                        </p>
+                      )}
+                    </div>
+                  <div className="flex flex-col items-center space-y-4">
                 <div className="flex items-center">
                   <p className="text-[#D1D1D1] text-sm mr-2">Pickup</p>
                   <div className={`w-1 h-2 ${
@@ -119,49 +122,62 @@ export default async function Orders() {
                     order.shipping?.orderStatus === 'delivered' ? 'bg-green-500' : 'bg-[#404040]'
                   } rounded-full`}></div>
                 </div>
+                  </div>
               </div>
-            </div>
-          </Link>
-        )
-      })}
+                </Link>
+                
+              )
+            })}
+          </div>
+        ) : (
+          <p className="text-gray-500">No active orders.</p>
+        )}
 
-      <h2 className="text-2xl font-medium mt-12">Past Orders</h2>
-      {pastOrders.map(order => {
-        const firstItem = Array.isArray(order.items) && order.items[0]?.product
-        console.log('Rendering past order:', {
-          orderId: order.id,
-          trackingNumber: order.shipping?.trackingNumber,
-          status: order.shipping?.orderStatus || order.status
-        })
-        
-        return (
-          <Link href={`/account/orders/${order.id}`} key={order.id}>
-            <div className="border border-[#404040] p-5 mt-5 w-full md:w-2/3 rounded-lg flex justify-between items-center">
-              <div className="flex flex-col">
-                <p className="text-[#D1D1D1] text-lg">
-                  {typeof firstItem === 'object' ? firstItem.title : 'Order Item'}
-                  <span className="text-[#D1D1D1] text-lg mx-3">
-                    {new Intl.NumberFormat('en-US', {
-                      style: 'currency',
-                      currency: 'usd',
-                    }).format(order.total / 100)}
-                  </span>
-                </p>
-                <p className="text-[#D1D1D1] text-lg pt-10">
-                  Order ID
-                  <span className="text-white block">{order.id}</span>
-                </p>
-                {order.shipping?.trackingNumber && (
-                  <p className="text-[#D1D1D1] text-sm pt-2">
-                    Tracking #: {order.shipping.trackingNumber}
-                  </p>
-                )}
-              </div>
-            </div>
-          </Link>
-        )
-      })}
-    </div>
+        {/* Past Orders */}
+        <h2 className="text-2xl font-medium mt-12">Past Orders</h2>
+        {pastOrders.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {pastOrders.map(order => {
+              const firstItem = Array.isArray(order.items) && order.items[0]?.product
+              console.log('Rendering past order:', {
+                orderId: order.id,
+                trackingNumber: order.shipping?.trackingNumber,
+                status: order.shipping?.orderStatus || order.status
+              })
+
+              return (
+                <Link href={`/account/orders/${order.id}`} key={order.id}>
+                  <div className="border border-[#404040] p-5 rounded-lg flex justify-between items-center">
+                    <div className="flex flex-col">
+                      <p className="text-[#D1D1D1] text-lg">
+                        {typeof firstItem === 'object' ? firstItem.title : 'Order Item'}
+                        <span className="text-[#D1D1D1] text-lg mx-3">
+                          {new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: 'usd',
+                          }).format(order.total / 100)}
+                        </span>
+                      </p>
+                      <p className="text-[#D1D1D1] text-lg pt-10">
+                        Order ID
+                        <span className="text-white block">{order.id}</span>
+                      </p>
+                      {order.shipping?.trackingNumber && (
+                        <p className="text-[#D1D1D1] text-sm pt-2">
+                          Tracking #: {order.shipping.trackingNumber}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        ) : (
+          <p className="text-gray-500">No past orders available.</p>
+        )}
+      </div>
+    </>
   )
 }
 

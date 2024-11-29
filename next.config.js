@@ -1,44 +1,43 @@
 /** @type {import('next').NextConfig} */
-const ContentSecurityPolicy = require('./csp')
-const redirects = require('./redirects')
+const ContentSecurityPolicy = require('./csp');
+const redirects = require('./redirects');
 
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true
+    ignoreDuringBuilds: true,
   },
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['localhost', 'momifa.com', process.env.NEXT_PUBLIC_SERVER_URL]
-      .filter(Boolean)
-      .map(url => url.replace(/https?:\/\//, '')),
-  },
+    domains: [
+      'localhost',
+      'momifa.com',
+      'momifa-storage-bucket.s3.eu-west-2.amazonaws.com',
+      'momifa-storage-bucket.s3.amazonaws.com', // Add this domain
+      process.env.NEXT_PUBLIC_SERVER_URL?.replace(/https?:\/\//, ''),
+    ].filter(Boolean), // Ensure no falsy values are included
+  },  
   redirects,
   async headers() {
-    const headers = []
+    const headers = [];
 
     // Prevent search engines from indexing the site if it is not live
-    // This is useful for staging environments before they are ready to go live
-    // To allow robots to crawl the site, use the `NEXT_PUBLIC_IS_LIVE` env variable
-    // You may want to also use this variable to conditionally render any tracking scripts
     if (!process.env.NEXT_PUBLIC_IS_LIVE) {
       headers.push({
+        source: '/:path*',
         headers: [
           {
             key: 'X-Robots-Tag',
             value: 'noindex',
           },
         ],
-        source: '/:path*',
-      })
+      });
     }
 
-    // Set the `Content-Security-Policy` header as a security measure to prevent XSS attacks
-    // It works by explicitly whitelisting trusted sources of content for your website
-    // This will block all inline scripts and styles except for those that are allowed
+    // Set the `Content-Security-Policy` header
     headers.push({
       source: '/(.*)',
       headers: [
@@ -47,10 +46,33 @@ const nextConfig = {
           value: ContentSecurityPolicy,
         },
       ],
-    })
+    });
 
-    return headers
+    // CORS headers configuration for API routes
+    headers.push({
+      source: '/api/:path*',
+      headers: [
+        {
+          key: 'Access-Control-Allow-Origin',
+          value: '*', // Change to specific domain if needed
+        },
+        {
+          key: 'Access-Control-Allow-Methods',
+          value: 'GET, POST, PUT, DELETE, OPTIONS',
+        },
+        {
+          key: 'Access-Control-Allow-Headers',
+          value: 'Content-Type, Authorization',
+        },
+        {
+          key: 'Access-Control-Allow-Credentials',
+          value: 'true',
+        },
+      ],
+    });
+
+    return headers;
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

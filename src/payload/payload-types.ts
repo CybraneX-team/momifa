@@ -7,9 +7,10 @@
  */
 
 export type CartItems = {
-  product?: string | Product;
+  product?:   Product;
   quantity?: number;
   id?: string;
+  size? : string
 }[];
 
 export interface Config {

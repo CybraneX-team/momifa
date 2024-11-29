@@ -100,6 +100,10 @@ export const Orders: CollectionConfig = {
             {
               name: 'timestamp',
               type: 'date',
+            },
+            {
+              name: "size",
+              type: "text"
             }
           ],
         },

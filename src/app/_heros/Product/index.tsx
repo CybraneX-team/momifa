@@ -16,6 +16,7 @@ import Link from 'next/link'
 import ReviewForm from '../../_components/ReviewForm'
 import { useCart } from '../../_providers/Cart'
 
+
 export const ProductHero: React.FC<{
   product: Product
 }> = ({ product }) => {
@@ -143,20 +144,18 @@ export const ProductHero: React.FC<{
       const res = await req.json()
     }
   }
-  function swapImage(image) {
+  const swapImage = (image: string) => {
     if (image) {
-      const splittedURLArray = image.split("/");
-
-      if (metaImage) {
-        const indexToReplace = imagess.indexOf(`/media/${splittedURLArray[splittedURLArray.length - 1]}`)
-        imagess.splice(indexToReplace, 1)
-        const newImages = [...imagess, `/media/${displayedImage.filename}`]
-        setimagess(newImages)
-        const newObjext = { ...displayedImage, filename: splittedURLArray[splittedURLArray.length - 1] }
-        setdisplayedImage(newObjext)
-      }
+      console.log("imageee", image)
+      const imgToReplace = imagess.indexOf(image);
+      const newImages = [...imagess];
+      newImages.splice(imgToReplace, 1);
+      newImages.push(displayedImage as any);
+      setimagess(newImages);
+      setdisplayedImage(image);
     }
   }
+  
   function setSizeAndSliderValue(size) {
     setSelectedSize(size)
     if (size === "S") {
@@ -190,8 +189,8 @@ export const ProductHero: React.FC<{
           {imagesLoding ? <div className={classes.loading} /> :
             <div className={classes.imagess}>
               {imagess.map((image) => {
-                return <div onClick={() => { swapImage(image) }} className={`${classes.imagessImage} rounded-lg`}>
-                  <Image className={classes.imageclass} src={image} width={100} height={50} alt='image' />
+                return <div onClick={() => { swapImage(image) }} className={`${classes.imagessImage} rounded-xl`}>
+                  <Image className={classes.imageclass} src={image} width={100} height={40} alt='image' />
                 </div>
               })}
             </div>

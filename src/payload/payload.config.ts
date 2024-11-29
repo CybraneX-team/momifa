@@ -33,6 +33,7 @@ import wishlist from './collections/Wishlist/wishlist'
 import Feedback from './collections/Feedbacks/feedback'
 import Address from './collections/Address/address'
 import Cards from './collections/Cards/card'
+import Adminlogo from '../app/_components/AdminLogo/Icon';
 
 const generateTitle: GenerateTitle = () => {
   return 'My Store'
@@ -47,14 +48,17 @@ dotenv.config({
 export default buildConfig({
   admin: {
     user: Users.slug,
-    bundler: webpackBundler(), // bundler-config
+    bundler: webpackBundler(),
+    meta: {
+      titleSuffix: "- Momifa"
+    },
     components: {
-      // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       beforeLogin: [BeforeLogin],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
       beforeDashboard: [BeforeDashboard],
+      graphics: {
+        Icon: Adminlogo,
+        Logo: Adminlogo
+      }
     },
     webpack: config => {
       return {

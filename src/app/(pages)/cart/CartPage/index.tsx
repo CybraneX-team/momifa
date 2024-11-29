@@ -4,15 +4,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import { Page, Settings } from '../../../../payload/payload-types'
+import { Page, Product, Settings } from '../../../../payload/payload-types'
 import { Button } from '../../../_components/Button'
 import { LoadingShimmer } from '../../../_components/LoadingShimmer'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../../../_providers/Auth'
 import { useCart } from '../../../_providers/Cart'
 import CartItem from '../CartItem'
-import { ToastContainer, toast } from 'react-toastify'
+import { Bounce, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { priceFromJSON } from '../../../_components/Price'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 
@@ -51,35 +52,122 @@ const PaymentForm = ({ onSuccess, onSaveCard }) => {
   const [error, setError] = useState(null)
   const [processing, setProcessing] = useState(false)
   const [saveCard, setSaveCard] = useState(false)
-
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-    setProcessing(true)
-
-    if (!stripe || !elements) {
-      return
-    }
-
-    const result = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/cart`,
-      },
-      redirect: 'if_required',
-    })
-
-    if (result.error) {
-      setError(result.error.message)
-    } else {
-      if (result.paymentIntent.status === 'succeeded') {
-        onSuccess()
-        if (saveCard) {
-          onSaveCard()
-        }
-      }
-    }
-    setProcessing(false)
+  const user = useAuth()
+  const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart, clearCart } = useCart()
+  const removesignAndReturnValue = (val:string) =>{
+    const newVal = val.replace("$", "")
+    const actualNumber = Number(newVal)
+    return actualNumber
   }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setProcessing(true);
+  
+    if (!stripe || !elements) {
+      setError('Stripe has not been initialized.');
+      setProcessing(false);
+      return;
+    }
+  
+    try {
+      const result = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/cart`,
+        },
+        redirect: 'if_required',
+      });
+  
+      if (result.error) {
+        setError(result.error.message);
+        setProcessing(false);
+        return;
+      }
+  
+      if (result.paymentIntent?.status === 'succeeded') {
+        onSuccess();
+        const saveOrder = {
+          orderedBy: user.user.id,
+          items: cart?.items.map((e) => ({
+            id: e.id,
+            quantity: e.quantity,
+            price: removesignAndReturnValue(priceFromJSON(e.product.priceJSON)),
+            product: e.product.id,
+          ...(e.size && { size: e.size })
+          })),
+          total: removesignAndReturnValue(cartTotal.formatted),
+        };
+  
+  
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(saveOrder),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to save the order');
+        }
+  
+        const orderWasSaved = await response.json();
+        if(orderWasSaved){
+          clearCart()
+        }
+  
+        if (saveCard) {
+          onSaveCard();
+          
+          const saveOrder = {
+            orderedBy: user.user.id,
+            items: cart?.items.map((e) => ({
+              id: e.id,
+              quantity: e.quantity,
+              price: removesignAndReturnValue(priceFromJSON(e.product.priceJSON)),
+              product: e.product.id,
+            ...(e.size && { size: e.size })
+            })),
+            total: removesignAndReturnValue(cartTotal.formatted),
+          };
+  
+  
+          const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders`, {
+           method: 'POST',
+           headers: {
+              'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(saveOrder),
+         });
+  
+          if (!response.ok) {
+            throw new Error('Failed to save the order');
+          }
+    
+          const orderWasSaved = await response.json();
+          if(orderWasSaved){
+           clearCart()
+           toast.info("You're awesome—thank you for your order!", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+            });
+          }
+          }
+      }
+    } catch (error) {
+      console.error('Error saving order:', error);
+      setError('Order could not be saved. Please try again.');
+    }
+  
+    setProcessing(false);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -113,7 +201,7 @@ export const CartPage: React.FC<{
   const { productsPage } = settings || {}
 
   const { user } = useAuth()
-  const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
+  const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart, clearCart } = useCart()
 
   const [showCardDetails, setShowCardDetails] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState('')
@@ -140,18 +228,17 @@ export const CartPage: React.FC<{
     cvv: '',
   });
 
-
+  const removesignAndReturnValue = (val:string) =>{
+    const newVal = val.replace("$", "")
+    const actualNumber = Number(newVal)
+    return actualNumber
+  }
   // const addresses = [
   //   { id: '1', address: 'sector 123, Lalbagh, Bangalore 560027' },
   //   { id: '2', address: 'sector 123, Lalbagh, Bangalore 560027' },
   // ]
 
-  useEffect(() => {
-    if (cartIsEmpty && hasInitializedCart) {
-      addItemToCart({ product: dummyProduct, quantity: 1 })
-    }
-  }, [cartIsEmpty, hasInitializedCart, addItemToCart])
-
+ 
   useEffect(() => {
     if (showCardDetails && user) {
       setLoadingSavedCards(true)
@@ -209,7 +296,6 @@ export const CartPage: React.FC<{
   }, [user]);
 
   const handleNextClick = () => {
-    console.log('Current selected address:', selectedAddress);
     if (selectedAddress) {
       setShowCardDetails(true)
     } else {
@@ -237,7 +323,7 @@ export const CartPage: React.FC<{
     if (!user?.id) return;
 
     try {
-      const response = await fetch(`http://145.223.74.227/api/address?where[user][equals]=${user.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/address?where[user][equals]=${user.id}`, {
         headers: { 'Content-Type': 'application/json' },
       });
       const data = await response.json();
@@ -275,7 +361,7 @@ export const CartPage: React.FC<{
       };
       if (saveAddress) {
         try {
-          const response = await fetch('http://145.223.74.227/api/address', {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/address`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -311,7 +397,7 @@ export const CartPage: React.FC<{
 
   const handleDeleteAddress = async (addressId) => {
     try {
-      const response = await fetch(`http://145.223.74.227/api/address/${addressId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/address/${addressId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -350,6 +436,45 @@ export const CartPage: React.FC<{
     } catch (error) {
       console.error('Error processing payment:', error)
       alert('An error occurred. Please try again.')
+    }
+    const saveOrder = {
+      orderedBy: user.id,
+      items: cart?.items.map((e) => ({
+        id: e.id,
+        quantity: e.quantity,
+        price: removesignAndReturnValue(priceFromJSON(e.product.priceJSON)),
+        product: e.product.id,
+      ...(e.size && { size: e.size })
+      })),
+      total: removesignAndReturnValue(cartTotal.formatted),
+    };
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders`, {
+     method: 'POST',
+     headers: {
+        'Content-Type': 'application/json',
+     },
+     body: JSON.stringify(saveOrder),
+   });
+
+    if (!response.ok) {
+      throw new Error('Failed to save the order');
+    }
+
+    const orderWasSaved = await response.json();
+    if(orderWasSaved){
+      clearCart()
+      toast.info("You're awesome—thank you for your order!", {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+        });
     }
   }
 
@@ -406,6 +531,18 @@ export const CartPage: React.FC<{
   }
   return (
     <Fragment>
+      <ToastContainer
+        position="top-right"
+        autoClose={500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <style jsx global>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;

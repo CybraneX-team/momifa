@@ -40,21 +40,19 @@ export const Image: React.FC<MediaProps> = props => {
     alt = altFromResource
 
     const filename = fullFilename
-
-    src = `media/${filename}`
+   
+    src = filename
+    
   }
-  // console.log("srccccccc",)
-  // NOTE: this is used by the browser to determine which image to download at different screen sizes
   const sizes = Object.entries(breakpoints)
     .map(([, value]) => `(max-width: ${value}px) ${value}px`)
     .join(', ')
-  console.log("ccccccccccccccccccc", typeof(src))
   return (
     <NextImage
       className={[isLoading && classes.placeholder, classes.image, imgClassName]
         .filter(Boolean)
         .join(' ')}
-      src={`/media/${src.toString().split("/")[1]}`}
+      src={`https://momifa-storage-bucket.s3.amazonaws.com/${src}`}
       alt={alt || ''}
       onClick={onClick}
       onLoad={() => {

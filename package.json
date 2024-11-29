@@ -35,6 +35,7 @@
     "@splinetool/runtime": "^1.9.19",
     "@stripe/react-stripe-js": "^1.16.3",
     "@stripe/stripe-js": "^1.46.0",
+    "aws-sdk": "^2.1692.0",
     "dotenv": "^8.2.0",
     "escape-html": "^1.0.3",
     "express": "^4.17.1",
