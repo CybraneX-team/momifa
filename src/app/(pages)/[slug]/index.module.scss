@@ -8,8 +8,7 @@ $tablet-max: 1024px;
   flex-direction: column;
   gap: 100px;
   margin-top: 100px;
-  font-family: "Montserrat", serif;
-  
+  font-family: 'Montserrat', serif;
 
   & > :last-child {
     margin-top: 2rem;
@@ -29,13 +28,12 @@ $tablet-max: 1024px;
 
   @include mid-break {
     margin-top: 28px;
-    
   }
 }
 @media (max-width: 650px) {
-  .fallingRectanglesWrapper{
-   margin-top:  -1px;
-   height: 700px;
+  .fallingRectanglesWrapper {
+    margin-top: -1px;
+    height: 700px;
   }
 }
 
@@ -77,22 +75,18 @@ $tablet-max: 1024px;
   @media (max-width: 650px) {
     margin-left: 20px;
     height: 290vh;
-
   }
 }
 
-
-
 .faq {
-
   @media (max-width: 650px) {
     margin-top: 3rem;
-  margin-bottom: 3rem;
+    margin-bottom: 3rem;
     margin-right: 30px;
-    }
+  }
 }
 
-.productCards{
+.productCards {
   margin-bottom: 100px;
 }
 
@@ -111,9 +105,8 @@ $tablet-max: 1024px;
   justify-content: center;
   text-align: center;
   margin-right: 70px;
-  
 }
 
-.hoodies{
+.hoodies {
   width: 100%;
 }
