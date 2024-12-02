@@ -1,87 +1,5 @@
 'use client'
-
-// import { useCallback, useRef } from 'react'
-// import { useForm } from 'react-hook-form'
-// // import Link from 'next/link'
-// import { useRouter, useSearchParams } from 'next/navigation'
-
-// // import { Button } from '../../../_components/Button'
-// // import { Input } from '../../../_components/Input'
-// import { Message } from '../../../_components/Message'
-// import { useAuth } from '../../../_providers/Auth'
-
 import './index.module.scss'
-
-// // type FormData = {
-// //   email: string
-// //   password: string
-// // }
-
-// // const LoginForm: React.FC = () => {
-// //   const searchParams = useSearchParams()
-// //   const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
-// //   const redirect = useRef(searchParams.get('redirect'))
-// //   const { login } = useAuth()
-// //   const router = useRouter()
-// //   const [error, setError] = React.useState<string | null>(null)
-
-// //   const {
-// //     register,
-// //     handleSubmit,
-// //     formState: { errors, isLoading },
-// //   } = useForm<FormData>()
-
-// //   const onSubmit = useCallback(
-// //     async (data: FormData) => {
-// //       try {
-// //         await login(data)
-// //         if (redirect?.current) router.push(redirect.current as string)
-// //         else router.push('/')
-// //         window.location.href = '/'
-// //       } catch (_) {
-// //         setError('There was an error with the credentials provided. Please try again.')
-// //       }
-// //     },
-// //     [login, router],
-// //   )
-
-// //   return (
-// //     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-// //       <Message error={error} className={classes.message} />
-// //       <Input
-// //         name="email"
-// //         label="Email Address"
-// //         required
-// //         register={register}
-// //         error={errors.email}
-// //         type="email"
-// //       />
-// //       <Input
-// //         name="password"
-// //         type="password"
-// //         label="Password"
-// //         required
-// //         register={register}
-// //         error={errors.password}
-// //       />
-// //       <Button
-// //         type="submit"
-// //         appearance="primary"
-// //         label={isLoading ? 'Processing' : 'Login'}
-// //         disabled={isLoading}
-// //         className={classes.submit}
-// //       />
-// //       <div className={classes.links}>
-// //         <Link href={`/create-account${allParams}`}>Create an account</Link>
-// //         <br />
-// //         <Link href={`/recover-password${allParams}`}>Recover your password</Link>
-// //       </div>
-// //     </form>
-// //   )
-// // }
-
-// // export default LoginForm
-
 import React, { useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -91,6 +9,9 @@ import { useAuth } from '../../../_providers/Auth'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { motion } from 'framer-motion'
+import { SparklesCore } from '../../../_components/ui/sparkle'
+import { Vortex } from '../../../_components/ui/Wave'
+import { FlipWords } from '../../../_components/ui/FlipWords'
 
 type FormData = {
   email: string
@@ -121,6 +42,7 @@ const LoginForm: React.FC = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [error, setError] = useState<string | null>(null)
+  const wordsArray = ['Modern', 'Minimal']
 
   const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
   const redirect = searchParams.get('redirect')
@@ -135,7 +57,7 @@ const LoginForm: React.FC = () => {
     async (data: FormData) => {
       try {
         const dataa = await login(data)
-        if(dataa){
+        if (dataa) {
           toast.success(`Welcome, ${dataa?.name}! Happy shopping`)
         }
 
@@ -153,7 +75,7 @@ const LoginForm: React.FC = () => {
     <div className="flex w-screen overflow-hidden -mr-10 ">
       {/* Left Section Form */}
       <motion.div
-        className="bg-black h-screen text-white w-full p-5 pt-10 "
+        className="bg-[#0c0c0c] h-screen text-white w-full p-5 pt-10 "
         initial="hidden"
         animate="visible"
         variants={containerVariants}
@@ -306,10 +228,22 @@ const LoginForm: React.FC = () => {
       > */}
       <motion.div
         variants={containerVariants}
-        className="relative hidden 2xl:flex p-10 px-12 h-screen w-screen bg-[url('/media/login-bg.jpg')] bg-no-repeat bg-cover "
+        className="relative hidden 2xl:flex flex-col p-10 px-12 h-screen w-screen max-w-[50%] justify-center items-center"
         initial="hidden"
         animate="visible"
       >
+        {/* <Vortex className="absolute inset-0 z-0" /> */}
+        <SparklesCore className="absolute inset-0 z-0" />
+        <h1 className="text-white font-bold text-7xl z-50">MOMIFA</h1>
+        <div className="flex flex-row items-center">
+          <FlipWords
+            words={wordsArray}
+            duration={2000} // Optional: Time in milliseconds for each word
+            className="text-4xl font-semibold z-50" // Optional: Additional Tailwind classes
+          />
+          <h2 className="text-white font-semibold text-4xl z-50">Fashion</h2>
+        </div>
+
         <ToastContainer
           position="top-right"
           autoClose={5000}
