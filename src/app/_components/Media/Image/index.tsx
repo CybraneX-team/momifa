@@ -44,6 +44,7 @@ export const Image: React.FC<MediaProps> = props => {
     src = filename
     
   }
+  
   const sizes = Object.entries(breakpoints)
     .map(([, value]) => `(max-width: ${value}px) ${value}px`)
     .join(', ')
@@ -52,7 +53,7 @@ export const Image: React.FC<MediaProps> = props => {
       className={[isLoading && classes.placeholder, classes.image, imgClassName]
         .filter(Boolean)
         .join(' ')}
-      src={`https://momifa-storage-bucket.s3.amazonaws.com/${src}`}
+      src={`https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${src}`}
       alt={alt || ''}
       onClick={onClick}
       onLoad={() => {
