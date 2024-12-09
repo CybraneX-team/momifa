@@ -17,7 +17,7 @@ export const deleteProductFromCarts: AfterDeleteHook<Product> = async ({ req, id
     await Promise.all(
       usersWithProductInCart.docs.map(async user => {
         const cart = user.cart
-        const itemsWithoutProduct = cart.items.filter(item => item.product !== id)
+        const itemsWithoutProduct = cart.items.filter(item => item.product.id !== id)
         const cartWithoutProduct = {
           ...cart,
           items: itemsWithoutProduct,

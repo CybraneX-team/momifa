@@ -1,6 +1,6 @@
 export const addToWishlist = async (productId: string, userId:string) =>{
     try {
-        const response = await fetch("http://145.223.74.227/api/wishlist", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist`, {
             method: "POST", 
             headers: {
                 'Content-Type': "application/json"
@@ -11,7 +11,6 @@ export const addToWishlist = async (productId: string, userId:string) =>{
             })
         })
         const data = await response.json() 
-        console.log(`data :`, data)
         return data 
     } catch (error) {
         console.log("some error", error)

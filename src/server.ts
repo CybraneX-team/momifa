@@ -66,8 +66,8 @@ const start = async (): Promise<void> => {
   
       const filteredProducts = products.images?.map(image => image.image.url) || [];
       const finalImages = filteredProducts.map((url) => {
-        if (url.includes("http://145.223.74.227/media/")) {
-          return url.replace("http://145.223.74.227/media/", "");
+        if (url.includes(`${process.env.NEXT_PUBLIC_SERVER_URL}/media/`)) {
+          return url.replace(`${process.env.NEXT_PUBLIC_SERVER_URL}/media/`, "");
         } else if (url.includes("http://localhost:3000/media/")) {
           return url.replace("http://localhost:3000/media/", "");
         }
@@ -80,22 +80,6 @@ const start = async (): Promise<void> => {
     }
   });
   
-  // app.get('/api/images', async (req, res) => {
-  //   try {
-  //     const productId = req.query.productId as string;
-  //     const products = await payload.findByID({
-  //       id: productId,
-  //       collection: "products"
-  //     }) as { images?: { image: { url: string } }[] };
-  //     const filteredProducts = products.images?.map(image => image.image.url);
-  //     const finalImages = filteredProducts.map((e)=>{ 
-  //       return e.replace('http://145.223.74.227', '')
-  //     })
-  //     res.json(finalImages);
-  //   } catch (error) {
-  //     res.status(500).json({ error: 'Failed to fetch products' });
-  //   }
-  // });
 
   const nextApp = next({
     dev: process.env.NODE_ENV !== 'production',

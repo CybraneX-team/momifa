@@ -49,7 +49,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
     async function fetchWishlistData() {
       try {
         const req = await fetch(
-          `http://145.223.74.227/api/wishlist?where[user][equals]=${user.id}&depth=2&populate=product`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[user][equals]=${user.id}&depth=2&populate=product`,
         )
         const res = await req.json()
         setWishlistItems(res.docs.map(item => item.product.title))
@@ -79,7 +79,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await fetch(`http://145.223.74.227/api/address?where[user][equals]=${user.id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/address?where[user][equals]=${user.id}`)
         if (response.ok) {
           const data = await response.json();
           setAddresses(data.docs); // Assuming the API returns an array of address objects in 'docs'

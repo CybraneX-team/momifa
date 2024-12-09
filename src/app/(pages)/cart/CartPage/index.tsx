@@ -202,7 +202,7 @@ export const CartPage: React.FC<{
 
   const { user } = useAuth()
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart, clearCart } = useCart()
-
+  console.log("carttttt", cart)
   const [showCardDetails, setShowCardDetails] = useState(false)
   const [selectedAddress, setSelectedAddress] = useState('')
   const [clientSecret, setClientSecret] = useState('')
@@ -621,6 +621,7 @@ export const CartPage: React.FC<{
                       const {
                         quantity,
                         product,
+                        size,
                         product: { id, title, meta },
                       } = item
                       const metaImage = meta?.image
@@ -628,6 +629,7 @@ export const CartPage: React.FC<{
                         <CartItem
                           key={id}
                           product={product}
+                          size={size}
                           title={title}
                           metaImage={metaImage}
                           qty={quantity}

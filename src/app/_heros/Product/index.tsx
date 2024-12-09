@@ -15,6 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ReviewForm from '../../_components/ReviewForm'
 import { useCart } from '../../_providers/Cart'
+import {Media as mediaType} from '../../../payload/payload-types'
 
 
 export const ProductHero: React.FC<{
@@ -27,7 +28,6 @@ export const ProductHero: React.FC<{
   const [cartvalue, setcartvalue] = useState(0)
   const [colors, setcolors] = useState([])
   const [added, setadded] = useState(false)
-  console.log("id", id)
   const [disabled, setdisabled] = useState(false)
   const [wishlist, setwishlist] = useState([])
   const [showReviewForm, seshowReviewForm] = useState(false)
@@ -38,6 +38,7 @@ export const ProductHero: React.FC<{
   const [sleeveLength, setSleeveLength] = useState(17)
   const [chest, setChest] = useState(19)
   const [imagesLoding, setimagesLoading] = useState(true)
+  const [sizeName, setsizeName] = useState("Small")
 
   console.log("metaImage", metaImage)
   function setvalue(op) {
@@ -62,7 +63,7 @@ export const ProductHero: React.FC<{
   }, [])
   useEffect(() => {
     async function getImages() {
-      const images = await fetch(`http://145.223.74.227/api/images?productId=${id}`)
+      const images = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/images?productId=${id}`)
       const imagesArray = await images.json()
       setimagess(imagesArray)
       setimagesLoading(prev => prev === true ? false : prev)
@@ -76,9 +77,9 @@ export const ProductHero: React.FC<{
 
         // Fetch all requests concurrently
         const [res, res2, res3] = await Promise.all([
-          fetch(`http://145.223.74.227/api/wishlist?where[product][equals]=${id}&where[user][equals]=${user?.id}`),
-          fetch(`http://145.223.74.227/api/feedback?where[product][equals]=${id}&depth=2`),
-          fetch(`http://145.223.74.227/api/products?limit=100`)
+          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[product][equals]=${id}&where[user][equals]=${user?.id}`),
+          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback?where[product][equals]=${id}&depth=2`),
+          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?limit=100`)
         ]);
 
         // Parse responses concurrently
@@ -117,7 +118,7 @@ export const ProductHero: React.FC<{
   }, [id, user?.id, categories]); // Add dependencies for re-execution when necessary
 
   async function PostReview(bodyObject) {
-    const postReview = await fetch(`http://145.223.74.227/api/feedback`, {
+    const postReview = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -140,19 +141,24 @@ export const ProductHero: React.FC<{
       }
     } else {
       setadded(false)
-      const req = await fetch(`http://145.223.74.227/api/wishlist/${wishlistID}`, { method: "DELETE" })
+      const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${wishlistID}`, { method: "DELETE" })
       const res = await req.json()
     }
   }
   const swapImage = (image: string) => {
     if (image) {
-      console.log("imageee", image)
+      console.log("imageee", image, "imagesssArray", imagess)
       const imgToReplace = imagess.indexOf(image);
       const newImages = [...imagess];
       newImages.splice(imgToReplace, 1);
-      newImages.push(displayedImage as any);
+      newImages.push(`https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${displayedImage.filename}`);
       setimagess(newImages);
-      setdisplayedImage(image);
+      console.log("newImagessss", newImages)
+      const newDisplayedImage : mediaType = {
+        ...metaImage,
+        filename : image.replace("https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/", "") 
+      }
+      setdisplayedImage(newDisplayedImage);
     }
   }
   
@@ -161,16 +167,19 @@ export const ProductHero: React.FC<{
     if (size === "S") {
       setSleeveLength(17)
       setChest(19)
+      setsizeName("Small")
     } else if (size === "M") {
       setSleeveLength(19)
       setChest(20)
-
+      setsizeName("Medium")
     } else if (size === "L") {
       setSleeveLength(20)
       setChest(21)
+      setsizeName("Large")
     } else {
       setSleeveLength(21)
       setChest(22)
+      setsizeName("XL")
     }
   }
   return (
@@ -204,7 +213,7 @@ export const ProductHero: React.FC<{
               <h4 className={classes.dText} >Description </h4>
               <p className={classes.description}>  {description} </p>
             </div>
-            <br />
+            <h2 className='text-white my-2 text-2xl'><Price product={product} button={false} /></h2>
             <div className={classes.responsivee2}>
               <h4 className='text-white text-md mt-2' >Colors</h4>
               {colors.map((e) => {
@@ -277,11 +286,15 @@ export const ProductHero: React.FC<{
                     </div>
                   </div>
                 </div>
-                {/* <Price product={product} button={false} /> */}
               </div>
             </div>
             <div className={classes.btns}>
-              <AddToCartButton quantity={cartvalue === 0 ? cartvalue + 1 : cartvalue} product={product} className={classes.addToCartButton} />
+              <AddToCartButton 
+              quantity={cartvalue === 0 ? cartvalue + 1 : cartvalue} 
+              product={product} 
+              className={classes.addToCartButton} 
+              size={`${sizeName} : Chest - ${sleeveLength}  Waist -  ${chest}`}
+              />
 
               <button
                 onClick={add}

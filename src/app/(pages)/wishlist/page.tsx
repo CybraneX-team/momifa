@@ -21,7 +21,7 @@ const Wishlist = () => {
     async function getWishlistData() {
       try {
         const req = await fetch(
-          `http://145.223.74.227/api/wishlist?where[user][equals]=${user.id}&depth=2&populate=product`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[user][equals]=${user.id}&depth=2&populate=product`,
         )
         const res = await req.json()
         setwishlistData(res.docs) // Set wishlist items for the logged-in user
@@ -36,7 +36,7 @@ const Wishlist = () => {
 
   async function deleteItem(id) {
     try {
-      const deleteReq = await fetch(`http://145.223.74.227/api/wishlist/${id}`, {
+      const deleteReq = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${id}`, {
         method: 'DELETE',
       })
       await deleteReq.json()
