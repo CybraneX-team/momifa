@@ -42,7 +42,12 @@ export const Image: React.FC<MediaProps> = props => {
     const filename = fullFilename
    
     src = filename
-    
+  }
+  function getSrc(src){
+    if(src.includes("https")){
+      return src.replace("https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/", "")
+    }
+    return src
   }
   
   const sizes = Object.entries(breakpoints)
@@ -53,7 +58,7 @@ export const Image: React.FC<MediaProps> = props => {
       className={[isLoading && classes.placeholder, classes.image, imgClassName]
         .filter(Boolean)
         .join(' ')}
-      src={`https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${src}`}
+      src={`https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${getSrc(src)}`}
       alt={alt || ''}
       onClick={onClick}
       onLoad={() => {

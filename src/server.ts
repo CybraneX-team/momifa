@@ -6,6 +6,7 @@ import express from 'express'
 import payload from 'payload'
 import { seed } from './payload/seed'
 import { initializeTrackingCron } from './payload/cron/updateTrackingStatus'
+import { sendMail } from './payload/utilities/nodemailer'
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
@@ -80,6 +81,7 @@ const start = async (): Promise<void> => {
     }
   });
   
+  app.post('/api/mailContactUs',  sendMail)
 
   const nextApp = next({
     dev: process.env.NODE_ENV !== 'production',

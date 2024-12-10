@@ -26,9 +26,9 @@ export const Media: CollectionConfig = {
             const uniqueFilename = `${Date.now()}-${file.name}`;
 
             const s3Url = await uploadToS3(buffer, uniqueFilename, mimeType);
-            const fileNameFromS3URL = s3Url.replace("https://momifa-storage-bucket.s3.amazonaws.com/", "")            
-            data.filename = fileNameFromS3URL;
-            data.url = `https://momifa-storage-bucket.s3.amazonaws.com/${fileNameFromS3URL}`
+            // const fileNameFromS3URL = s3Url.replace("https://momifa-storage-bucket.s3.amazonaws.com/", "")            
+            data.filename = s3Url;
+            data.url = s3Url
           } catch (error) {
             console.error('Error uploading file to S3:', error);
             throw new Error('Failed to upload file to S3');

@@ -1,10 +1,40 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import { IoMdMail, IoIosSend } from 'react-icons/io'
 import { GoLocation } from 'react-icons/go'
 import { FiPhone } from 'react-icons/fi'
 import { HideFooter } from '../../_components/HideFooter'
 
 export default function ContactUs() {
+  const [contactusdata, setcontactusdata] = useState({
+    fName: "",
+    lName : "",
+    Email : "",
+    Phone: "",
+    message: ""
+  })
+  const setVals = (e)=>{
+    setcontactusdata({...contactusdata, [e.target.name]: e.target.value} )
+  }
+  const sendMailOnSubmit = async (e)=>{
+    e.preventDefault()
+    if(contactusdata.fName   === ""|| 
+       contactusdata.lName   === ""||
+       contactusdata.Email   === ""|| 
+       contactusdata.Phone   === ""|| 
+       contactusdata.message === ""  ){
+        return alert("please provide all details")
+       }
+    const sendMail = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/mailContactUs`,
+      {
+        method: "POST",
+        body: JSON.stringify(contactusdata),
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+    const response = await sendMail.json()
+    console.log(response)
+  }
   return (
     <div className="px-4 py-5 sm:p-6 bg-[url('/media/pages-bg.png')] bg-no-repeat bg-cover bg-fixed pt-32 pb-20 h-screen">
       <div className="text-center text-white mt-20">
@@ -20,22 +50,34 @@ export default function ContactUs() {
             className="border p-3 w-full rounded-md bg-[#29292951] text-white backdrop-blur-sm"
             placeholder="First Name"
             required
+            name='fName'
+            onChange={(e)=>{setVals(e)}}
+            value={contactusdata.fName}
           />
           <input
             className="border p-3 w-full rounded-md bg-[#29292951] text-white backdrop-blur-sm"
             placeholder="Last Name"
             required
+            name='lName'
+            onChange={(e)=>{setVals(e)}}
+            value={contactusdata.lName}
           />
           <input
             className="border p-3 w-full rounded-md bg-[#29292951] text-white backdrop-blur-sm"
             placeholder="Email"
             type="email"
             required
+            name='Email'
+            onChange={(e)=>{setVals(e)}}
+            value={contactusdata.Email}
           />
           <input
             className="border p-3 w-full rounded-md bg-[#29292951] text-white backdrop-blur-sm"
             placeholder="Phone (Optional)"
             type="tel"
+            name='Phone'
+            onChange={(e)=>{setVals(e)}}
+            value={contactusdata.Phone}
           />
         </div>
         <textarea
@@ -43,10 +85,14 @@ export default function ContactUs() {
           placeholder="Your Message"
           rows={5}
           required
+          name='message'
+          onChange={(e)=>{setVals(e)}}
+          value={contactusdata.message}
         ></textarea>
         <button
           type="submit"
           className="w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 flex items-center justify-center"
+          onClick={(e)=>{sendMailOnSubmit(e)}}
         >
           <IoIosSend className="mr-2" /> Send Message
         </button>

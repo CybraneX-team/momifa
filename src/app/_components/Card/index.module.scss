@@ -142,10 +142,10 @@ padding-bottom: 0px;
 .title {
   margin: 0;
   padding: 3px;
-  font-size: 16px;
-  font-weight: 500;
+  margin: 0 -6px;
+  font-size: 1.8vh;
+  font-weight: 400;
   color: white;
-  text-align: center;
 }
 
 @media (max-width: 640px) {
@@ -182,7 +182,7 @@ padding-bottom: 0px;
 
 .discountBadge {
   position: absolute;
-  top: 10px;
+  top: 2px;
   left: 10px;
   background-color: #b83131;
   color: white;
@@ -203,7 +203,7 @@ padding-bottom: 0px;
 
 .strikethroughPrice {
   position: absolute;
-  top: 8px;
+  top: -1px;
   left: 3rem;
   font-size: 15px;
   color: rgb(80, 80, 80);

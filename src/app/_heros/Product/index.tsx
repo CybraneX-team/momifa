@@ -182,6 +182,11 @@ export const ProductHero: React.FC<{
       setsizeName("XL")
     }
   }
+
+  function removeParentheses(input) {
+    return input.replace(/[()]/g, ""); 
+}
+
   return (
     <>
       <Image
@@ -217,9 +222,10 @@ export const ProductHero: React.FC<{
             <div className={classes.responsivee2}>
               <h4 className='text-white text-md mt-2' >Colors</h4>
               {colors.map((e) => {
+                {console.log("ee",e)}
                 const bgClass = `bg-[#262626]-400`;
                 return (
-                  <Link href={`/products/${e.link}`} >
+                  <Link href={`/products/${removeParentheses(e.link)}`} >
                     <span
                       key={e}
                       style={{ backgroundColor: e.color }}
