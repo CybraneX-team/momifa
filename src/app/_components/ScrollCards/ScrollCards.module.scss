@@ -1,4 +1,6 @@
 // Variables
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 $mobile-breakpoint: 768px;
 $tablet-breakpoint: 1024px;
 $card-padding-desktop: 4rem;
@@ -28,6 +30,7 @@ $text-color: #fff;
 }
 
 .scrollSectionOuter {
+  font-family: 'Montserrat', sans-serif;
   overflow: hidden;
   position: relative;
   height: 100vh;
@@ -120,11 +123,11 @@ $text-color: #fff;
 
 .cardContent {
   flex: 1;
+  font-family: 'Montserrat', sans-serif;
   padding: $card-padding-desktop;
   border-radius: $card-border-radius-desktop;
   display: flex;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.9);
   z-index: 1;
   margin: 80px 120px 0 160px;
   transition: transform 0.3s ease;
@@ -144,7 +147,7 @@ $text-color: #fff;
     flex-direction: column;
     display: flex;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.9);
+    // background-color: rgba(255, 255, 255, 0.9);
     z-index: 1;
     margin: 80px 120px 0 160px;
     transition: transform 0.3s ease;
@@ -156,7 +159,7 @@ $text-color: #fff;
 
 .cardHeading {
   margin: 130px 0 0 -120px;
-  
+  font-family: 'Montserrat', sans-serif;
   @include mobile {
     margin: 0;
     text-align: center;
@@ -166,9 +169,7 @@ $text-color: #fff;
   }
   h2 {
     font-size: clamp(2rem, 4vw, 3.5rem);
-    margin-bottom: 2rem;
     color: $heading-color;
-    line-height: 1.2;
   @media screen and (min-width: 820px) and (max-width: 1180px){
     font-size: clamp(3rem, 4vw, 3.5rem);
     margin-bottom: 2rem;
@@ -212,8 +213,8 @@ $text-color: #fff;
 }
 
 .cardLottie {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   
   @include mobile {
     width: 150px;
@@ -229,9 +230,12 @@ $text-color: #fff;
   }
   
   @include mobile {
-    width: 170px;
-    height: 170px;
-    margin-left: 80px;
+    width: 30em;
+    position: relative;
+    height: 261px;
+    margin-left: -21px;
+    left: -1em;
+    bottom: 2em;
   }
 }
 

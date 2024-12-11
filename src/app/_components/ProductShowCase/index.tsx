@@ -29,6 +29,15 @@ const ProductDisplay: React.FC = () => {
     },
   }
 
+  let newLinesObject = {
+    blue:  "True blue dreams" ,
+    red:  "Seeing red with passion",
+    white : "Cloud nine in white",
+    green : "Fresh as a green leaf",
+    darkblue : "A sky full of dark blue",
+    gray : "Gray matter magic",
+  }
+
   const variantList = Object.keys(variants)
 
   const handleColorChange = (color: string) => {
@@ -88,10 +97,8 @@ const ProductDisplay: React.FC = () => {
       >
         <div className={styles.colorTextLine}>
           <div className={styles.colorLine}></div>
-          <p>In</p>
+          <p className={styles.colorLineText} >{ newLinesObject[currentColor] }</p>
         </div>
-        <p>love with</p>
-        <p className={styles.colorName}>{currentColor}</p>
       </motion.div>
 
       <h2 className={styles.title} data-content={getTitle(currentVariant)}>

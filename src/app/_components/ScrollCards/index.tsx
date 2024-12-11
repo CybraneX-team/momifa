@@ -31,7 +31,7 @@ const services = [
   },
 ]
 
-const backgroundColors = ['#80024c', '#dfa0f0', '#4e2b9b', '#01d9fa']
+// const backgroundColors = ['#80024c', '#dfa0f0', '#4e2b9b', '#01d9fa']
 const textColors = ['#ffffff', '#000000']
 
 const HorizontalScroll = () => {
@@ -165,21 +165,20 @@ const HorizontalScroll = () => {
           className={`${styles.scrollSection} ${styles.introSection} text-center md:text-left -mb-10 md:-mb-0 flex items-center gap-8`}
         >
           <h1>Why Choose Momifa?</h1>
-        <img
+        {/* <img
             src="/media/gif.gif" 
             className="w-60 h-auto object-cover rounded-md"
-          />
+          /> */}
         </div>
         {services.map((service, index) => (
           <div key={index} className={styles.scrollSection}>
             <div className={styles.card}>
               <div
                 className={styles.cardContent}
-                style={{ backgroundColor: backgroundColors[index] }}
               >
                 <div className={styles.cardHeading}>
-                  <h2 style={{ color: textColors[index % textColors.length] }}>{service.title}</h2>
-                  <p style={{ color: textColors[index % textColors.length] }}>
+                  <h2 style={{ color: "White" }}>{service.title}</h2>
+                  <p style={{ color: "#B3B3B3" }}>
                     {service.description}
                   </p>
                 </div>

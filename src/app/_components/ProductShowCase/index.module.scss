@@ -361,6 +361,9 @@
   max-width: 100%;
   height: 35rem;
   max-width: 128%;
+  @media (max-width: 650px){
+    left: -2em;
+  }
   @media screen and (min-width: 820px) and (max-width: 1180px){
     height: 43rem;
     max-width: 128%;
@@ -417,9 +420,17 @@ transform: translateX(-16.67%);
   gap: 10px;
 }
 .colorLine {
-  width: 15px;
+  width: 44px;
   height: 2px;
+  position: relative;
   background-color: white;
+  left: 2em;
+  margin: 0 2em;
+  top: 0.7em;
+}
+.colorLineText {
+  width: auto;
+  height: 2px;
 }
 .colorName {
   font-weight: bold;
@@ -433,8 +444,9 @@ transform: translateX(-16.67%);
   flex-direction: column;
   gap: 15px;
   @media (max-width: 650px){
-    top: -5rem;
+    top: -7rem;
     right: 10px;
+    gap: 1em;
   }
   @media screen and (min-width: 768px) and (max-width: 1024px){
    top: -82px;
