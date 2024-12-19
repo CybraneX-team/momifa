@@ -3,8 +3,7 @@
 .createAccount {
   display: grid;
   grid-template-columns: 1fr 45%;
-  height: 87vh;
-  overflow:hidden ;
+  overflow: hidden;
 
   @include mid-break {
     grid-template-columns: 1fr;
@@ -73,7 +72,6 @@
   align-items: center;
   width: 100%;
   height: 100%;
- 
 
   @include mid-break {
     justify-content: flex-start;
@@ -94,7 +92,7 @@
   }
 
   @include small-break {
-    padding: 30px ;
+    padding: 30px;
   }
 }
 

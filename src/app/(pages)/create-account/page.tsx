@@ -22,7 +22,7 @@ export default async function CreateAccount() {
 
   return (
     <>
-      <div className="p-[3rem] -px-5 pb-0">
+      {/* <div className=" -px-5 pb-0">
         <Link href="/">
           <svg
             className="w-24"
@@ -63,7 +63,7 @@ export default async function CreateAccount() {
             />
           </svg>
         </Link>
-      </div>
+      </div> */}
       <section className={classes.createAccount}>
         <HideFooter />
         <CreateAccountForm />

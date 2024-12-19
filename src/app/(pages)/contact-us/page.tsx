@@ -36,7 +36,7 @@ export default function ContactUs() {
     console.log(response)
   }
   return (
-    <div className="px-4 py-5 sm:p-6 bg-[url('/media/pages-bg.png')] bg-no-repeat bg-cover bg-fixed pt-32 pb-20 h-screen">
+    <div className="px-4 py-5 sm:p-6 bg-[url('/media/pages-bg.png')] bg-no-repeat bg-cover bg-fixed pt-10  pb-20 h-screen">
       <div className="text-center text-white mt-20">
         <h2 className="text-3xl font-bold text-white mb-4">We'd Love to Hear From You!</h2>
         <p className="text-base text-[#a8a5a5] mb-6">

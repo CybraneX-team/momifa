@@ -10,7 +10,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { motion } from 'framer-motion'
 import { SparklesCore } from '../../../_components/ui/sparkle'
-import { Vortex } from '../../../_components/ui/Wave'
 import { FlipWords } from '../../../_components/ui/FlipWords'
 
 type FormData = {
@@ -232,7 +231,6 @@ const LoginForm: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        {/* <Vortex className="absolute inset-0 z-0" /> */}
         <SparklesCore className="absolute inset-0 z-0" />
         <h1 className="text-white font-bold text-7xl z-50">MOMIFA</h1>
         <div className="flex flex-row items-center">
