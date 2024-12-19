@@ -227,7 +227,7 @@ const LoginForm: React.FC = () => {
       > */}
       <motion.div
         variants={containerVariants}
-        className="relative hidden 2xl:flex flex-col p-10 px-12 h-screen w-screen max-w-[50%] justify-center items-center"
+        className="relative hidden xl:flex flex-col p-10 px-12 h-screen w-screen max-w-[50%] justify-center items-center"
         initial="hidden"
         animate="visible"
       >
