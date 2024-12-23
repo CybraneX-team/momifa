@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React, { Fragment, useEffect, useState } from 'react'
 
 import { Category, Product } from '../../../payload/payload-types'
@@ -15,8 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ReviewForm from '../../_components/ReviewForm'
 import { useCart } from '../../_providers/Cart'
-import {Media as mediaType} from '../../../payload/payload-types'
-
+import { Media as mediaType } from '../../../payload/payload-types'
 
 export const ProductHero: React.FC<{
   product: Product
@@ -24,7 +23,7 @@ export const ProductHero: React.FC<{
   const { id, title, categories, meta: { image: metaImage, description } = {} } = product
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
   const { user } = useAuth()
-  const [wishlistID, setwishlistID] = useState("")
+  const [wishlistID, setwishlistID] = useState('')
   const [cartvalue, setcartvalue] = useState(0)
   const [colors, setcolors] = useState([])
   const [added, setadded] = useState(false)
@@ -38,13 +37,13 @@ export const ProductHero: React.FC<{
   const [sleeveLength, setSleeveLength] = useState(17)
   const [chest, setChest] = useState(19)
   const [imagesLoding, setimagesLoading] = useState(true)
-  const [sizeName, setsizeName] = useState("Small")
+  const [sizeName, setsizeName] = useState('Small')
 
-  console.log("metaImage", metaImage)
+  console.log('metaImage', metaImage)
   function setvalue(op) {
-    if (op === "reduce" && cartvalue !== 0) {
+    if (op === 'reduce' && cartvalue !== 0) {
       setcartvalue(prev => prev - 1)
-    } else if (op === "reduce" && cartvalue === 0) {
+    } else if (op === 'reduce' && cartvalue === 0) {
       setcartvalue(0)
     } else {
       setcartvalue(prev => prev + 1)
@@ -52,10 +51,10 @@ export const ProductHero: React.FC<{
   }
 
   function addHyphenToSpace(str) {
-    return str.toLowerCase().replace(/\s+/g, '-');
+    return str.toLowerCase().replace(/\s+/g, '-')
   }
   useEffect(() => {
-    cart?.items?.map((cartItem) => {
+    cart?.items?.map(cartItem => {
       if (cartItem.product.id === id) {
         setcartvalue(cartItem.quantity)
       }
@@ -66,7 +65,7 @@ export const ProductHero: React.FC<{
       const images = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/images?productId=${id}`)
       const imagesArray = await images.json()
       setimagess(imagesArray)
-      setimagesLoading(prev => prev === true ? false : prev)
+      setimagesLoading(prev => (prev === true ? false : prev))
     }
     getImages()
   }, [])
@@ -74,56 +73,59 @@ export const ProductHero: React.FC<{
   useEffect(() => {
     async function get() {
       try {
-
         // Fetch all requests concurrently
         const [res, res2, res3] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[product][equals]=${id}&where[user][equals]=${user?.id}`),
-          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback?where[product][equals]=${id}&depth=2`),
-          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?limit=100`)
-        ]);
+          fetch(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[product][equals]=${id}&where[user][equals]=${user?.id}`,
+          ),
+          fetch(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback?where[product][equals]=${id}&depth=2`,
+          ),
+          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?limit=100`),
+        ])
 
         // Parse responses concurrently
         const [response, response2, response3] = await Promise.all([
           res.json(),
           res2.json(),
-          res3.json()
-        ]);
+          res3.json(),
+        ])
 
-        setfeedback(response2.docs);
+        setfeedback(response2.docs)
         // setimagess(response3.images)
         // Reduce color array
         const colorArr = response3?.docs?.reduce((acc, e) => {
           if (e.categories[0].title === categories[0].title) {
-            acc.push({ color: e.color, link: addHyphenToSpace(e.title) });
+            acc.push({ color: e.color, link: addHyphenToSpace(e.title) })
           }
-          return acc;
-        }, []);
+          return acc
+        }, [])
 
-        setcolors(colorArr);
+        setcolors(colorArr)
 
         // Set wishlist status
         if (response.docs.length) {
-          setadded(true);
-          setwishlistID(response.docs[0].id);
+          setadded(true)
+          setwishlistID(response.docs[0].id)
         } else {
-          setadded(false);
-          setwishlistID("");
+          setadded(false)
+          setwishlistID('')
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error)
       }
     }
 
-    get();
-  }, [id, user?.id, categories]); // Add dependencies for re-execution when necessary
+    get()
+  }, [id, user?.id, categories]) // Add dependencies for re-execution when necessary
 
   async function PostReview(bodyObject) {
     const postReview = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(bodyObject)
+      body: JSON.stringify(bodyObject),
     })
     const postedResult = await postReview.json()
     const newUpdatedFeedbacks = [...feedback, postedResult.doc]
@@ -141,91 +143,114 @@ export const ProductHero: React.FC<{
       }
     } else {
       setadded(false)
-      const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${wishlistID}`, { method: "DELETE" })
+      const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${wishlistID}`, {
+        method: 'DELETE',
+      })
       const res = await req.json()
     }
   }
   const swapImage = (image: string) => {
     if (image) {
-      console.log("imageee", image, "imagesssArray", imagess)
-      const imgToReplace = imagess.indexOf(image);
-      const newImages = [...imagess];
-      newImages.splice(imgToReplace, 1);
-      newImages.push(`https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${displayedImage.filename}`);
-      setimagess(newImages);
-      console.log("newImagessss", newImages)
-      const newDisplayedImage : mediaType = {
+      console.log('imageee', image, 'imagesssArray', imagess)
+      const imgToReplace = imagess.indexOf(image)
+      const newImages = [...imagess]
+      newImages.splice(imgToReplace, 1)
+      newImages.push(
+        `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${displayedImage.filename}`,
+      )
+      setimagess(newImages)
+      console.log('newImagessss', newImages)
+      const newDisplayedImage: mediaType = {
         ...metaImage,
-        filename : image.replace("https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/", "") 
+        filename: image.replace('https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/', ''),
       }
-      setdisplayedImage(newDisplayedImage);
+      setdisplayedImage(newDisplayedImage)
     }
   }
-  
+
   function setSizeAndSliderValue(size) {
     setSelectedSize(size)
-    if (size === "S") {
+    if (size === 'S') {
       setSleeveLength(17)
       setChest(19)
-      setsizeName("Small")
-    } else if (size === "M") {
+      setsizeName('Small')
+    } else if (size === 'M') {
       setSleeveLength(19)
       setChest(20)
-      setsizeName("Medium")
-    } else if (size === "L") {
+      setsizeName('Medium')
+    } else if (size === 'L') {
       setSleeveLength(20)
       setChest(21)
-      setsizeName("Large")
+      setsizeName('Large')
     } else {
       setSleeveLength(21)
       setChest(22)
-      setsizeName("XL")
+      setsizeName('XL')
     }
   }
 
   function removeParentheses(input) {
-    return input.replace(/[()]/g, ""); 
-}
+    return input.replace(/[()]/g, '')
+  }
 
   return (
-    <>
+    <div className="overflow-x-hidden flex flex-col justify-center items-center md:justify-start md:items-start px-5 pt-6 ">
       <Image
         src="/media/MOMIFA.png"
-        alt='MOMIFA'
+        alt="MOMIFA"
         // layout="fill" // Adjust this based on your desired layout
         // objectFit="cover"
         height={150}
         width={70}
-        className={classes.rotatedText}
+        className={`${classes.rotatedText}`}
       />
       <Gutter className={classes.productHero}>
         <div className={classes.mainn}>
-          {imagesLoding ? <div className={classes.loading} /> :
+          {imagesLoding ? (
+            <div className={classes.loading} />
+          ) : (
             <div className={classes.imagess}>
-              {imagess.map((image) => {
-                return <div onClick={() => { swapImage(image) }} className={`${classes.imagessImage} rounded-xl`}>
-                  <Image className={classes.imageclass} src={image} width={100} height={40} alt='image' />
-                </div>
+              {imagess.map(image => {
+                return (
+                  <div
+                    onClick={() => {
+                      swapImage(image)
+                    }}
+                    className={`${classes.imagessImage} rounded-xl`}
+                  >
+                    <Image
+                      className={classes.imageclass}
+                      src={image}
+                      width={100}
+                      height={40}
+                      alt="image"
+                    />
+                  </div>
+                )
               })}
             </div>
-          }
+          )}
           <div className={classes.vig}>
             <Media imgClassName={classes.image} resource={displayedImage} />
           </div>
-          <div className={classes.detailsDiv} >
+          <div className={`${classes.detailsDiv}`}>
             <div className={classes.responsivee}>
-              <h3 className={classes.productTitle} >{title}</h3>
-              <h4 className={classes.dText} >Description </h4>
-              <p className={classes.description}>  {description} </p>
+              <h3 className={classes.productTitle}>{title}</h3>
+              <h4 className={classes.dText}>Description </h4>
+              <p className={classes.description}> {description} </p>
             </div>
-            <h2 className='text-white my-2 text-2xl'><Price product={product} button={false} /></h2>
+            <h2 className="text-white my-2 text-2xl">
+              <Price product={product} button={false} />
+            </h2>
             <div className={classes.responsivee2}>
-              <h4 className='text-white text-md mt-2' >Colors</h4>
-              {colors.map((e) => {
-                {console.log("ee",e)}
-                const bgClass = `bg-[#262626]-400`;
+              <h4 className="text-white text-md mt-2">Colors</h4>
+              {colors.map(e => {
+                {
+                  console.log('ee', e)
+                }
+                const bgClass = `bg-[#262626]-400`
                 return (
-                  <Link href={`/products/${removeParentheses(e.link)}`} >
+                  <Link href={`/products/${removeParentheses(e.link)}`}>
                     <span
                       key={e}
                       style={{ backgroundColor: e.color }}
@@ -236,27 +261,37 @@ export const ProductHero: React.FC<{
               })}
             </div>
             <div className={classes.sizeButtons}>
-              {['S', 'M', 'L', 'XL'].map((size) => (
+              {['S', 'M', 'L', 'XL'].map(size => (
                 <button
                   key={size}
                   onClick={() => setSizeAndSliderValue(size)}
-                  className={`${classes.sizeButton} ${selectedSize === size ? classes.activeSize : ''}`}
+                  className={`${classes.sizeButton} ${
+                    selectedSize === size ? classes.activeSize : ''
+                  }`}
                 >
                   {size}
                 </button>
               ))}
             </div>
             <div className={classes.sliderContainer}>
-              <label className={classes.sliderLabel}>Chest: {sleeveLength === 17 ? '17-18' :
-                sleeveLength === 19 ? '18-19' : sleeveLength === 20 ? '19-20' : '20-21'
-              } Inches</label>
+              <label className={classes.sliderLabel}>
+                Chest:{' '}
+                {sleeveLength === 17
+                  ? '17-18'
+                  : sleeveLength === 19
+                  ? '18-19'
+                  : sleeveLength === 20
+                  ? '19-20'
+                  : '20-21'}{' '}
+                Inches
+              </label>
               <input
                 type="range"
                 min="17"
                 max="21"
                 disabled
                 value={sleeveLength}
-                onChange={(e) => setSleeveLength(Number(e.target.value))}
+                onChange={e => setSleeveLength(Number(e.target.value))}
                 className={classes.slider}
               />
             </div>
@@ -268,26 +303,40 @@ export const ProductHero: React.FC<{
                 max="22"
                 disabled
                 value={chest}
-                onChange={(e) => setChest(Number(e.target.value))}
+                onChange={e => setChest(Number(e.target.value))}
                 className={classes.slider}
               />
             </div>
             <div className={classes.quan}>
-              <div className={classes.quan2} >
+              <div className={classes.quan2}>
                 <h4 className="text-white sm:flex  text-sm inline lg:block">Quantity</h4>
 
-                <div className='relative lg:block lg:left-0 lg:top-0  sm:left-[7em] sm:top-[-2.2em] sm:mx-3 sm:my-2'>
+                <div className="relative lg:block lg:left-0 lg:top-0  sm:left-[7em] sm:top-[-2.2em] sm:mx-3 sm:my-2">
                   <div className="flex items-center justify-center mt-3 sm:justify-center sm:items-center md:justify-start md:items-start lg:justify-start lg:items-start">
                     <div className="flex text-lg text-white text-center">
                       <div
                         className="text-xl 
         w-10 h-10 bg-[#262626] text-center rounded-s-3xl cursor-pointer flex items-center justify-center"
                       >
-                        <span onClick={() => { setvalue("reduce") }} >-</span>
+                        <span
+                          onClick={() => {
+                            setvalue('reduce')
+                          }}
+                        >
+                          -
+                        </span>
                       </div>
-                      <div className="text-xl  w-10 h-10 bg-[#262626] text-center flex items-center justify-center">{cartvalue}</div>
+                      <div className="text-xl  w-10 h-10 bg-[#262626] text-center flex items-center justify-center">
+                        {cartvalue}
+                      </div>
                       <div className="text-xl w-10 h-10 bg-[#262626] text-center rounded-e-3xl cursor-pointer flex items-center justify-center">
-                        <span onClick={() => { setvalue("inc") }} >+</span>
+                        <span
+                          onClick={() => {
+                            setvalue('inc')
+                          }}
+                        >
+                          +
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -295,17 +344,16 @@ export const ProductHero: React.FC<{
               </div>
             </div>
             <div className={classes.btns}>
-              <AddToCartButton 
-              quantity={cartvalue === 0 ? cartvalue + 1 : cartvalue} 
-              product={product} 
-              className={classes.addToCartButton} 
-              size={`${sizeName} : Chest - ${sleeveLength}  Waist -  ${chest}`}
+              <AddToCartButton
+                quantity={cartvalue === 0 ? cartvalue + 1 : cartvalue}
+                product={product}
+                className={classes.addToCartButton}
+                size={`${sizeName} : Chest - ${sleeveLength}  Waist -  ${chest}`}
               />
 
               <button
                 onClick={add}
                 className={`${classes.wishlistButton} ${added ? 'added' : 'not-added'}`}
-
               >
                 {added ? (
                   <span key="remove">❤️ Remove From Wishlist</span>
@@ -316,19 +364,25 @@ export const ProductHero: React.FC<{
             </div>
           </div>
         </div>
-
       </Gutter>
-      <div className='flex justify-center mt-[12.5rem] mb-5 md:mt-[0rem]' >
-        <h2 className='text-3xl text-white  text-center lg:text-4xl' >Reviews</h2>
-        <h2 className='text-3xl text-white mx-2 text-center lg:text-4xl' > | </h2>
+      <div className="flex justify-center mx-auto mt-[12.5rem] mb-5 md:mt-[0rem]">
+        <h2 className="text-3xl text-white mx-auto text-center lg:text-4xl">Reviews</h2>
+        <h2 className="text-3xl text-white mx-2 text-center lg:text-4xl"> | </h2>
         <button
-          onClick={() => { seshowReviewForm(!showReviewForm) }}
+          onClick={() => {
+            seshowReviewForm(!showReviewForm)
+          }}
           className={`${classes.postReviewButton} `}
         >
           {showReviewForm === false ? <span>Post a Review</span> : <span>Cancel Review</span>}
         </button>
       </div>
-      <ReviewForm showReviewForm={seshowReviewForm} productId={id} postReview={PostReview} value={showReviewForm} />
+      <ReviewForm
+        showReviewForm={seshowReviewForm}
+        productId={id}
+        postReview={PostReview}
+        value={showReviewForm}
+      />
       {feedback.map((e, i) => {
         return (
           <div key={i}>
@@ -336,17 +390,13 @@ export const ProductHero: React.FC<{
               <h3 className="text-white text-2xl capitalize font-bold">
                 {e.user.name ? e.user.name : e.user}
               </h3>
-              <h3 className="text-2xl text-yellow-500 font-bold ml-2">
-                {"★".repeat(e.rating)}
-              </h3>
+              <h3 className="text-2xl text-yellow-500 font-bold ml-2">{'★'.repeat(e.rating)}</h3>
             </div>
             <hr className="border-white mx-11 lg:mx-32 lg:hidden" />
-            <p className="text-white text-lg p-2 lg:mx-40 mx-10 lg:text-md">
-              {e.review}
-            </p>
+            <p className="text-white text-lg p-2 lg:mx-40 mx-10 lg:text-md">{e.review}</p>
           </div>
-        );
+        )
       })}
-    </>
+    </div>
   )
 }

@@ -22,8 +22,9 @@ $tablet-max: 1024px;
 
 .fallingRectanglesWrapper {
   width: 100%;
-  height: 10rem;
+  height: 20rem;
   margin: 20px 0;
+  margin-top: 0px;
   overflow: hidden;
   background: #000;
 
@@ -34,7 +35,7 @@ $tablet-max: 1024px;
 @media (max-width: 650px) {
   .fallingRectanglesWrapper {
     margin-top: -1px;
-    height: 700px;
+    height: 400px;
   }
 }
 

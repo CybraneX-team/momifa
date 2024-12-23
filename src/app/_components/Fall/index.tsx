@@ -4,14 +4,16 @@ import { InfiniteMovingCards } from '../ui/MovingCards'
 function MovingCards() {
   const items = [
     {
-      quote: 'This is an example quote.',
-      name: 'John Doe',
-      title: 'abz',
+      title: 'Premium Fabric',
+      desc: 'Exclusive woven Fabric from sri lanka ',
     },
     {
-      quote: 'Another example quote.',
-      name: 'Jane Smith',
-      title: 'abz',
+      title: '100% cotton',
+      desc: 'Durable material',
+    },
+    {
+      title: 'Super Quality',
+      desc: 'Affordable',
     },
   ]
   return (

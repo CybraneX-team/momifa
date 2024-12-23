@@ -11,7 +11,7 @@ import classes from './index.module.scss'
 
 const Categories = ({ categories }: { categories: Category[] }) => {
   return (
-    <section className="flex flex-col  ">
+    <section className="flex flex-col  -mt-20">
       <div className={classes.titleWrapper}>
         <motion.div
           className={classes.title}

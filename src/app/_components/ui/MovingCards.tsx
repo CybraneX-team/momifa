@@ -10,11 +10,7 @@ export const InfiniteMovingCards = ({
   pauseOnHover = true,
   className,
 }: {
-  items: {
-    quote: string
-    name: string
-    title: string
-  }[]
+  items: { title: string; desc: string }[]
   direction?: 'left' | 'right'
   speed?: 'fast' | 'normal' | 'slow'
   pauseOnHover?: boolean
@@ -81,31 +77,34 @@ export const InfiniteMovingCards = ({
       >
         {items.map((item, idx) => (
           <li
-            className="w-[350px] max-w-full relative rounded-2xl bg-[#3d51c456] border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px]"
+            className="w-[350px] h-[200px] mt-28 max-w-full relative rounded-2xl flex-shrink-0 px-8 py-6 md:w-[450px]"
             style={{
-              background: 'linear-gradient(180deg, #1e293b, #3d51c456)',
+              background: 'linear-gradient(to bottom, #6F8EFF 0%, #F2ABFF 100%)', // Border gradient
+              padding: '1px', // Thickness of the gradient border
+              borderRadius: '1rem', // Matches the inner rounded corners
             }}
-            key={item.name}
+            key={idx}
           >
-            <blockquote>
-              <div
-                aria-hidden="true"
-                className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
-              ></div>
-              <span className=" relative z-20 text-sm leading-[1.6] text-gray-100 font-normal">
-                {item.quote}
-              </span>
-              <div className="relative z-20 mt-6 flex flex-row items-center">
-                <span className="flex flex-col gap-1">
-                  <span className=" text-sm leading-[1.6] text-gray-400 font-normal">
-                    {item.name}
-                  </span>
-                  <span className=" text-sm leading-[1.6] text-gray-400 font-normal">
-                    {item.title}
-                  </span>
+            {/* Inner Content with Background Gradient */}
+            <div
+              className="w-full h-full rounded-[inherit] bg-gradient-to-b border border-b-0 border-slate-700"
+              style={{
+                background: 'linear-gradient(to bottom, #1B0F26 0%, #110F16 100%)', // Inner background gradient
+              }}
+            >
+              <blockquote className="flex  flex-col justify-center items-center h-full">
+                <div
+                  aria-hidden="true"
+                  className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
+                ></div>
+                <span className="relative z-20 leading-[1.6] text-gray-100 font-bold text-xl">
+                  {item.title}
                 </span>
-              </div>
-            </blockquote>
+                <span className="relative z-20 leading-[1.6] text-gray-100 font-light text-lg mt-1">
+                  {item.desc}
+                </span>
+              </blockquote>
+            </div>
           </li>
         ))}
       </ul>

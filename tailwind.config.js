@@ -10,6 +10,9 @@ module.exports = {
   theme: {
     // extend: {},
     extend: {
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+      },
       animation: {
         scroll:
           'scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite',
