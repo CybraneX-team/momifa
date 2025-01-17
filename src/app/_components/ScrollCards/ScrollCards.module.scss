@@ -1,274 +1,366 @@
-// Variables
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+// // Variables
+// @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-$mobile-breakpoint: 768px;
-$tablet-breakpoint: 1024px;
-$card-padding-desktop: 4rem;
-$card-padding-mobile: 2rem;
-$card-border-radius-desktop: 70px;
-$card-border-radius-mobile: 20px;
-$heading-color: #333;
-$text-color: #fff;
+// $mobile-breakpoint: 768px;
+// $tablet-breakpoint: 1024px;
+// $card-padding-desktop: 4rem;
+// $card-padding-mobile: 2rem;
+// $card-border-radius-desktop: 70px;
+// $card-border-radius-mobile: 20px;
+// $heading-color: #333;
+// $text-color: #fff;
 
-// Mixins for common media queries
-@mixin mobile {
-  @media (max-width: #{$mobile-breakpoint}) {
-    @content;
-  }
-}
+// // Mixins for common media queries
+// @mixin mobile {
+//   @media (max-width: #{$mobile-breakpoint}) {
+//     @content;
+//   }
+// }
 
-@mixin tablet {
-  @media (min-width: #{$mobile-breakpoint + 1}) and (max-width: #{$tablet-breakpoint}) {
-    @content;
-  }
-}
+// @mixin tablet {
+//   @media (min-width: #{$mobile-breakpoint + 1}) and (max-width: #{$tablet-breakpoint}) {
+//     @content;
+//   }
+// }
 
-@mixin desktop {
-  @media (min-width: #{$tablet-breakpoint + 1}) {
-    @content;
-  }
-}
+// @mixin desktop {
+//   @media (min-width: #{$tablet-breakpoint + 1}) {
+//     @content;
+//   }
+// }
 
-.scrollSectionOuter {
-  font-family: 'Montserrat', sans-serif;
-  overflow: hidden;
-  position: relative;
-  height: 100vh;
+// .scrollSectionOuter {
+//   font-family: 'Montserrat', sans-serif;
+//   overflow: hidden;
+//   position: relative;
+//   height: 100vh;
   
-  @include mobile {
-    overflow: visible;
-    height: auto;
-    transform: none !important;
-    height: 166em;
-  }
+//   @include mobile {
+//     overflow: visible;
+//     height: auto;
+//     transform: none !important;
+//     height: 166em;
+//   }
   
-  &[data-scroll-container] {
-    transition: none !important;
-    // height: 166em;
-  }
+//   &[data-scroll-container] {
+//     transition: none !important;
+//     // height: 166em;
+//   }
 
-}
+// }
 
-.scrollSectionInner {
-  height: 100vh;
-  width: calc(100vw * 5);
+// .scrollSectionInner {
+//   height: 100vh;
+//   width: calc(100vw * 5);
+//   display: flex;
+//   flex-direction: row;
+//   will-change: transform;
+  
+//   @include mobile {
+//     height: 45vh;
+//     width: 90%;
+//     flex-direction: column;
+//     padding-bottom: 0;
+//     margin: 0 auto;
+//     transform: none !important;
+//     transition: none !important;
+//   }
+  
+//   &[data-scroll-section] {
+//     &.gsap-triggered {
+//       transition: none !important;
+//     }
+//   }
+
+// }
+
+// .scrollSection {
+//   height: 90%;
+//   width: 99vw;
+//   flex-shrink: 0;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+  
+//   @include mobile {
+//     width: 100%;
+//     padding: 0 20px;
+//     height: 100%;
+//     margin-bottom: 8rem;
+//     transform: none !important;
+//   }
+// }
+
+// .introSection {
+//   border-radius: 100px;
+//   margin-top: 40px;
+//   background-color: transparent;
+  
+//   @include mobile {
+//     margin: 0;
+//   }
+  
+//   h1 {
+//     font-size: clamp(2.5rem, 5vw, 4rem);
+//     color: $heading-color;
+//     line-height: 1.2;
+//     font-weight: bold;
+//   }
+// }
+
+// .card {
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   overflow: hidden;
+//   transform: translateZ(0);
+  
+//   @include mobile {
+//     height: 400px;
+//     transform: none !important;
+//   }
+// }
+
+// .cardContent {
+//   flex: 1;
+//   font-family: 'Montserrat', sans-serif;
+//   padding: $card-padding-desktop;
+//   border-radius: $card-border-radius-desktop;
+//   display: flex;
+//   justify-content: center;
+//   z-index: 1;
+//   margin: 80px 120px 0 160px;
+//   transition: transform 0.3s ease;
+  
+//   @include mobile {
+//     flex-direction: column;
+//     margin: 0;
+//     padding: $card-padding-mobile;
+//     border-radius: $card-border-radius-mobile;
+//     width: 100%;
+//     max-width: calc(100vw - 40px);
+//   }
+//   @media screen and (min-width: 820px) and (max-width: 1180px){
+//     flex: 1;
+//     padding: 4rem;
+//     border-radius: 70px;
+//     flex-direction: column;
+//     display: flex;
+//     justify-content: center;
+//     // background-color: rgba(255, 255, 255, 0.9);
+//     z-index: 1;
+//     margin: 80px 120px 0 160px;
+//     transition: transform 0.3s ease;
+//   }
+//   &:hover {
+//     transform: translateY(-5px);
+//   }
+// }
+
+// .cardHeading {
+//   margin: 130px 0 0 -120px;
+//   font-family: 'Montserrat', sans-serif;
+//   @include mobile {
+//     margin: 0;
+//     text-align: center;
+//   }
+//   @media screen and (min-width: 820px) and (max-width: 1180px){
+//     margin: -42px 0 0 -120px;
+//   }
+//   h2 {
+//     font-size: clamp(2rem, 4vw, 3.5rem);
+//     color: $heading-color;
+//   @media screen and (min-width: 820px) and (max-width: 1180px){
+//     font-size: clamp(3rem, 4vw, 3.5rem);
+//     margin-bottom: 2rem;
+//     text-align: center;
+//     left: 4rem;
+//     position: relative;
+//     color: #333;
+//     line-height: 1.2;
+//   }
+// }
+  
+//   p {
+//     font-size: clamp(1.2rem, 2vw, 1.8rem);
+//     color: $text-color;
+//     line-height: 1.5;
+//   @media screen and (min-width: 820px) and (max-width: 1180px){
+//     font-size: clamp(2.2rem, 4vw, 1.8rem);
+//     color: #fff;
+//     text-align: center;
+//     position: relative;
+//     left: 5rem;
+//     line-height: 0.5;
+//   }
+//   }
+// }
+
+// .lotties {
+//   margin: 40px 0 0 170px;
+//   transition: transform 0.3s ease;
+  
+//   @include mobile {
+//     margin: 2rem auto 0;
+//     transform: scale(0.8);
+//   }
+//   @media screen and (min-width: 820px) and (max-width: 1180px){
+//     margin: 0px 6em;
+//     position: relative;
+//     left: 3em;
+//     transition: transform 0.3s ease;
+//   }
+// }
+
+// .cardLottie {
+//   width: 400px;
+//   height: 400px;
+  
+//   @include mobile {
+//     width: 150px;
+//     height: 150px;
+//   }
+// }
+
+// .moneyGuarantee {
+//   @include desktop {
+//     width: 400px;
+//     height: 400px;
+//     margin: 0 0 0 70px;
+//   }
+  
+//   @include mobile {
+//     width: 30em;
+//     position: relative;
+//     height: 261px;
+//     margin-left: -21px;
+//     left: -1em;
+//     bottom: 2em;
+//   }
+// }
+
+// .scrollSectionOuter {
+//   scrollbar-width: thin;
+//   scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+  
+//   &::-webkit-scrollbar {
+//     width: 6px;
+//   }
+  
+//   &::-webkit-scrollbar-track {
+//     background: transparent;
+//   }
+  
+//   &::-webkit-scrollbar-thumb {
+//     background-color: rgba(155, 155, 155, 0.5);
+//     border-radius: 3px;
+//   }
+// }
+
+// @media print {
+//   .scrollSectionOuter {
+//     overflow: visible;
+//   }
+  
+//   .scrollSectionInner {
+//     width: 100%;
+//     flex-direction: column;
+//   }
+  
+//   .cardContent {
+//     break-inside: avoid;
+//     page-break-inside: avoid;
+//   }
+// }
+.main{
   display: flex;
-  flex-direction: row;
-  will-change: transform;
-  
-  @include mobile {
-    height: 45vh;
-    width: 90%;
-    flex-direction: column;
-    padding-bottom: 0;
-    margin: 0 auto;
-    transform: none !important;
-    transition: none !important;
-  }
-  
-  &[data-scroll-section] {
-    &.gsap-triggered {
-      transition: none !important;
-    }
-  }
-
-}
-
-.scrollSection {
-  height: 90%;
-  width: 99vw;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  @include mobile {
-    width: 100%;
-    padding: 0 20px;
-    height: 100%;
-    margin-bottom: 8rem;
-    transform: none !important;
-  }
-}
-
-.introSection {
-  border-radius: 100px;
-  margin-top: 40px;
-  background-color: transparent;
-  
-  @include mobile {
-    margin: 0;
-  }
-  
-  h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: $heading-color;
-    line-height: 1.2;
-    font-weight: bold;
-  }
-}
-
-.card {
   width: 100%;
-  height: 100%;
+  flex-direction: column;
+}
+.headingDiv {
+  background: linear-gradient(180deg, #FFFFFF 0%, #9B9B9B 148.64%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  // margin: 1em 0;
+  font-size: 2rem ;
+}
+.headingDiv h1{
+  text-align: center;
+  font-weight: 600;
+  // margin: 1px 18em;
+  width: auto; 
+}
+.iconDiv{
+  background-color: #0F0F0F;
+  border: 1px solid #2E2E2E; 
+  height: 7em;
+  width: 72em;
+  border-radius: 5px;
+  align-items: center;
+  align-self: center;
   display: flex;
-  overflow: hidden;
-  transform: translateZ(0);
-  
-  @include mobile {
-    height: 400px;
-    transform: none !important;
-  }
+  // margin: 0 6em;
 }
-
-.cardContent {
-  flex: 1;
-  font-family: 'Montserrat', sans-serif;
-  padding: $card-padding-desktop;
-  border-radius: $card-border-radius-desktop;
+.iconDiv img{
+  margin: 0 0.5em;
+  position: relative;
+  left: 31em;
+}
+.imageClass{
+  width:  2.5em;
+  top: 0.5em;
+  height: 2.5em;
+}
+.imageClassMid{
+  width:  4em;
+  height: 4em;
+}
+.LinesDiv{
   display: flex;
-  justify-content: center;
-  z-index: 1;
-  margin: 80px 120px 0 160px;
-  transition: transform 0.3s ease;
-  
-  @include mobile {
-    flex-direction: column;
-    margin: 0;
-    padding: $card-padding-mobile;
-    border-radius: $card-border-radius-mobile;
-    width: 100%;
-    max-width: calc(100vw - 40px);
-  }
-  @media screen and (min-width: 820px) and (max-width: 1180px){
-    flex: 1;
-    padding: 4rem;
-    border-radius: 70px;
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-    // background-color: rgba(255, 255, 255, 0.9);
-    z-index: 1;
-    margin: 80px 120px 0 160px;
-    transition: transform 0.3s ease;
-  }
-  &:hover {
-    transform: translateY(-5px);
-  }
+  background-color: #0F0F0F;
+  border: 1px solid #2E2E2E; 
+  color: white;
+  height: 15em;
+  width: 72em;
+  // align-items: center;
+  align-self: center;
+  text-align: left;
+  margin: 2em ;
 }
+.LinesDiv div{
+  margin: 0 2em;
+}
+#div1 {
+  border-right-width: 0.5px;
+  border-right-style: solid;
+  border-image-source: radial-gradient(circle, #7247FF 0%, rgba(132, 132, 132, 0) 100%);
+  border-image-slice: 2;
+  height: 14em;
 
-.cardHeading {
-  margin: 130px 0 0 -120px;
-  font-family: 'Montserrat', sans-serif;
-  @include mobile {
-    margin: 0;
-    text-align: center;
-  }
-  @media screen and (min-width: 820px) and (max-width: 1180px){
-    margin: -42px 0 0 -120px;
-  }
-  h2 {
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    color: $heading-color;
-  @media screen and (min-width: 820px) and (max-width: 1180px){
-    font-size: clamp(3rem, 4vw, 3.5rem);
-    margin-bottom: 2rem;
-    text-align: center;
-    left: 4rem;
-    position: relative;
-    color: #333;
-    line-height: 1.2;
-  }
 }
-  
-  p {
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
-    color: $text-color;
-    line-height: 1.5;
-  @media screen and (min-width: 820px) and (max-width: 1180px){
-    font-size: clamp(2.2rem, 4vw, 1.8rem);
-    color: #fff;
-    text-align: center;
-    position: relative;
-    left: 5rem;
-    line-height: 0.5;
-  }
-  }
-}
+#div2 {
+  border-right-width: 0.5px;
+  border-right-style: solid;
+  border-image-source: radial-gradient(circle, #47EDFF 0%, rgba(132, 132, 132, 0) 100%);
+  border-image-slice: 2;
+  height: 14em;
 
-.lotties {
-  margin: 40px 0 0 170px;
-  transition: transform 0.3s ease;
-  
-  @include mobile {
-    margin: 2rem auto 0;
-    transform: scale(0.8);
-  }
-  @media screen and (min-width: 820px) and (max-width: 1180px){
-    margin: 0px 6em;
-    position: relative;
-    left: 3em;
-    transition: transform 0.3s ease;
-  }
 }
+#div3 {
+  border-right-width: 0.5px;
+  border-right-style: solid;
+  border-image-slice: 2;
+  border-image-source: radial-gradient(circle, #FF47C8 0%, rgba(132, 132, 132, 0) 100%);
+  height: 14em;
 
-.cardLottie {
-  width: 400px;
-  height: 400px;
-  
-  @include mobile {
-    width: 150px;
-    height: 150px;
-  }
 }
-
-.moneyGuarantee {
-  @include desktop {
-    width: 400px;
-    height: 400px;
-    margin: 0 0 0 70px;
-  }
-  
-  @include mobile {
-    width: 30em;
-    position: relative;
-    height: 261px;
-    margin-left: -21px;
-    left: -1em;
-    bottom: 2em;
-  }
+.LinesDiv li{
+  font-size: 15px;
+  font-weight: 300;
 }
-
-.scrollSectionOuter {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
-  
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(155, 155, 155, 0.5);
-    border-radius: 3px;
-  }
-}
-
-@media print {
-  .scrollSectionOuter {
-    overflow: visible;
-  }
-  
-  .scrollSectionInner {
-    width: 100%;
-    flex-direction: column;
-  }
-  
-  .cardContent {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
+.headinclass{
+  font-size: 18px;
+  font-weight: 700;
+  width: 11em;
 }

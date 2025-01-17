@@ -4,6 +4,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Player } from '@lottiefiles/react-lottie-player'
 import styles from './ScrollCards.module.scss'
+import Image from 'next/image'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -35,167 +36,86 @@ const services = [
 const textColors = ['#ffffff', '#000000']
 
 const HorizontalScroll = () => {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const triggerRef = useRef<HTMLElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
-  const scrollTriggerInstance = useRef<ScrollTrigger | null>(null)
+  
 
-  useEffect(() => {
-    // Auto-play video when component mounts
-    if (videoRef.current) {
-      videoRef.current.play().catch(error => {
-        console.log("Video autoplay failed:", error)
-      })
-    }
-  }, [])
-
-  useEffect(() => {
-    let resizeTimer: NodeJS.Timeout
-
-    const handleResize = () => {
-      clearTimeout(resizeTimer)
-      resizeTimer = setTimeout(() => {
-        const newIsMobile = window.innerWidth <= 768
-
-        if (newIsMobile !== isMobile) {
-          if (scrollTriggerInstance.current) {
-            scrollTriggerInstance.current.kill()
-          }
-
-          window.scrollTo(0, 0)
-
-          if (sectionRef.current) {
-            gsap.set(sectionRef.current, { clearProps: 'all' })
-          }
-
-          setIsMobile(newIsMobile)
-        }
-      }, 250)
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      clearTimeout(resizeTimer)
-      if (scrollTriggerInstance.current) {
-        scrollTriggerInstance.current.kill()
-      }
-      ScrollTrigger.getAll().forEach(st => st.kill())
-    }
-  }, [isMobile])
-
-  useEffect(() => {
-    if (!isMobile && sectionRef.current && triggerRef.current) {
-      // Reset position
-      gsap.set(sectionRef.current, { clearProps: 'all' })
-
-      const pin = gsap.fromTo(
-        sectionRef.current,
-        {
-          translateX: 0,
-        },
-        {
-          translateX: `-${services.length * 100}vw`,
-          ease: 'none',
-          duration: 1,
-          scrollTrigger: {
-            trigger: triggerRef.current,
-            start: 'top top',
-            end: () => `+=${window.innerWidth * services.length}px`, // Added 'px' here
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            snap: {
-              snapTo: 1 / services.length,
-              duration: { min: 0.2, max: 0.3 },
-              delay: 0,
-              ease: 'power1.inOut',
-            },
-            onUpdate: (self) => {
-              sessionStorage.setItem('scrollProgress', self.progress.toString())
-            },
-            onRefresh: (self) => {
-              self.scroll(0)
-              // Remove the progress setting as it's read-only
-            }
-          },
-        }
-      )
-
-      scrollTriggerInstance.current = pin.scrollTrigger
-
-      return () => {
-        pin.kill()
-        ScrollTrigger.getAll().forEach(st => st.kill())
-        gsap.set(sectionRef.current, { clearProps: 'all' })
-      }
-    }
-  }, [isMobile])
-
-  useEffect(() => {
-    if (!isMobile) {
-      document.body.style.overflow = 'auto'
-      document.body.style.height = '100%'
-    } else {
-      document.body.style.overflow = ''
-      document.body.style.height = ''
-    }
-
-    return () => {
-      document.body.style.overflow = ''
-      document.body.style.height = ''
-    }
-  }, [isMobile])
+ 
 
   return (
-    <section 
-      className={styles.scrollSectionOuter} 
-      ref={triggerRef}
-      data-scroll-container
-    >
-      <div 
-        ref={sectionRef} 
-        className={styles.scrollSectionInner}
-        data-scroll-section
-      >
-        <div
-          className={`${styles.scrollSection} ${styles.introSection} text-center md:text-left -mb-10 md:-mb-0 flex items-center gap-8`}
-        >
-          <h1>Why Choose Momifa?</h1>
-        {/* <img
-            src="/media/gif.gif" 
-            className="w-60 h-auto object-cover rounded-md"
-          /> */}
-        </div>
-        {services.map((service, index) => (
-          <div key={index} className={styles.scrollSection}>
-            <div className={styles.card}>
-              <div
-                className={styles.cardContent}
-              >
-                <div className={styles.cardHeading}>
-                  <h2 style={{ color: "White" }}>{service.title}</h2>
-                  <p style={{ color: "#B3B3B3" }}>
-                    {service.description}
-                  </p>
-                </div>
-                <div className={`${styles.lotties} ${styles[service.className] || ''}`}>
-                  <Player
-                    autoplay
-                    loop
-                    src={service.lottie}
-                    className={`${styles.cardLottie} ${styles[service.className] || ''}`}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+    <div className={styles.main}> 
+      <div className="bg-black w-[full ] h-[92px] z-[2]">  </div>
+      <div className={styles.headingDiv}>
+          <h1> Momifa Cares </h1>
       </div>
-    </section>
+      <div className={styles.iconDiv}>
+      <Image 
+        width={5}
+        className={styles.imageClass}
+        height={5}
+        src={"/media/Group 11.svg"}
+        alt="image"
+      />
+         <Image 
+        width={5}
+        className={styles.imageClassMid}
+        height={5}
+        src={"/media/Group 14.svg"}
+        alt="image"
+      />
+         <Image 
+        width={5}
+        height={5}
+        src={"/media/Group 15.svg"}
+        alt="image"
+        className={styles.imageClass}
+      />
+      </div>
+      <div className={styles.LinesDiv}>
+        <div >
+          <h1 className={styles.headinclass}> Better Payments </h1>
+          <ul>
+            <li  >Different ways to pay</li>
+            <li  >Shop Pay</li>
+            <li  >Google Pay</li>
+            <li  >Apple Pay</li>
+            <li  >Debit and Credit Cards</li>
+          </ul>
+       </div>
+       <div id={styles.div1}>
+
+       </div>
+        <div>
+        <h1 className={styles.headinclass}> Humane Core Values </h1>
+          <ul>
+            <li>Nature Friendly Fabric</li>
+            <li>Donations towards Autism</li>
+            <li>Donations to Veterans</li>
+            <li>Sustainable Clothing</li>
+          </ul>
+        </div>
+        <div id={styles.div2}>
+        </div>
+        <div>
+        <h1 className={styles.headinclass}> Premium Quality </h1>
+        <ul>
+          <li>Crafted with love</li>
+          <li>Made by Sri Lankan Artisans</li>
+          <li>Finest fabrics used</li>
+          <li>100% Cotton</li>
+        </ul>
+        </div>
+        <div id={styles.div3}>
+        </div>
+        <div>
+        <h1 className={styles.headinclass}> 24/7 Customer Service </h1>
+        <ul>
+          <li>Faster reach with different platforms</li>
+          <li>Phone at  732-232-5549</li>
+          <li>info@momifa.com</li>
+          <li>Multiple Social Media handles</li>
+        </ul>
+        </div>
+      </div>
+    </div>
   )
 }
 

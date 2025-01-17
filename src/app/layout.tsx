@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import { Jost, Syne } from 'next/font/google'
+import { Jost, Plus_Jakarta_Sans, Syne } from 'next/font/google'
 
 import { AdminBar } from './_components/AdminBar'
 import { Footer } from './_components/Footer'
@@ -15,10 +15,10 @@ import './_css/app.scss'
 
 gsap.registerPlugin(ScrollTrigger);
 
-const jost = Syne({
+const jost = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '700'],
-  variable: '--font-jost',
+  variable: '--font-Plus_Jakarta_Sans',
 })
 
 export default async function RootLayout({ 
@@ -34,11 +34,13 @@ export default async function RootLayout({
         <meta 
           name="viewport" 
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" 
+
         />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className={jost.variable}>
+      <body >
         <Providers>
           <AdminBar />
           {/* @ts-expect-error */}

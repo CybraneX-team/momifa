@@ -36,13 +36,18 @@ import ProductsOnHome from '../../_components/ProductsOnHome'
 import Head from 'next/head'
 import Hoodies from '../../_components/Hoodies'
 import ToastNotifier from './TostNotifier'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
 
   loading: () => <div style={{ height: '300px' }}>Loading...</div>,
 })
-
+const jost = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-Plus_Jakarta_Sans',
+})
 const cardData = [
   {
     title: 'Auto-generate personalized videos in bulk',
@@ -118,11 +123,11 @@ export default async function Page({ params: { slug = 'home' } }) {
             <Categories categories={categories} />
             {/* <Promotion /> */}
           </Gutter>
-          <div className={classes.horizontalScrollWrapper}>
-            <HorizontalScroll />
-          </div>
-          <div className="">
+          <div className={jost.variable}>
             <ProductShowCase />
+          </div>
+          <div >
+            <HorizontalScroll />
           </div>
 <div className={classes.hoodies}>
           <Hoodies />
