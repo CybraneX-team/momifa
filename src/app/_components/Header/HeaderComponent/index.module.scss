@@ -4,10 +4,10 @@
 
 .header {
   padding: 15px 20px;
-
-  width: 900px;
-  margin-left: 320px;
-
+  margin: -16px;
+  margin-right: -10px;
+  width: 103%;
+  margin-left: -18px;
   position: fixed;
   z-index: 999999999999999;
 }
@@ -16,13 +16,13 @@
   width: 100px;
   height: auto;
 }
-.logoNavText{
+.logoNavText {
   width: 169px;
   height: 30px;
   font-size: 21px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  
+
   text-align: left;
   color: white;
 }
@@ -33,29 +33,25 @@
 
 .wrap {
   display: flex;
+  backdrop-filter: blur(6px);
   padding-left: 40px !important;
   padding-right: 40px !important;
   padding: 20px 0;
   align-items: center;
   justify-content: space-between;
-  border-radius: 160px;
-  background: rgba(96, 96, 96, 0.3);
-  ;
-  // box-shadow: 5px 5px 10px #1a1a1a, inset 5px 5px 10px #1a1a1a ;
+  background: rgba(43, 43, 43, 0.452);
   flex-wrap: wrap;
 }
 
-.wrapAfter{
+.wrapAfter {
   display: flex;
   padding-left: 40px !important;
   padding-right: 40px !important;
   padding: 20px 0;
   align-items: center;
   justify-content: space-between;
-  border-radius: 160px;
-  background: #262626;
-  ;
-  // box-shadow: 5px 5px 10px #1a1a1a, inset 5px 5px 10px #1a1a1a ;
+  background: rgba(43, 43, 43, 0.452);
+  backdrop-filter: blur(10px);
   flex-wrap: wrap;
 }
 
@@ -70,8 +66,7 @@
   .wrap {
     padding: 20px !important;
     padding-left: 40px !important;
-    border-radius: 80px;
-    box-shadow: 2px 4px 10px #1a1a1a, inset 5px 5px 10px #1a1a1a ;
+    box-shadow: 2px 4px 10px #1a1a1a, inset 5px 5px 10px #1a1a1a;
   }
 
   .hide {
@@ -82,13 +77,9 @@
 @media (max-width: 768px) {
   .header {
     padding: 10px;
-    width: 100%;
+    width: 105%;
     position: fixed;
-    margin-left: 0px;
-  }
-
-  .wrap {
-    border-radius: 40px;
+    margin-left: -10px;
   }
 
   .svg {
@@ -97,8 +88,6 @@
 }
 
 @media (max-width: 480px) {
-
-
   .svg {
     width: 60px;
   }

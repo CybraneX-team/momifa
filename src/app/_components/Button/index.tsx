@@ -37,6 +37,7 @@ export const Button: React.FC<Props> = ({
   const newTabProps = newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 
   const className = [
+    classNameFromProps,
     classes.button,
     classNameFromProps,
     classes[`appearance--${appearance}`],

@@ -58,18 +58,25 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex h-full md:pl-16">
+      <div className="flex h-full w-full pt-20 md:pt-0 md:pl-16">
         {/* Left Content */}
         <div className=" flex flex-col justify-center px-6 md:px-12 z-50">
-          <h1 className="text-white text-3xl md:text-4xl font-bold leading-tight mb-4">
-            Clothes For Every Occasion
+          <div className="w-full">
+            <img
+              src="/media/h-img.png"
+              alt=""
+              className="rounded-xl mx-auto h-96 w-[20rem] ml-8 md:hidden"
+            />
+          </div>
+          <h1 className="text-white text-3xl md:text-4xl font-bold leading-tight md:mb-4 z-40 -mt-20 ">
+            Clothes For Every
             <br />
-            Every Moment
+            Occasion Every Moment
           </h1>
           <p className="text-gray-300 text-xl mb-8">Explore Momifa Store</p>
 
           {/* Glass Card */}
-          <div className="bg-[#0f0f0f74] backdrop-blur-md rounded-xl p-5 md:p-8 w-[120%] md:max-w-lg h-60 z-50 shadow-inner inset-0 border-[#58598aa2] border-[1px] shadow-[#58598a96] stroke-[#58598A] stroke-2">
+          {/* <div className="bg-[#0f0f0f74] backdrop-blur-md rounded-xl p-5 md:p-8 w-[120%] md:max-w-lg h-60 z-50 shadow-inner inset-0 border-[#58598aa2] border-[1px] shadow-[#58598a96] stroke-[#58598A] stroke-2">
             <h3 className="text-[#B7B0FF] text-xl md:text-2xl font-semibold mb-4">
               Premium Quality at Fingertips.
             </h3>
@@ -77,7 +84,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
               Branded products and accessories. With contribution towards nature and cleanliness.
               Now at affordable pricing.
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Content - Image Section */}
@@ -86,9 +93,9 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
           <div className="absolute inset-0 md:bg-gray-900 transform -skew-x-12 origin-top-right translate-x-32"></div>
 
           {/* Image */}
-          <div className="absolute inset-0 transform translate-x-24">
+          <div className="absolute inset-0 transform translate-x-24 hidden md:block">
             <img
-              src="/media/hero-img.png"
+              src="/media/hero.png"
               alt="Model wearing casual business attire"
               className="w-full h-full object-cover"
             />

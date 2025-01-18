@@ -1,10 +1,9 @@
 @use '../../../_css/queries.scss' as *;
 
-
 .nav {
   display: flex;
   height: 20px;
-  gap: calc(var(--base) / 4) var(--base);
+  // gap: calc(var(--base) / 4) var(--base);
   align-items: center;
   padding-right: 0 !important;
   flex-wrap: wrap;
@@ -18,19 +17,17 @@
   }
 
   Button {
-    background: none;    
+    background: none;
     text-align: left;
   }
 
   > * {
     text-decoration: none;
     color: white;
-    
   }
 }
 
 .hide {
   opacity: 0;
   visibility: hidden;
-  
 }

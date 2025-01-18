@@ -100,53 +100,58 @@ export default async function Page({ params: { slug = 'home' } }) {
   }
 
   const { hero, layout } = page
-  
+
   return (
     <React.Fragment>
-      <ToastNotifier />
       {slug === 'home' ? (
         <>
-        <Head>
-         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          {/*  Prevent telephone number detection on iOS */}
-          <meta name="format-detection" content="telephone=no" />
-       </Head>
-        <section>
-          <Hero {...hero} />
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            />
+            <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+            {/*  Prevent telephone number detection on iOS */}
+            <meta name="format-detection" content="telephone=no" />
+          </Head>
+          <section>
+            <Hero {...hero} />
 
-          {/* <IconScoll /> */}
-          <div className={classes.fallingRectanglesWrapper}>
-            <FallingRectangles />
-          </div>
-          <Gutter className={classes.home}>
-            <Categories categories={categories} />
-            {/* <Promotion /> */}
-          </Gutter>
-          <div className={jost.variable}>
-            <ProductShowCase />
-          </div>
-          <div >
-            <HorizontalScroll />
-          </div>
-<div className={classes.hoodies}>
-          <Hoodies />
-          </div>
-          <ProductsOnHome />
-          <Feedback />
-          <div className={classes.faq}>
-            <FAQ />
-          </div>
-        </section>
+            {/* <IconScoll /> */}
+            <div className={classes.fallingRectanglesWrapper}>
+              <FallingRectangles />
+            </div>
+            <Gutter className={classes.home}>
+              <Categories categories={categories} />
+              {/* <Promotion /> */}
+            </Gutter>
+            <div className={classes.horizontalScrollWrapper}>
+              <HorizontalScroll />
+            </div>
+            <div className="">
+              <ProductShowCase />
+            </div>
+            <div className={classes.hoodies}>
+              <Hoodies />
+            </div>
+            <ProductsOnHome />
+            <Feedback />
+            <div className={classes.faq}>
+              <FAQ />
+            </div>
+          </section>
         </>
       ) : (
         <>
-        <Head>
-         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          {/* Optional: Prevent telephone number detection on iOS */}
-          <meta name="format-detection" content="telephone=no" />
-        </Head>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            />
+            <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+            {/* Optional: Prevent telephone number detection on iOS */}
+            <meta name="format-detection" content="telephone=no" />
+          </Head>
           <Hero {...hero} />
           <Blocks
             blocks={layout}

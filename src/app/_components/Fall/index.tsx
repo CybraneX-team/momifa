@@ -1,5 +1,7 @@
+'use client'
 import React from 'react'
 import { InfiniteMovingCards } from '../ui/MovingCards'
+import Menu from '../ui/Menu'
 
 function MovingCards() {
   const items = [
@@ -18,6 +20,7 @@ function MovingCards() {
   ]
   return (
     <div>
+      {/* <Menu /> */}
       <InfiniteMovingCards
         items={items}
         direction="left"

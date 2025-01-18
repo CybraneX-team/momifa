@@ -11,15 +11,12 @@ import { CMSLink } from '../../Link'
 
 import classes from './index.module.scss'
 
-
 export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const navItems = header?.navItems || []
   const { user } = useAuth()
-  
 
-  
   return (
-    <nav  className={[classes.nav, user === undefined && classes.hide].filter(Boolean).join(' ')}>
+    <nav className={[classes.nav, user === undefined && classes.hide].filter(Boolean).join(' ')}>
       {/* {navItems.map(({ link }, i) => {
         return <CMSLink  key={i} {...link} appearance="none" />
       })} */}
@@ -31,24 +28,34 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
         <p> {value} </p>
       </div>
       </Link> */}
-      <div className="-mt-3 flex items-center justify-center text-white">
-      {user && <Link href="/account" className='bg-[#7c2c71a1] px-4 py-2 rounded-full font-bold text-white mx-3'>{user.name.charAt(0)}</Link>}
-      {user && <CartLink />}
-      
-      <div className="mt-2 flex items-center justify-center text-white">
-      {!user && <CartLink />}
-      {!user && (
-        <Button
-          el="link"
-          href="/login"
-          // label="Login"
-          children={"Login"}
-          appearance="primary"
-          onClick={() => (window.location.href = '/login')}
-          className='ml-3'
-        />
-      )}
-      </div>
+      <div className="-mt-3 flex items-center justify-around text-white space-x-6 md:space-x-16 -mr-3  md:mr-12">
+        <Link href="/products" className="mt-1.5 text-white  font-medium">
+          Collection
+        </Link>
+
+        <Link href="/" className="mt-1.5 text-white ">
+          Home
+        </Link>
+
+        {user && <CartLink />}
+        {user && (
+          <Link
+            href="/account"
+            className="bg-[#7c2c71a1] px-4 py-2 mt-1.5 md:mt-0 rounded-full font-bold text-white mx-4"
+          >
+            {user.name.charAt(0)}
+          </Link>
+        )}
+        <div className="mt-2 flex items-center justify-center text-white space-x-6 md:space-x-16">
+          {!user && <CartLink />}
+          {!user && (
+            <div className="bg-[#ffffff] p-1 cursor-pointer text-black">
+              <button onClick={() => (window.location.href = '/login')} className="px-4 md:px-10">
+                Login
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   )
