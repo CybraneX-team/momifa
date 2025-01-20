@@ -329,39 +329,70 @@ const ProductDisplay: React.FC = () => {
             }}
           ></div>
           <div className={styles.colorVarient}>
-            {Object.keys(variants[currentVariant]['colors']).map(e => {
+            {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
               return (
                 <div
+                  key={colorKey}
                   style={
                     currentVariant === 'polo' || currentVariant === 'plain'
                       ? {
-                          backgroundColor: variants[currentVariant]['colors'][e],
+                          background:
+                            currentColor === colorKey
+                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
+                              : variants[currentVariant]['colors'][colorKey],
                           height: '31px',
-                          width: '13px',
-                          margin: '1em',
+                          width: currentColor === colorKey ? '120px' : '13px',
+                          margin: '1.3em',
                           position: 'relative',
                           left: '21em',
                           cursor: 'pointer',
                           bottom: '59em',
-                          transform: 'skew(337deg, 12deg)',
+                          transform:
+                            currentColor === colorKey ? 'rotate(-12deg)' : 'skew(356deg, 12deg)',
+                          transition: 'all 0.3s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }
                       : {
-                          backgroundColor: variants[currentVariant]['colors'][e],
+                          background:
+                            currentColor === colorKey
+                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
+                              : variants[currentVariant]['colors'][colorKey],
                           height: '31px',
-                          width: '13px',
+                          width: currentColor === colorKey ? '150px' : '13px',
                           position: 'relative',
-                          margin: '1em',
+                          margin: '1.3em',
                           left: '23em',
                           cursor: 'pointer',
                           bottom: '59em',
-                          transform: 'skew(337deg, 12deg)',
+                          transform:
+                            currentColor === colorKey ? 'rotate(-12deg) ' : 'skew(356deg, 12deg)',
+                          transition: 'all 0.3s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                         }
                   }
                   onClick={() => {
-                    setCurrentColor(e)
+                    setCurrentColor(colorKey)
                   }}
                 >
-                  {' '}
+                  {currentColor === colorKey && (
+                    <span
+                      style={{
+                        color:
+                          variants[currentVariant]['colors'][colorKey] === '#ffffff' ||
+                          variants[currentVariant]['colors'][colorKey] === 'white'
+                            ? 'black'
+                            : 'white',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      {colorKey.toUpperCase()}
+                    </span>
+                  )}
                 </div>
               )
             })}
@@ -407,7 +438,7 @@ const ProductDisplay: React.FC = () => {
                               : 'text-[#888] text-md -p-5 px-1'
                           }`}
                         >
-                          {item.name}
+                          {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                         </button>
                       </div>
                     </div>
