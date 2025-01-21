@@ -125,11 +125,11 @@ export default async function Page({ params: { slug = 'home' } }) {
               <Categories categories={categories} />
               {/* <Promotion /> */}
             </Gutter>
-            <div className={classes.horizontalScrollWrapper}>
-              <HorizontalScroll />
-            </div>
             <div className="">
               <ProductShowCase />
+            </div>
+            <div className={classes.horizontalScrollWrapper}>
+              <HorizontalScroll />
             </div>
             <div className={classes.hoodies}>
               <Hoodies />

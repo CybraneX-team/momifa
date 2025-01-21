@@ -272,6 +272,24 @@
 //     page-break-inside: avoid;
 //   }
 // }
+// Breakpoint Variables
+$breakpoints: (
+  small: 320px,  // Small phones
+  medium: 480px, // Medium phones
+  large: 768px,  // Tablets and up
+  xlarge: 1024px // Desktops
+);
+@mixin respond-to($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+  @if $value {
+    @media (max-width: $value) {
+      @content;
+    }
+  } @else {
+    @error "Invalid breakpoint: #{$breakpoint}";
+  }
+}
+
 .main{
   display: flex;
   width: 100%;
@@ -282,8 +300,13 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
-  // margin: 1em 0;
   font-size: 2rem ;
+  @include respond-to(medium) {
+    text-align: center;
+    font-weight: 600;
+    margin: 0px 2em;
+    width: 233px;
+  }
 }
 .headingDiv h1{
   text-align: center;
@@ -301,11 +324,29 @@
   align-self: center;
   display: flex;
   // margin: 0 6em;
+  @include respond-to(medium){
+    background-color: #0F0F0F;
+    border: 1px solid #2E2E2E;
+    height: 7em;
+    width: 20em;
+    border-radius: 5px;
+    align-items: center;
+    /* align-self: center; */
+    margin: 0 6em;
+    display: flex
+;
+  }
 }
 .iconDiv img{
   margin: 0 0.5em;
   position: relative;
   left: 31em;
+  @include respond-to(medium){
+
+    margin: 0 0.5em;
+    position: relative;
+    left: 4em;
+  }
 }
 .imageClass{
   width:  2.5em;
@@ -327,9 +368,25 @@
   align-self: center;
   text-align: left;
   margin: 2em ;
+  @include respond-to(medium) {
+    display: flex;
+    background-color: #0F0F0F;
+    left: 2em;
+    border: 1px solid #2E2E2E;
+    color: white;
+    flex-direction: column;
+    padding: 2em;
+    height: 47em;
+    width: 20em;
+    text-align: left;
+    margin: 2em 7em;
+  }
 }
 .LinesDiv div{
   margin: 0 2em;
+  @include respond-to(medium){
+    margin: 5px 2em;
+  }
 }
 #div1 {
   border-right-width: 0.5px;
@@ -337,7 +394,9 @@
   border-image-source: radial-gradient(circle, #7247FF 0%, rgba(132, 132, 132, 0) 100%);
   border-image-slice: 2;
   height: 14em;
-
+  @include respond-to(medium){
+    display: none;
+  }
 }
 #div2 {
   border-right-width: 0.5px;
@@ -345,7 +404,9 @@
   border-image-source: radial-gradient(circle, #47EDFF 0%, rgba(132, 132, 132, 0) 100%);
   border-image-slice: 2;
   height: 14em;
-
+  @include respond-to(medium){
+    display: none;
+  }
 }
 #div3 {
   border-right-width: 0.5px;
@@ -353,7 +414,9 @@
   border-image-slice: 2;
   border-image-source: radial-gradient(circle, #FF47C8 0%, rgba(132, 132, 132, 0) 100%);
   height: 14em;
-
+  @include respond-to(medium){
+    display: none;
+  }
 }
 .LinesDiv li{
   font-size: 15px;

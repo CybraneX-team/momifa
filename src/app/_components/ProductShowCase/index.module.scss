@@ -1,20 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+// Breakpoint Variables
+$breakpoints: (
+  small: 320px, 
+  medium: 480px, 
+  large: 768px,  
+  xlarge: 1024px 
+);
+@mixin respond-to($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+  @if $value {
+    @media (max-width: $value) {
+      @content;
+    }
+  } @else {
+    @error "Invalid breakpoint: #{$breakpoint}";
+  }
+}
 
 .container {
-  // font-family: "Arimo", serif;
   display: flex;
   height: 40em;
   width: 100%;
   background-color: black;
   overflow: hidden;
+  @include respond-to(medium) {
+    height: 60em;
+  }
 }
 .linehead {
   color: white;
-  // font-family: "Plus Jakarta Sans", serif;
   font-weight: 700;
   font-size: 30px;
   margin: 1.5em 2em;
   width: 264px;
+  line-height: 34px;
+  @include respond-to(medium) {
+    display: none;
+  }
 }
 .buyNowButton {
   background-color: #1d1d1d;
@@ -24,6 +46,21 @@
   height: 2.3em;
   font-weight: 300;
   margin: -6em 3em;
+  @include respond-to(medium){
+    background-color: #1d1d1d;
+    border: 1px solid #a9a9a9;
+    color: white;
+    position: relative;
+    width: 9em;
+    height: 2.5em;
+    padding: 6px 0px;
+    top: 14em;
+    border-radius: 26px;
+    z-index: 1;
+    font-weight: 300;
+    margin: -3em 2em;
+
+  }
 }
 .FashionLine {
   font-size: 56px;
@@ -33,6 +70,15 @@
   z-index: 5;
   color: white;
   font-weight: 500;
+  @include respond-to(medium){
+    font-size: 6.8vw;
+    position: relative;
+    margin: 0.1em 0.9em;
+    top: 6.4rem;
+    z-index: 5;
+    color: white;
+    font-weight: 600;
+  }
 }
 .tagLine {
   margin: 1px 1em;
@@ -45,6 +91,20 @@
   top: 1em;
   text-align: center;
   right: 4.4rem;
+  @include respond-to(medium){
+    margin: 1px 0.9em;
+    color: white;
+    font-size: 18px;
+    width: 15em;
+    font-weight: lighter;
+    z-index: 7;
+    /* display: none; */
+    position: relative;
+    font-weight: 400;
+    top: 5em;
+    text-align: center;
+    right: 2.4rem;
+  }
 }
 .skewGradient {
   position: relative;
@@ -64,6 +124,11 @@
   cursor: pointer;
   bottom: -88em;
   transform: skew(337deg, 12deg);
+  @include respond-to(
+    medium
+  ){
+    display: none;
+  }
 }
 .imgDiv {
   position: absolute;
@@ -74,6 +139,16 @@
   margin: 5em;
   z-index: 1;
   width: 33%;
+  @include respond-to(medium){
+    position: relative;
+        /* border: 2px solid red; */
+        height: 100%;
+        /* display: none; */
+        left: -1em;
+        margin: 23.7em -4em;
+        z-index: 1;
+        width: 100%;
+  }
 }
 .sliderPosition {
   position: absolute;
@@ -223,4 +298,82 @@
 // }
 .coverUpDiv {
   background: linear-gradient(44.52deg, #111517 5.12%, #ff2f60 97.99%);
+}
+.skewDiv{
+  position: relative;
+  left: 18em;
+  background: linear-gradient(44.52deg, #111517 5.12%, #FF2F60 97.99%);
+  width: 25em;
+  transform: skew(-22deg, 0deg);
+  height: 107%;
+  z-index: 0;
+  top: -19em;
+  @include respond-to(medium){
+    position: relative;
+    left: -6em;
+    background: linear-gradient(44.52deg, #111517 5.12%, #FF2F60 97.99%);
+    width: 36em;
+    transform: skew(-22deg, 0deg);
+    height: 99%;
+    z-index: 0;
+    top: -117em;
+  }
+}
+.varientSelect{
+  display: none;
+  @include respond-to(medium){
+    display: flex;
+    background-color: rgba(38, 38, 38, 0.6);
+    margin: 0 2em;
+    border-radius: 5em;
+    height: 3em;
+    left: 0.5em;
+    text-decoration: none;
+    color: white;
+    position: relative;
+    z-index: 5;
+    top: 7em;
+    align-items: center;
+  }
+}
+.varientSelect li{
+  list-style: none;
+  margin: 0 5px;
+  text-align: center;
+  font-size: 11px;
+  margin: 0 0.8em;
+}
+.colorWheel{
+  display: none;
+  @include respond-to(medium){
+    display: flex;
+    height: 3em;
+    width: auto;
+    border-radius: 40px;
+    position: absolute;
+    /* top: 1em; */
+    background-color: #26262659;
+    z-index: 2;
+    margin: 56em 1em;
+  }
+}
+.name{
+  display: none;
+  @include respond-to(medium){
+    width: 39%;
+    display: block;
+    border-radius: 40px;
+    /* align-self: center; */
+    text-align: center;
+    font: bold;
+    position: relative;
+    z-index: 7;
+    left: 14em;
+    color: white;
+    background-color: rgba(38, 38, 38, 0.3490196078);
+    /* margin: 62em 16em; */
+    top: 56em;
+    margin-top: 0em;
+    height: 3em;
+  }
 }

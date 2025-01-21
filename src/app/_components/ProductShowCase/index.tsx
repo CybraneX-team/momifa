@@ -6,23 +6,45 @@ import styles from './index.module.scss'
 import VariantPreview from '../VariantPreview'
 import Image from 'next/image'
 import { Plus_Jakarta_Sans } from 'next/font/google'
+// import { BackgroundColor } from '../BackgroundColor'
 
 const ProductDisplay: React.FC = () => {
   const [currentColor, setCurrentColor] = useState('blue')
   const [currentVariant, setCurrentVariant] = useState('plain')
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+    // Update state based on the initial match
+    setIsMobile(mediaQuery.matches);
+
+    // Listen for changes
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaChange);
+    };
+  }, []);
+
+  
   const getTopValue = color => {
     if (color === 'blue') {
-      return '-16em'
+      return '-13.7em'
     } else if (color === 'red') {
-      return '-11.6em'
+      return '-9.4em'
     } else if (color === 'white') {
-      return '-13.2em'
+      return '-11.9em'
     } else if (color === 'green') {
-      return '-14.7em'
+      return '-12.6em'
     } else if (color === 'darkblue') {
-      return '-12.9em'
+      return '-11.5em'
     } else if (color === 'gray') {
-      return '-18.3em'
+      return '-16em'
     }
   }
   const variants = {
@@ -126,7 +148,7 @@ const ProductDisplay: React.FC = () => {
         return `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`
     }
   }
-  console.log(getURL('onyxBlack'))
+ 
   let newLinesObject = {
     blue: 'True blue dreams',
     red: 'Seeing red with passion',
@@ -264,6 +286,33 @@ const ProductDisplay: React.FC = () => {
   // const menuItems = ["Accessories", "Branded Polos", "T-shirts"];
   return (
     <div className="font-jakarta">
+        <div className={styles.varientSelect}>   
+           <li onClick={()=>{setCurrentVariant("polo")}} >Branded Polos</li>
+           <li onClick={()=>{setCurrentVariant("brandedtshirt")}} >Branded T-shirts</li>
+           <li onClick={()=>{setCurrentVariant("plain")}} >Plain</li>
+           <li onClick={()=>{setCurrentVariant("branded")}} >Branded</li>  
+        </div>
+        <div className="flex">
+
+        <div className={styles.colorWheel}> 
+        {Object.keys(variants[currentVariant]['colors']).map((e)=>{
+          return <span 
+          style={{
+            backgroundColor: `${variants[currentVariant]['colors'][e]}`,
+            borderRadius: "100%",
+            height: "25px",
+            width: "20px",
+            alignSelf : "center",
+            margin: "0 0.3em"
+          }}
+          onClick={()=>{setCurrentColor(e)}}
+          >  </span>
+        })}
+        </div>
+        <div className={styles.name}> 
+          <span className='text-lg relative top-2'> {currentColor} </span>
+        </div>
+        </div>
       <div className={styles.container}>
         <div className={styles.bgBlack}> </div>
         <div className={styles.coverUpDiv}> </div>
@@ -278,12 +327,17 @@ const ProductDisplay: React.FC = () => {
           <div className={styles.imgDiv}>
             <Image
               style={
-                currentVariant === 'plain'
+                currentVariant === 'plain' && !isMobile
                   ? {
                       zIndex: -1,
                       top: getTopValue(currentColor),
                       position: 'absolute',
                     }
+                   : currentVariant === 'plain' && isMobile ?  {
+                      zIndex: -1,
+                      top: "-12.5em",
+                      position: 'absolute',
+                   }
                   : currentVariant === 'polo'
                   ? {
                       zIndex: -1,
@@ -317,16 +371,7 @@ const ProductDisplay: React.FC = () => {
             />
           </div>
           <div
-            style={{
-              position: 'relative',
-              left: '18em',
-              background: 'linear-gradient(44.52deg, #111517 5.12%, #FF2F60 97.99%)',
-              width: '25em',
-              transform: 'skew(-22deg, 0deg)',
-              height: '107%',
-              zIndex: '0',
-              top: '-19em',
-            }}
+            className={styles.skewDiv}
           ></div>
           <div className={styles.colorVarient}>
             {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
@@ -458,6 +503,7 @@ const ProductDisplay: React.FC = () => {
             </div>
           </div>
         </div>
+      
       </div>
     </div>
   )

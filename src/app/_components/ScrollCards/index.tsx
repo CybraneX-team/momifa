@@ -42,7 +42,6 @@ const HorizontalScroll = () => {
 
   return (
     <div className={styles.main}> 
-      <div className="bg-black w-[full ] h-[92px] z-[2]">  </div>
       <div className={styles.headingDiv}>
           <h1> Momifa Cares </h1>
       </div>
