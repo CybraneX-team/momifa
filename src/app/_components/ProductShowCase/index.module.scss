@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
-// Breakpoint Variables
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');// Breakpoint Variables
 $breakpoints: (
   small: 320px, 
   medium: 480px, 
@@ -44,7 +43,7 @@ $breakpoints: (
   color: white;
   width: 10em;
   height: 2.3em;
-  font-weight: 300;
+  font-weight: 200;
   margin: -6em 3em;
   @include respond-to(medium){
     background-color: #1d1d1d;
@@ -54,12 +53,11 @@ $breakpoints: (
     width: 9em;
     height: 2.5em;
     padding: 6px 0px;
-    top: 14em;
+    top: 13em;
     border-radius: 26px;
     z-index: 1;
-    font-weight: 300;
+    font-weight: 100;
     margin: -3em 2em;
-
   }
 }
 .FashionLine {
@@ -71,13 +69,13 @@ $breakpoints: (
   color: white;
   font-weight: 500;
   @include respond-to(medium){
-    font-size: 6.8vw;
+    font-size: 9vw;
     position: relative;
-    margin: 0.1em 0.9em;
-    top: 6.4rem;
+    margin: 0.1em 10vw;
+    top: 4.4rem;
     z-index: 5;
     color: white;
-    font-weight: 600;
+    font-weight: 500;
   }
 }
 .tagLine {
@@ -92,16 +90,15 @@ $breakpoints: (
   text-align: center;
   right: 4.4rem;
   @include respond-to(medium){
-    margin: 1px 0.9em;
+    margin: 1px 1.9em;
     color: white;
     font-size: 18px;
     width: 15em;
     font-weight: lighter;
     z-index: 7;
-    /* display: none; */
     position: relative;
     font-weight: 400;
-    top: 5em;
+    top: 4em;
     text-align: center;
     right: 2.4rem;
   }
@@ -340,8 +337,36 @@ $breakpoints: (
   list-style: none;
   margin: 0 5px;
   text-align: center;
-  font-size: 11px;
-  margin: 0 0.8em;
+  font-size: 9px;
+  margin: 0 4.5vw;
+}
+.lineCode{
+  top: 0.5em;
+  width: 18%;
+  width: -1px;
+  margin: 2.4em 0;
+  position: absolute;
+  right: 19em;
+}
+.line2{
+  position: absolute;
+  width: 6em;
+  margin: 0 0em;
+  top: 3em;
+  color: white;
+  left: 7em;
+}
+.line3{
+  position: absolute;
+  left: 14.5em;
+  width: 2em;
+  top: 3em;
+}
+.line4{
+  position: absolute;
+    left: 18.5em;
+    width: 3em;
+    top: 3em;
 }
 .colorWheel{
   display: none;

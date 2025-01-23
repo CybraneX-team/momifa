@@ -60,7 +60,7 @@ $tablet-max: 1024px;
 
   /* Small screen breakpoint */
   @include small-break {
-    height: 290vh;
+    height: 97vh;
   }
 
   /* Small screen heights */
@@ -76,7 +76,7 @@ $tablet-max: 1024px;
   /* Mobile screens */
   @media (max-width: 650px) {
     margin-left: 20px;
-    height: 290vh;
+    height: 97vh;
   }
 }
 

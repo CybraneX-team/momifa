@@ -6,12 +6,14 @@ import styles from './index.module.scss'
 import VariantPreview from '../VariantPreview'
 import Image from 'next/image'
 import { Plus_Jakarta_Sans } from 'next/font/google'
+import Link from 'next/link'
 // import { BackgroundColor } from '../BackgroundColor'
 
 const ProductDisplay: React.FC = () => {
   const [currentColor, setCurrentColor] = useState('blue')
   const [currentVariant, setCurrentVariant] = useState('plain')
   const [isMobile, setIsMobile] = useState(false);
+  const [href, sethref] = useState("");
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
@@ -180,28 +182,28 @@ const ProductDisplay: React.FC = () => {
     setCurrentColor(setVariantColor(currentVariant))
   }, [currentVariant])
 
-  function setVariant(currentVariant: string): string {
-    let newVariant: string
+  // function setVariant(currentVriant: string): string {
+  //   let newVariant: string
 
-    switch (currentVariant) {
-      case 'plain':
-        newVariant = 'polo'
-        break
-      case 'polo':
-        newVariant = 'branded'
-        break
-      case 'branded':
-        newVariant = 'brandedtshirt'
-        break
-      case 'brandedtshirt':
-        newVariant = 'plain'
-        break
-      default:
-        throw new Error('Unknown variant')
-    }
+  //   switch (currentVariant) {
+  //     case 'plain':
+  //       newVariant = 'polo'
+  //       break
+  //     case 'polo':
+  //       newVariant = 'branded'
+  //       break
+  //     case 'branded':
+  //       newVariant = 'brandedtshirt'
+  //       break
+  //     case 'brandedtshirt':
+  //       newVariant = 'plain'
+  //       break
+  //     default:
+  //       throw new Error('Unknown variant')
+  //   }
 
-    return newVariant
-  }
+  //   return newVariant
+  // }
   function setVariantColor(currentVariant: string): string {
     let newVariant: string
 
@@ -223,6 +225,24 @@ const ProductDisplay: React.FC = () => {
     }
 
     return newVariant
+  }
+  function buyNowRedirect (){
+    if(currentColor === "blue"){
+      return '/products/aqua-plain-t-shirt-unisex'
+    }else if(currentColor === "blue"){
+      return '/products/aqua-plain-t-shirt-unisex'
+    }else if(currentColor === "red"){
+      return '/products/cherry-red-plain-t-shirt-unisex'
+    }else if(currentColor === "white"){
+      return '/products/vanilla-plain-t-shirt-unisex'
+    }else if(currentColor === "green"){
+      return '/products/mint-plain-t-shirt-unisex'
+    }else if(currentColor === "darkblue"){
+      return '/products/royal-blue-plain-t-shirt-unisex'
+    }
+    else if(currentColor === "gray"){
+      return '/products/grey-marl-plain-t-shirt-unisex'
+    }
   }
   const initialColors = currentCol => {
     if (currentCol === 'blue') {
@@ -288,9 +308,18 @@ const ProductDisplay: React.FC = () => {
     <div className="font-jakarta">
         <div className={styles.varientSelect}>   
            <li onClick={()=>{setCurrentVariant("polo")}} >Branded Polos</li>
+            {currentVariant === "polo"?
+             <hr className={styles.lineCode} /> :
+             <></>
+             }
            <li onClick={()=>{setCurrentVariant("brandedtshirt")}} >Branded T-shirts</li>
+           { currentVariant === "brandedtshirt"?
+            <hr className={styles.line2} /> : ""}
            <li onClick={()=>{setCurrentVariant("plain")}} >Plain</li>
-           <li onClick={()=>{setCurrentVariant("branded")}} >Branded</li>  
+           {currentVariant === "plain" ? 
+            <hr  className={styles.line3} /> :" "}
+           <li onClick={()=>{setCurrentVariant("branded")}} >Branded</li>
+           {currentVariant === "branded" ? <hr  className={styles.line4} /> : ""}
         </div>
         <div className="flex">
 
@@ -300,7 +329,7 @@ const ProductDisplay: React.FC = () => {
           style={{
             backgroundColor: `${variants[currentVariant]['colors'][e]}`,
             borderRadius: "100%",
-            height: "25px",
+            height: "20px",
             width: "20px",
             alignSelf : "center",
             margin: "0 0.3em"
@@ -318,9 +347,11 @@ const ProductDisplay: React.FC = () => {
         <div className={styles.coverUpDiv}> </div>
         <div className={styles.contentDiv}>
           <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
-          <button className={styles.buyNowButton}>
-            <span className="text-lg">Buy Now </span>
+          <Link  href={`/products/${buyNowRedirect}`}>
+          <button  className={styles.buyNowButton}>
+            <span className="text-sm">Buy Now </span>
           </button>
+          </Link>
           <h1 className={styles.FashionLine}>Fashion at Next level</h1>
           <h5 className={styles.tagLine}>Branded Polo T-Shirts</h5>
 
@@ -455,7 +486,6 @@ const ProductDisplay: React.FC = () => {
                       onMouseEnter={() => setActiveItem(item.name)}
                       onClick={() => {
                         setCurrentVariant(item.varientName)
-                        // setCurrentColor(setVariantColor(item.varientName))
                       }}
                     >
                       {/* Bg */}
