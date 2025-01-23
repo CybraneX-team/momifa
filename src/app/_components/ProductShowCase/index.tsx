@@ -243,6 +243,28 @@ const ProductDisplay: React.FC = () => {
     else if(currentColor === "gray"){
       return '/products/grey-marl-plain-t-shirt-unisex'
     }
+    else if(currentColor === "minkGray"){
+      return '/products/mink-gray'
+    }
+    else if(currentColor === "aquablue"){
+      return '/products/aqua-blue'
+    }
+    else if(currentColor === "frenchPink"){
+      return '/products/french-pink'
+    }
+    else if(currentColor === "rolexGreen"){
+      return '/products/rolex-green'
+    }else if(currentColor === "vistaWhite"){
+      return '/products/vista-white'
+    }else if(currentColor === "cobaltBlue"){
+      return '/products/cobalt-blue'
+    }else if(currentColor === "RichCream"){
+      return '/products/rich-cream'
+    }else if(currentColor === "onyxBlack"){
+      return '/products/onyx-black'
+    }
+    
+   
   }
   const initialColors = currentCol => {
     if (currentCol === 'blue') {
@@ -298,12 +320,10 @@ const ProductDisplay: React.FC = () => {
         return 'Plain T-Shirts'
     }
   }
-  const setGradient = colorName => {
-    return `linear-gradient(44.52deg, #111517 5.12%, ${colorName} 97.99%)`
+  
+  function getBackgroundColor(currentColor){
+    return  `linear-gradient(44.52deg, #111517 5.12%, ${variants[currentVariant]['colors'][currentColor]} 97.99%)`
   }
-  const [activeIndex, setActiveIndex] = useState(1) // Default active item
-
-  // const menuItems = ["Accessories", "Branded Polos", "T-shirts"];
   return (
     <div className="font-jakarta">
         <div className={styles.varientSelect}>   
@@ -347,7 +367,7 @@ const ProductDisplay: React.FC = () => {
         <div className={styles.coverUpDiv}> </div>
         <div className={styles.contentDiv}>
           <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
-          <Link  href={`/products/${buyNowRedirect}`}>
+          <Link  href={`${buyNowRedirect()}`}>
           <button  className={styles.buyNowButton}>
             <span className="text-sm">Buy Now </span>
           </button>
@@ -403,6 +423,9 @@ const ProductDisplay: React.FC = () => {
           </div>
           <div
             className={styles.skewDiv}
+            style={{
+              background: getBackgroundColor(currentColor)
+            }}
           ></div>
           <div className={styles.colorVarient}>
             {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
