@@ -11,6 +11,7 @@ import { slateEditor } from '@payloadcms/richtext-slate' // editor-import
 import dotenv from 'dotenv'
 import path from 'path'
 import { buildConfig } from 'payload/config'
+// import { oAuthPlugin } from 'payload-plugin-oauth'
 
 import Categories from './collections/Categories'
 import { Media } from './collections/Media'
@@ -48,17 +49,10 @@ dotenv.config({
 export default buildConfig({
   admin: {
     user: Users.slug,
-    bundler: webpackBundler(),
-    meta: {
-      titleSuffix: "- Momifa"
-    },
+    bundler: webpackBundler(), // bundler-config
     components: {
       beforeLogin: [BeforeLogin],
       beforeDashboard: [BeforeDashboard],
-      graphics: {
-        Icon: Adminlogo,
-        Logo: Adminlogo
-      }
     },
     webpack: config => {
       return {
@@ -75,8 +69,7 @@ export default buildConfig({
             ...config.resolve?.alias,
             dotenv: path.resolve(__dirname, './dotenv.js'),
             [path.resolve(__dirname, 'collections/Products/hooks/beforeChange')]: mockModulePath,
-            [path.resolve(__dirname, 'collections/Users/hooks/createStripeCustomer')]:
-              mockModulePath,
+            [path.resolve(__dirname, 'collections/Users/hooks/createStripeCustomer')]: mockModulePath,
             [path.resolve(__dirname, 'collections/Users/endpoints/customer')]: mockModulePath,
             [path.resolve(__dirname, 'endpoints/create-payment-intent')]: mockModulePath,
             [path.resolve(__dirname, 'endpoints/get-saved-cards')]: mockModulePath,
@@ -92,14 +85,12 @@ export default buildConfig({
       }
     },
   },
-  editor: slateEditor({}), // editor-config
-  // database-adapter-config-start
+  editor: slateEditor({}),
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
-  // database-adapter-config-end
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Pages, Products, Orders, Media, Categories, Users,wishlist,Feedback, Address, Cards],
+  collections: [Pages, Products, Orders, Media, Categories, Users, wishlist, Feedback, Address, Cards],
   globals: [Settings, Header, Footer],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
@@ -110,7 +101,6 @@ export default buildConfig({
   cors: [
     'https://checkout.stripe.com', 
     'http://145.223.74.227',  
-    'http://145.223.74.227',        
     'http://192.168.1.8:3000',        
     process.env.PAYLOAD_PUBLIC_SERVER_URL || ''
   ].filter(Boolean),
@@ -118,7 +108,6 @@ export default buildConfig({
   csrf: [
     'https://checkout.stripe.com', 
     'http://145.223.74.227',    
-    'http://145.223.74.227',     
     'http://192.168.1.8:3000',        
     process.env.PAYLOAD_PUBLIC_SERVER_URL || ''
   ].filter(Boolean),
@@ -154,8 +143,6 @@ export default buildConfig({
       method: 'get',
       handler: productsProxy,
     },
-    // The seed endpoint is used to populate the database with some example data
-    // You should delete this endpoint before deploying your site to production
     {
       path: '/seed',
       method: 'get',
@@ -163,7 +150,6 @@ export default buildConfig({
     },
   ],
   plugins: [
-    // formBuilder({}),
     stripePlugin({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY || '',
       isTestKey: Boolean(process.env.PAYLOAD_PUBLIC_STRIPE_IS_TEST_KEY),
@@ -175,6 +161,7 @@ export default buildConfig({
         'price.updated': priceUpdated,
       },
     }),
+
     redirects({
       collections: ['pages', 'products'],
     }),

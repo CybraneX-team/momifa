@@ -134,13 +134,11 @@ $breakpoints: (
 }
 .imgDiv {
   position: absolute;
-  /* border: 2px solid red; */
-  // top: 277.8vh;
-  height: 100%;
-  left: 13em;
-  margin: 5em;
-  z-index: 1;
-  width: 33%;
+    height: 100%;
+    left: 8em;
+    top: 133.3em;
+    z-index: 1;
+    width: 41%;
   @include respond-to(medium) {
     position: relative;
     /* border: 2px solid red; */

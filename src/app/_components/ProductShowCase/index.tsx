@@ -119,21 +119,21 @@ const ProductDisplay: React.FC = () => {
 
     switch (colorKey) {
       case 'minkGray':
-        return `${baseURL}Mink%2BGray%2B-%2BDuo%2B1-removebg-preview.png`
+        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/mink-gray.png`
       case 'frenchPink':
-        return `${baseURL}French%2BPink%2B-%2B1-removebg-preview.png`
+        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/french-pink.png`
       case 'rolexGreen':
-        return `${baseURL}Rolex%2BGreen%2B2-removebg-preview.png`
+        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/rolex-green.png`
       case 'onyxBlack':
-        return `${baseURL}Onyx%2BBlack%2BMe%2B1-removebg-preview.png`
+        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/onyx-black.png`
       case 'cobaltBlue':
-        return `${baseURL}Cobalt%2BBlue%2B-%2B1-removebg-preview.png`
+        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/cobalt-bluew.png`
       case 'vistaWhite':
         return `${baseURL}Vista%2BWhite%2B-%2B2-removebg-preview.png`
       case 'RichCream':
         return `${baseURL}Rich%2BCream%2B-%2B1-removebg-preview.png`
       case 'aquablue':
-        return `${baseURL}Aqua%2BBlue%2B1-removebg-preview.png`
+        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/aqual-blue.png`
       case 'blackHoodie':
         return `${baseURL}16064970992068608875_2048__1_-removebg-preview.png`
       case 'redHoodie':
@@ -231,32 +231,35 @@ const ProductDisplay: React.FC = () => {
       return '/products/aqua-plain-t-shirt-unisex'
     } else if (currentColor === 'blue') {
       return '/products/aqua-plain-t-shirt-unisex'
-    } else if (currentColor === 'red') {
-      return '/products/cherry-red-plain-t-shirt-unisex'
-    } else if (currentColor === 'white') {
-      return '/products/vanilla-plain-t-shirt-unisex'
-    } else if (currentColor === 'green') {
-      return '/products/mint-plain-t-shirt-unisex'
-    } else if (currentColor === 'darkblue') {
+    }else if(currentColor === "red"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/redd.png'
+    }else if(currentColor === "white"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/plainwhite.png'
+    }else if(currentColor === "green"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/plain-green.png'
+    }else if(currentColor === "darkblue"){
       return '/products/royal-blue-plain-t-shirt-unisex'
     } else if (currentColor === 'gray') {
       return '/products/grey-marl-plain-t-shirt-unisex'
     } else if (currentColor === 'minkGray') {
       return '/products/mink-gray'
-    } else if (currentColor === 'aquablue') {
-      return '/products/aqua-blue'
-    } else if (currentColor === 'frenchPink') {
-      return '/products/french-pink'
-    } else if (currentColor === 'rolexGreen') {
-      return '/products/rolex-green'
-    } else if (currentColor === 'vistaWhite') {
+    }
+    else if(currentColor === "aquablue"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/aqual-blue.png'
+    }
+    else if(currentColor === "frenchPink"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/french-pink.png'
+    }
+    else if(currentColor === "rolexGreen"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/rolex-green.png'
+    }else if(currentColor === "vistaWhite"){
       return '/products/vista-white'
-    } else if (currentColor === 'cobaltBlue') {
-      return '/products/cobalt-blue'
-    } else if (currentColor === 'RichCream') {
+    }else if(currentColor === "cobaltBlue"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/cobalt-bluew.png'
+    }else if(currentColor === "RichCream"){
       return '/products/rich-cream'
-    } else if (currentColor === 'onyxBlack') {
-      return '/products/onyx-black'
+    }else if(currentColor === "onyxBlack"){
+      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/onyx-black.png'
     }
   }
   const initialColors = currentCol => {
@@ -404,6 +407,7 @@ const ProductDisplay: React.FC = () => {
                       zIndex: -1,
                       top: getTopValue(currentColor),
                       position: 'absolute',
+                      left: "8em"
                     }
                   : currentVariant === 'plain' && isMobile
                   ? {
@@ -414,26 +418,29 @@ const ProductDisplay: React.FC = () => {
                   : currentVariant === 'polo'
                   ? {
                       zIndex: -1,
-                      top: '-16em',
+                      top: '-13.6em',
                       position: 'absolute',
-                      height: '32rem',
-                      width: '30rem',
+                      height: '35rem',
+                      left: "1em",
+                      width: '33rem',
                     }
                   : currentVariant === 'branded'
                   ? {
-                      zIndex: 1,
-                      top: '-18em',
-                      position: 'absolute',
-                      height: '35rem',
-                      width: '40rem',
+                    zIndex: 2,
+                    position: "absolute",
+                    left: "5em",
+                    top: "-15.3em",
+                    width: "30rem",
+                    height: "34rem",
                     }
                   : currentVariant === 'brandedtshirt'
                   ? {
-                      zIndex: 2,
-                      top: '-21.7em',
-                      position: 'absolute',
-                      height: '38rem',
-                      width: '35rem',
+                    zIndex: 2,
+                    position: "absolute",
+                    left: "7em",
+                    top: "-15.3em",
+                    width: "32rem",
+                    height: "34rem",
                     }
                   : undefined
               }

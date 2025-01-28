@@ -10,9 +10,12 @@ import { ensureFirstUserIsAdmin } from './hooks/ensureFirstUserIsAdmin'
 import { loginAfterCreate } from './hooks/loginAfterCreate'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
 import { CustomerSelect } from './ui/CustomerSelect'
+import payload from 'payload'
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const Users: CollectionConfig = {
   slug: 'users',
+  
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'email'],
@@ -28,7 +31,32 @@ const Users: CollectionConfig = {
     beforeChange: [createStripeCustomer],
     afterChange: [loginAfterCreate],
   },
-  auth: true,
+  auth: {
+    
+    forgotPassword :{
+      generateEmailHTML : ({ req, token, user }:{
+        req: any,
+        token: string,
+        user: any
+      }) =>{
+        const resetPasswordURL = `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/set-pass?token=${token}`
+
+        return `
+          <!doctype html>
+          <html>
+            <body>
+              <p>Hello, ${user.email}!</p>
+              <p>Click below to reset your password.</p>
+              <p>
+                <a href="${resetPasswordURL}">${resetPasswordURL}</a>
+              </p>
+            </body>
+          </html>
+        `
+      }
+    }
+  },
+  
   endpoints: [
     {
       path: '/:teamID/customer',

@@ -47,6 +47,7 @@
     "framer-motion": "^12.0.0-alpha.0",
     "gsap": "^3.12.5",
     "jquery": "^3.7.1",
+    "jsonwebtoken": "^9.0.2",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.454.0",
     "matter-js": "^0.20.0",

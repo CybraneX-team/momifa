@@ -65,7 +65,7 @@ const CreateAccountForm: React.FC = () => {
 
   const onSubmit = useCallback(
     async (data: FormData) => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/verificationMail`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -79,7 +79,7 @@ const CreateAccountForm: React.FC = () => {
         toast.error('There was an error creating the account.')
         return
       } else {
-        toast.success(`Account created, ${data.name}! Welcome aboard!`)
+        toast.success(`Verification Link Sent, ${data.name}! Please Check Your Email To Create Account!`)
       }
 
       const redirect = searchParams.get('redirect')
@@ -89,11 +89,13 @@ const CreateAccountForm: React.FC = () => {
       }, 1000)
 
       try {
-        await login(data)
+        console.log("data mera data :", data)
+        console.log("redirect is", redirect)
+        // await login(data)
         clearTimeout(timer)
-        if (redirect) router.push(redirect as string)
-        else router.push(`/`)
-        window.location.href = '/'
+        // if (redirect) router.push(redirect as string)
+        // else router.push(`/`)
+        // window.location.href = '/'
       } catch (_) {
         clearTimeout(timer)
         setError('There was an error with the credentials provided. Please try again.')
