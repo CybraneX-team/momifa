@@ -7,33 +7,33 @@ import VariantPreview from '../VariantPreview'
 import Image from 'next/image'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import Link from 'next/link'
+import { FlipWords } from '../ui/FlipWords'
 // import { BackgroundColor } from '../BackgroundColor'
 
 const ProductDisplay: React.FC = () => {
   const [currentColor, setCurrentColor] = useState('blue')
   const [currentVariant, setCurrentVariant] = useState('plain')
-  const [isMobile, setIsMobile] = useState(false);
-  const [href, sethref] = useState("");
+  const [isMobile, setIsMobile] = useState(false)
+  const [href, sethref] = useState('')
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    const mediaQuery = window.matchMedia('(max-width: 768px)')
 
     // Update state based on the initial match
-    setIsMobile(mediaQuery.matches);
+    setIsMobile(mediaQuery.matches)
 
     // Listen for changes
     const handleMediaChange = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches);
-    };
+      setIsMobile(e.matches)
+    }
 
-    mediaQuery.addEventListener('change', handleMediaChange);
+    mediaQuery.addEventListener('change', handleMediaChange)
 
     return () => {
-      mediaQuery.removeEventListener('change', handleMediaChange);
-    };
-  }, []);
+      mediaQuery.removeEventListener('change', handleMediaChange)
+    }
+  }, [])
 
-  
   const getTopValue = color => {
     if (color === 'blue') {
       return '-13.7em'
@@ -150,7 +150,7 @@ const ProductDisplay: React.FC = () => {
         return `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`
     }
   }
- 
+
   let newLinesObject = {
     blue: 'True blue dreams',
     red: 'Seeing red with passion',
@@ -226,45 +226,38 @@ const ProductDisplay: React.FC = () => {
 
     return newVariant
   }
-  function buyNowRedirect (){
-    if(currentColor === "blue"){
+  function buyNowRedirect() {
+    if (currentColor === 'blue') {
       return '/products/aqua-plain-t-shirt-unisex'
-    }else if(currentColor === "blue"){
+    } else if (currentColor === 'blue') {
       return '/products/aqua-plain-t-shirt-unisex'
-    }else if(currentColor === "red"){
+    } else if (currentColor === 'red') {
       return '/products/cherry-red-plain-t-shirt-unisex'
-    }else if(currentColor === "white"){
+    } else if (currentColor === 'white') {
       return '/products/vanilla-plain-t-shirt-unisex'
-    }else if(currentColor === "green"){
+    } else if (currentColor === 'green') {
       return '/products/mint-plain-t-shirt-unisex'
-    }else if(currentColor === "darkblue"){
+    } else if (currentColor === 'darkblue') {
       return '/products/royal-blue-plain-t-shirt-unisex'
-    }
-    else if(currentColor === "gray"){
+    } else if (currentColor === 'gray') {
       return '/products/grey-marl-plain-t-shirt-unisex'
-    }
-    else if(currentColor === "minkGray"){
+    } else if (currentColor === 'minkGray') {
       return '/products/mink-gray'
-    }
-    else if(currentColor === "aquablue"){
+    } else if (currentColor === 'aquablue') {
       return '/products/aqua-blue'
-    }
-    else if(currentColor === "frenchPink"){
+    } else if (currentColor === 'frenchPink') {
       return '/products/french-pink'
-    }
-    else if(currentColor === "rolexGreen"){
+    } else if (currentColor === 'rolexGreen') {
       return '/products/rolex-green'
-    }else if(currentColor === "vistaWhite"){
+    } else if (currentColor === 'vistaWhite') {
       return '/products/vista-white'
-    }else if(currentColor === "cobaltBlue"){
+    } else if (currentColor === 'cobaltBlue') {
       return '/products/cobalt-blue'
-    }else if(currentColor === "RichCream"){
+    } else if (currentColor === 'RichCream') {
       return '/products/rich-cream'
-    }else if(currentColor === "onyxBlack"){
+    } else if (currentColor === 'onyxBlack') {
       return '/products/onyx-black'
     }
-    
-   
   }
   const initialColors = currentCol => {
     if (currentCol === 'blue') {
@@ -320,61 +313,89 @@ const ProductDisplay: React.FC = () => {
         return 'Plain T-Shirts'
     }
   }
-  
-  function getBackgroundColor(currentColor){
-    return  `linear-gradient(44.52deg, #111517 5.12%, ${variants[currentVariant]['colors'][currentColor]} 97.99%)`
+
+  function getBackgroundColor(currentColor) {
+    return `linear-gradient(44.52deg, #111517 5.12%, ${variants[currentVariant]['colors'][currentColor]} 97.99%)`
   }
+  const wordsArray = ['"Feel the vibes of 1990\'s streets."', '"Modern street fashion"']
   return (
     <div className="font-jakarta">
-        <div className={styles.varientSelect}>   
-           <li onClick={()=>{setCurrentVariant("polo")}} >Branded Polos</li>
-            {currentVariant === "polo"?
-             <hr className={styles.lineCode} /> :
-             <></>
-             }
-           <li onClick={()=>{setCurrentVariant("brandedtshirt")}} >Branded T-shirts</li>
-           { currentVariant === "brandedtshirt"?
-            <hr className={styles.line2} /> : ""}
-           <li onClick={()=>{setCurrentVariant("plain")}} >Plain</li>
-           {currentVariant === "plain" ? 
-            <hr  className={styles.line3} /> :" "}
-           <li onClick={()=>{setCurrentVariant("branded")}} >Branded</li>
-           {currentVariant === "branded" ? <hr  className={styles.line4} /> : ""}
-        </div>
-        <div className="flex">
-
-        <div className={styles.colorWheel}> 
-        {Object.keys(variants[currentVariant]['colors']).map((e)=>{
-          return <span 
-          style={{
-            backgroundColor: `${variants[currentVariant]['colors'][e]}`,
-            borderRadius: "100%",
-            height: "20px",
-            width: "20px",
-            alignSelf : "center",
-            margin: "0 0.3em"
+      <div className={styles.varientSelect}>
+        <li
+          onClick={() => {
+            setCurrentVariant('polo')
           }}
-          onClick={()=>{setCurrentColor(e)}}
-          >  </span>
-        })}
+        >
+          Branded Polos
+        </li>
+        {currentVariant === 'polo' ? <hr className={styles.lineCode} /> : <></>}
+        <li
+          onClick={() => {
+            setCurrentVariant('brandedtshirt')
+          }}
+        >
+          Branded T-shirts
+        </li>
+        {currentVariant === 'brandedtshirt' ? <hr className={styles.line2} /> : ''}
+        <li
+          onClick={() => {
+            setCurrentVariant('plain')
+          }}
+        >
+          Plain
+        </li>
+        {currentVariant === 'plain' ? <hr className={styles.line3} /> : ' '}
+        <li
+          onClick={() => {
+            setCurrentVariant('branded')
+          }}
+        >
+          Branded
+        </li>
+        {currentVariant === 'branded' ? <hr className={styles.line4} /> : ''}
+      </div>
+      <div className="flex">
+        <div className={styles.colorWheel}>
+          {Object.keys(variants[currentVariant]['colors']).map(e => {
+            return (
+              <span
+                style={{
+                  backgroundColor: `${variants[currentVariant]['colors'][e]}`,
+                  borderRadius: '100%',
+                  height: '20px',
+                  width: '20px',
+                  alignSelf: 'center',
+                  margin: '0 0.3em',
+                }}
+                onClick={() => {
+                  setCurrentColor(e)
+                }}
+              >
+                {' '}
+              </span>
+            )
+          })}
         </div>
-        <div className={styles.name}> 
-          <span className='text-lg relative top-2'> {currentColor} </span>
+        <div className={styles.name}>
+          <span className="text-lg relative top-2"> {currentColor} </span>
         </div>
-        </div>
+      </div>
       <div className={styles.container}>
         <div className={styles.bgBlack}> </div>
         <div className={styles.coverUpDiv}> </div>
         <div className={styles.contentDiv}>
-          <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
-          <Link  href={`${buyNowRedirect()}`}>
-          <button  className={styles.buyNowButton}>
-            <span className="text-sm">Buy Now </span>
-          </button>
-          </Link>
-          <h1 className={styles.FashionLine}>Fashion at Next level</h1>
-          <h5 className={styles.tagLine}>Branded Polo T-Shirts</h5>
-
+          <div className="">
+            <h1 className={styles.FashionLine}>Fashion at Next level</h1>
+            <h5 className={styles.tagLine}>Branded Polo T-Shirts</h5>
+          </div>
+          {/* <div className="h">
+            <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
+            <Link href={`${buyNowRedirect()}`}>
+              <button className={styles.buyNowButton}>
+                <span className="text-sm">Buy Now </span>
+              </button>
+            </Link>
+          </div> */}
           <div className={styles.imgDiv}>
             <Image
               style={
@@ -384,11 +405,12 @@ const ProductDisplay: React.FC = () => {
                       top: getTopValue(currentColor),
                       position: 'absolute',
                     }
-                   : currentVariant === 'plain' && isMobile ?  {
+                  : currentVariant === 'plain' && isMobile
+                  ? {
                       zIndex: -1,
-                      top: "-12.5em",
+                      top: '-12.5em',
                       position: 'absolute',
-                   }
+                    }
                   : currentVariant === 'polo'
                   ? {
                       zIndex: -1,
@@ -424,11 +446,11 @@ const ProductDisplay: React.FC = () => {
           <div
             className={styles.skewDiv}
             style={{
-              background: getBackgroundColor(currentColor)
+              background: getBackgroundColor(currentColor),
             }}
           ></div>
           <div className={styles.colorVarient}>
-            {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
+            {/* {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
               return (
                 <div
                   key={colorKey}
@@ -439,13 +461,14 @@ const ProductDisplay: React.FC = () => {
                             currentColor === colorKey
                               ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
                               : variants[currentVariant]['colors'][colorKey],
-                          height: '31px',
-                          width: currentColor === colorKey ? '120px' : '13px',
+                          height: '28px',
+                          width: currentColor === colorKey ? '155px' : '13px',
                           margin: '1.3em',
                           position: 'relative',
                           left: '21em',
                           cursor: 'pointer',
                           bottom: '59em',
+                          textAlign: 'left',
                           transform:
                             currentColor === colorKey ? 'rotate(-12deg)' : 'skew(356deg, 12deg)',
                           transition: 'all 0.3s ease',
@@ -475,9 +498,62 @@ const ProductDisplay: React.FC = () => {
                   }
                   onClick={() => {
                     setCurrentColor(colorKey)
+                  }} */}
+            {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
+              return (
+                <div
+                  key={colorKey}
+                  style={
+                    currentVariant === 'polo' || currentVariant === 'plain'
+                      ? {
+                          background:
+                            currentColor === colorKey
+                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
+                              : variants[currentVariant]['colors'][colorKey],
+                          height: '28px',
+                          width: currentColor === colorKey ? '155px' : '13px',
+                          margin: '1.3em',
+                          position: 'relative',
+                          left: '21em',
+                          cursor: 'pointer',
+                          bottom: '59em',
+                          textAlign: 'left',
+                          transform:
+                            currentColor === colorKey
+                              ? 'rotate(-12deg) skew(-12deg)'
+                              : 'skew(-10deg)',
+                          transition: 'all 0.3s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }
+                      : {
+                          background:
+                            currentColor === colorKey
+                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
+                              : variants[currentVariant]['colors'][colorKey],
+                          height: '31px',
+                          width: currentColor === colorKey ? '150px' : '13px',
+                          position: 'relative',
+                          margin: '1.3em',
+                          left: '23em',
+                          cursor: 'pointer',
+                          bottom: '59em',
+                          transform:
+                            currentColor === colorKey
+                              ? 'rotate(-12deg) skew(-20deg)'
+                              : 'skew(-10deg)',
+                          transition: 'all 0.3s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }
+                  }
+                  onClick={() => {
+                    setCurrentColor(colorKey)
                   }}
                 >
-                  {currentColor === colorKey && (
+                  {/* {currentColor === colorKey && (
                     <span
                       style={{
                         color:
@@ -491,10 +567,34 @@ const ProductDisplay: React.FC = () => {
                     >
                       {colorKey.toUpperCase()}
                     </span>
+                  )} */}
+                  {currentColor === colorKey && (
+                    <span
+                      style={{
+                        color:
+                          variants[currentVariant]['colors'][colorKey] === '#ffffff' ||
+                          variants[currentVariant]['colors'][colorKey] === 'white'
+                            ? 'black'
+                            : 'white',
+                        fontSize: '15px',
+                        fontWeight: '500',
+                        transform: 'skew(12deg)', // Counter-skew the text to make it readable
+                      }}
+                    >
+                      {colorKey.toUpperCase()}
+                    </span>
                   )}
                 </div>
               )
             })}
+            {/* <div className="bg-red-800 ">
+              <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
+              <Link href={`${buyNowRedirect()}`}>
+                <button className={styles.buyNowButton}>
+                  <span className="text-sm">Buy Now </span>
+                </button>
+              </Link>
+            </div> */}
           </div>
         </div>
         <div className={styles.sliderDiv}>
@@ -556,7 +656,68 @@ const ProductDisplay: React.FC = () => {
             </div>
           </div>
         </div>
-      
+        <div className="relative top-0">
+          <h2 className={styles.linehead}>
+            <FlipWords
+              words={wordsArray}
+              duration={3000} // Optional: Time in milliseconds for each word
+              className=" " // Optional: Additional Tailwind classes
+            />
+          </h2>
+          <Link href={`${buyNowRedirect()}`}>
+            {/* <button
+              className={styles.buyNowButton}
+              style={{
+                backgroundColor: variants[currentVariant]['colors'][currentColor],
+                color:
+                  variants[currentVariant]['colors'][currentColor] === '#ffffff' ||
+                  variants[currentVariant]['colors'][currentColor] === 'white'
+                    ? 'black'
+                    : 'white',
+              }}
+            >
+              <span className="text-sm">Buy Now </span>
+            </button> */}
+            <button
+              className={`${styles.buyNowButton} group relative inline-flex items-center justify-center px-8 py-3 text-lg font-bold text-white transition-all duration-300 ease-in-out transform hover:scale-80 active:scale-95`}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-500 rounded-full transition-all duration-300 group-hover:scale-110 animate-gradient"></div>
+
+              <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-300 bg-[#ffffff8e] blur-xl"></div>
+              <div className="absolute inset-0 overflow-hidden rounded-full">
+                <div className="glitter-container">
+                  <div className="glitter"></div>
+                  <div className="glitter"></div>
+                  <div className="glitter"></div>
+                </div>
+              </div>
+
+              <div className="absolute inset-0 rounded-full border-2 border-white opacity-20 group-hover:opacity-40 group-hover:scale-105 transition-all duration-300"></div>
+
+              <div className="absolute inset-0 rounded-full overflow-hidden">
+                <div className="wave"></div>
+              </div>
+
+              <span className="relative z-10 flex items-center gap-2">
+                <span className="tracking-wider">Buy Now!</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  fill="none"
+                  className="w-5 h-5 transform transition-transform duration-300 group-hover:translate-x-1"
+                >
+                  <path
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  ></path>
+                </svg>
+                <span className="absolute bottom-0 left-0 hover:left-8 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-50 transition-transform duration-300 origin-left"></span>
+              </span>
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   )

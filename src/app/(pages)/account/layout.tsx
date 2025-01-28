@@ -28,20 +28,24 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   const navRefs = useRef([])
   const [addresses, setAddresses] = useState([])
   const [loadingSavedCards, setLoadingSavedCards] = useState(false)
-  const [savedCards, setSavedCards] = useState([]);
+  const [savedCards, setSavedCards] = useState([])
 
   const SavedCard = ({ id, last4, expMonth, expYear, brand, isSelected }) => (
     <div
-      className={`w-full p-4 shadow cursor-pointer mb-2 ${isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
-        }`}
+      className={`w-full p-4 shadow cursor-pointer mb-2 ${
+        isSelected ? 'border-[#C71E90] bg-[#C71E9020]' : 'border-gray-200 bg-[#19191974]'
+      }`}
     >
       <div className="flex justify-between items-center mb-2">
-        <h5 className="text-lg text-white">{brand} **** {last4}</h5>
+        <h5 className="text-lg text-white">
+          {brand} **** {last4}
+        </h5>
       </div>
-      <p className="text-sm text-gray-400">Expires: {expMonth}/{expYear}</p>
+      <p className="text-sm text-gray-400">
+        Expires: {expMonth}/{expYear}
+      </p>
     </div>
   )
-
 
   useEffect(() => {
     if (!user?.id) return
@@ -51,8 +55,15 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
         const req = await fetch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[user][equals]=${user.id}&depth=2&populate=product`,
         )
+        // const res = await req.json()
+        // setWishlistItems(res.docs.map(item => item.product.title))
         const res = await req.json()
-        setWishlistItems(res.docs.map(item => item.product.title))
+        setWishlistItems(
+          res.docs.map(item => ({
+            title: item.product.title,
+            price: item.product.price,
+          })),
+        )
       } catch (error) {
         console.log(`Error fetching wishlist: ${error}`)
       }
@@ -79,45 +90,47 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/address?where[user][equals]=${user.id}`)
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/address?where[user][equals]=${user.id}`,
+        )
         if (response.ok) {
-          const data = await response.json();
-          setAddresses(data.docs); // Assuming the API returns an array of address objects in 'docs'
+          const data = await response.json()
+          setAddresses(data.docs) // Assuming the API returns an array of address objects in 'docs'
         } else {
-          throw new Error('Failed to fetch addresses');
+          throw new Error('Failed to fetch addresses')
         }
       } catch (error) {
-        console.error('Error fetching addresses:', error);
+        console.error('Error fetching addresses:', error)
       }
-    };
+    }
 
     if (user?.id) {
-      fetchAddresses(); // Call the function if user is logged in
+      fetchAddresses() // Call the function if user is logged in
     }
-  }, [user]);
+  }, [user])
   const fetchSavedCards = () => {
-    setLoadingSavedCards(true);
-    fetch("/api/get-saved-cards")
-      .then((res) => res.json())
-      .then((data) => {
+    setLoadingSavedCards(true)
+    fetch('/api/get-saved-cards')
+      .then(res => res.json())
+      .then(data => {
         if (data.savedCards) {
-          setSavedCards(data.savedCards);
+          setSavedCards(data.savedCards)
         } else {
-          setSavedCards([]);
+          setSavedCards([])
         }
-        setLoadingSavedCards(false);
+        setLoadingSavedCards(false)
       })
-      .catch((error) => {
-        console.error('Error fetching saved cards:', error);
-        setLoadingSavedCards(false);
-      });
+      .catch(error => {
+        console.error('Error fetching saved cards:', error)
+        setLoadingSavedCards(false)
+      })
   }
 
   useEffect(() => {
     if (user) {
-      fetchSavedCards();
+      fetchSavedCards()
     }
-  }, [user]);
+  }, [user])
 
   return (
     <div className="bg-black min-h-screen text-white w-full md:px-5 pb-10">
@@ -184,8 +197,8 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
                 <ul className="space-y-2">
                   {wishlistItems.map((item, index) => (
                     <li key={index} className="flex justify-between text-[#B7B7B7] text-sm">
-                      <span>{item}</span>
-                      <span>$199</span>
+                      <span>{item.title}</span>
+                      <span>{item.price}</span>
                     </li>
                   ))}
                 </ul>
@@ -196,19 +209,17 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               <h5 style={{ textDecoration: 'underline' }}> Saved Addresses</h5>
               {addresses.map(addr => (
                 <div key={addr.id} className="flex items-center space-x-2 mb-2">
-                  <label htmlFor={`address-${addr.id}`} className="text-white">{`${addr.street}, ${addr.city}, ${addr.state} ${addr.postalCode}, ${addr.country}`}</label>
+                  <label
+                    htmlFor={`address-${addr.id}`}
+                    className="text-white"
+                  >{`${addr.street}, ${addr.city}, ${addr.state} ${addr.postalCode}, ${addr.country}`}</label>
                 </div>
               ))}
               <h5 style={{ textDecoration: 'underline' }}>Saved Cards</h5>
               {loadingSavedCards ? (
                 <p>Loading saved cards...</p>
               ) : savedCards.length > 0 ? (
-                savedCards.map((card) => (
-                  <SavedCard
-                    key={card.id}
-                    {...card}
-                  />
-                ))
+                savedCards.map(card => <SavedCard key={card.id} {...card} />)
               ) : (
                 <p>No saved cards found.</p>
               )}

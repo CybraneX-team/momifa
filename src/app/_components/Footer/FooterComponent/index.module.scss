@@ -1,7 +1,8 @@
 @use '../../../_css/queries.scss' as *;
 
 .footer {
-  background-color: #000;
+  position: relative;
+  background-color: transparent;
   color: #fff;
   padding: 60px 10px;
   padding-right: 200px;

@@ -9,6 +9,7 @@ import { useInView } from 'react-intersection-observer'
 
 import { Footer } from '../../../../payload/payload-types'
 import { noHeaderFooterUrls } from '../../../constants'
+import { SparklesCore } from '../../ui/sparkle'
 import { Gutter } from '../../Gutter'
 
 import classes from './index.module.scss'
@@ -99,6 +100,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
         initial="hidden"
         animate={controls}
       >
+        <SparklesCore className="absolute inset-0 z-[-1]" />
         <motion.div className={classes.logoSection} variants={itemVariants}>
           <Link href="/">
             <motion.svg

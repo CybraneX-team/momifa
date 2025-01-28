@@ -216,15 +216,6 @@ const LoginForm: React.FC = () => {
       </motion.div>
 
       {/* Right Section Image */}
-      {/* <motion.div
-        variants={containerVariants}
-        className="relative hidden 2xl:flex p-10 px-12 h-screen w-screen"
-        style={{
-          background: 'linear-gradient(to bottom, #000 10%, #392a5b 300%)',
-        }}
-        initial="hidden"
-        animate="visible"
-      > */}
       <motion.div
         variants={containerVariants}
         className="relative hidden xl:flex flex-col p-10 px-12 h-screen w-screen max-w-[50%] justify-center items-center"

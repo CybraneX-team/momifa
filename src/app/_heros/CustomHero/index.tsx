@@ -49,7 +49,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
   return (
     <div className="relative w-full h-screen bg-[#1A151E] overflow-hidden font-montserrat">
       {/* Background Image for Lines */}
-      <div className="absolute inset-0 z-40 bg-[url('/media/mobile-hero.svg')] bg-no-repeat bg-cover md:bg-none">
+      <div className="absolute inset-0 z-40 bg-[url('/media/mobile-hero.svg')] h-full w-full bg-no-repeat bg-cover md:bg-none">
         <img
           src="/media/Group 2 (1).svg"
           alt="Bg"
@@ -60,8 +60,8 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
       {/* Main Content */}
       <div className="flex h-full w-full pt-20 md:pt-0 md:pl-16">
         {/* Left Content */}
-        <div className=" flex flex-col justify-center px-6 md:px-12 z-50">
-          <div className="w-full">
+        <div className=" flex flex-col md:justify-center pt-20 md:pt-0 px-6 md:px-12 z-50">
+          <div className="w-screen md:w-full">
             <img
               src="/media/h-img.png"
               alt=""
@@ -93,7 +93,7 @@ export const CustomHero: React.FC<Page['hero']> = ({ richText, links }) => {
           <div className="absolute inset-0 md:bg-gray-900 transform -skew-x-12 origin-top-right translate-x-32"></div>
 
           {/* Image */}
-          <div className="absolute inset-0 transform translate-x-24 hidden md:block">
+          <div className="absolute inset-0  transform translate-x-28 hidden md:block">
             <img
               src="/media/hero.png"
               alt="Model wearing casual business attire"

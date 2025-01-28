@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');// Breakpoint Variables
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap'); // Breakpoint Variables
 $breakpoints: (
-  small: 320px, 
-  medium: 480px, 
-  large: 768px,  
-  xlarge: 1024px 
+  small: 320px,
+  medium: 480px,
+  large: 768px,
+  xlarge: 1024px,
 );
 @mixin respond-to($breakpoint) {
   $value: map-get($breakpoints, $breakpoint);
@@ -30,22 +30,27 @@ $breakpoints: (
   color: white;
   font-weight: 700;
   font-size: 30px;
-  margin: 1.5em 2em;
+  margin: 0em -1.5em;
   width: 264px;
   line-height: 34px;
+  position: absolute;
+  bottom: 5em;
   @include respond-to(medium) {
     display: none;
   }
 }
 .buyNowButton {
   background-color: #1d1d1d;
-  border: 1px solid #a9a9a9;
+  // border: 1px solid #a9a9a9;
   color: white;
-  width: 10em;
+  width: 12em;
   height: 2.3em;
   font-weight: 200;
-  margin: -6em 3em;
-  @include respond-to(medium){
+  position: absolute;
+  bottom: 3.5em;
+  border-radius: 50px;
+  margin: 1em -1.5em;
+  @include respond-to(medium) {
     background-color: #1d1d1d;
     border: 1px solid #a9a9a9;
     color: white;
@@ -61,14 +66,16 @@ $breakpoints: (
   }
 }
 .FashionLine {
-  font-size: 56px;
+  font-size: 50px;
   position: relative;
   margin: 0.1em 0.8em;
-  top: 2.4rem;
+  margin-top: 4em;
+  // margin: 1.5em 2em;
+  top: -3em;
   z-index: 5;
   color: white;
-  font-weight: 500;
-  @include respond-to(medium){
+  font-weight: 600;
+  @include respond-to(medium) {
     font-size: 9vw;
     position: relative;
     margin: 0.1em 10vw;
@@ -79,17 +86,17 @@ $breakpoints: (
   }
 }
 .tagLine {
-  margin: 1px 1em;
+  margin: 2px 1.5em;
   color: white;
-  font-size: 35px;
+  font-size: 30px;
   width: 15em;
   font-weight: lighter;
   z-index: 7;
   position: relative;
-  top: 1em;
+  top: -5em;
   text-align: center;
   right: 4.4rem;
-  @include respond-to(medium){
+  @include respond-to(medium) {
     margin: 1px 1.9em;
     color: white;
     font-size: 18px;
@@ -121,9 +128,7 @@ $breakpoints: (
   cursor: pointer;
   bottom: -88em;
   transform: skew(337deg, 12deg);
-  @include respond-to(
-    medium
-  ){
+  @include respond-to(medium) {
     display: none;
   }
 }
@@ -136,22 +141,22 @@ $breakpoints: (
   margin: 5em;
   z-index: 1;
   width: 33%;
-  @include respond-to(medium){
+  @include respond-to(medium) {
     position: relative;
-        /* border: 2px solid red; */
-        height: 100%;
-        /* display: none; */
-        left: -1em;
-        margin: 23.7em -4em;
-        z-index: 1;
-        width: 100%;
+    /* border: 2px solid red; */
+    height: 100%;
+    /* display: none; */
+    left: -1em;
+    margin: 23.7em -4em;
+    z-index: 1;
+    width: 100%;
   }
 }
 .sliderPosition {
   position: absolute;
   color: white;
   left: 77em;
-  top: 357%;
+  top: 350%;
 }
 .scrollmenu {
   display: flex;
@@ -296,19 +301,19 @@ $breakpoints: (
 .coverUpDiv {
   background: linear-gradient(44.52deg, #111517 5.12%, #ff2f60 97.99%);
 }
-.skewDiv{
+.skewDiv {
   position: relative;
   left: 18em;
-  background: linear-gradient(44.52deg, #111517 5.12%, #FF2F60 97.99%);
+  background: linear-gradient(44.52deg, #111517 5.12%, #ff2f60 97.99%);
   width: 25em;
   transform: skew(-22deg, 0deg);
   height: 107%;
   z-index: 0;
   top: -19em;
-  @include respond-to(medium){
+  @include respond-to(medium) {
     position: relative;
     left: -6em;
-    background: linear-gradient(44.52deg, #111517 5.12%, #FF2F60 97.99%);
+    background: linear-gradient(44.52deg, #111517 5.12%, #ff2f60 97.99%);
     width: 36em;
     transform: skew(-22deg, 0deg);
     height: 99%;
@@ -316,9 +321,9 @@ $breakpoints: (
     top: -117em;
   }
 }
-.varientSelect{
+.varientSelect {
   display: none;
-  @include respond-to(medium){
+  @include respond-to(medium) {
     display: flex;
     background-color: rgba(38, 38, 38, 0.6);
     margin: 0 2em;
@@ -333,14 +338,14 @@ $breakpoints: (
     align-items: center;
   }
 }
-.varientSelect li{
+.varientSelect li {
   list-style: none;
   margin: 0 5px;
   text-align: center;
   font-size: 9px;
   margin: 0 4.5vw;
 }
-.lineCode{
+.lineCode {
   top: 0.5em;
   width: 18%;
   width: -1px;
@@ -348,7 +353,7 @@ $breakpoints: (
   position: absolute;
   right: 19em;
 }
-.line2{
+.line2 {
   position: absolute;
   width: 6em;
   margin: 0 0em;
@@ -356,21 +361,21 @@ $breakpoints: (
   color: white;
   left: 7em;
 }
-.line3{
+.line3 {
   position: absolute;
   left: 14.5em;
   width: 2em;
   top: 3em;
 }
-.line4{
+.line4 {
   position: absolute;
-    left: 18.5em;
-    width: 3em;
-    top: 3em;
+  left: 18.5em;
+  width: 3em;
+  top: 3em;
 }
-.colorWheel{
+.colorWheel {
   display: none;
-  @include respond-to(medium){
+  @include respond-to(medium) {
     display: flex;
     height: 3em;
     width: auto;
@@ -382,9 +387,9 @@ $breakpoints: (
     margin: 56em 1em;
   }
 }
-.name{
+.name {
   display: none;
-  @include respond-to(medium){
+  @include respond-to(medium) {
     width: 39%;
     display: block;
     border-radius: 40px;
