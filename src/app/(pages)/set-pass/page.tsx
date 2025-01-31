@@ -11,6 +11,7 @@ const Index = () => {
   const [token, setToken] = useState("");
   const router = useSearchParams();
   const [showPass , setshowPass]  = useState(false)
+  const [showconfirmPass , setshowconfirmPass]  = useState(false)
 
   const setOnChange = (e) => {
     setPassData({ ...passData, [e.target.name]: e.target.value });
@@ -71,6 +72,12 @@ const Index = () => {
     );
   };
 
+  function eyeButtonLogic(e){
+    setshowPass(!showPass)
+  }
+  const setConfirmpassOnChange = (e) => {
+    setshowconfirmPass(!showconfirmPass)
+  };
   return (
     <div>
       <form className="flex flex-col resetPassword">
@@ -79,7 +86,8 @@ const Index = () => {
             New Password
           </label>
           <input
-            type="password"
+            type={ showPass ? 
+              'text' : "password"}
             id="password1"
             placeholder="New password"
             required
@@ -89,16 +97,16 @@ const Index = () => {
             className="text-[#A19B9B] text-xl max-w-3xl font-medium
               focus:outline-none w-full p-3 py-4 mt-3 bg-transparent 
               border border-[#363636] rounded-lg self-center my-2"
-          />
-          {
-          showPass ? 
-          <FaRegEye 
-          onClick={()=>{setshowPass(!showPass)}}
-          className={styles.iconClass} />:
-          <FaEyeSlash  
-          onClick={()=>{setshowPass(!showPass)}}
-          className={styles.iconClass} />
-          }
+              />
+              {
+              showPass ? 
+              <FaRegEye 
+              onClick={(e)=>{eyeButtonLogic(e)}}
+              className={styles.iconClass} />:
+              <FaEyeSlash  
+              onClick={(e)=>{eyeButtonLogic(e)}}
+              className={styles.iconClass} />
+              }
          <ToastContainer
           position="bottom-center"
           autoClose={500}
@@ -116,7 +124,8 @@ const Index = () => {
             Confirm New Password
           </label>
           <input
-            type="password"
+            type={ showconfirmPass ? 
+              'text' : "password"}
             id="password2"
             onChange={setOnChange}
             placeholder="Confirm password"
@@ -127,15 +136,15 @@ const Index = () => {
               font-medium focus:outline-none w-full p-3 py-4 mt-3 bg-transparent 
               border border-[#363636] rounded-lg my-2"
           />
-          {showPass? 
+          {showconfirmPass? 
               <>
              <FaRegEye 
-              onClick={()=>{setshowPass(!showPass)}}
+              onClick={(e)=>{setConfirmpassOnChange(e)}}
               className={styles.iconClass} 
               />
               </>
           :  <FaEyeSlash  
-              onClick={()=>{setshowPass(!showPass)}}
+              onClick={(e)=>{setConfirmpassOnChange(e)}}
               className={styles.iconClass} 
               /> }
           <button

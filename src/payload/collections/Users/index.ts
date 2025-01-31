@@ -99,6 +99,20 @@ const Users: CollectionConfig = {
       },
     },
     {
+      name: "sub",
+      label: "sub",
+      type: "text",
+      admin: { readOnly: true },
+      access: { update: () => false },
+    },
+    {
+      name: "pictureURL",
+      label: "pictureURL",
+      type: "text",
+      admin: { readOnly: true },
+      access: { update: () => false },
+    },
+    {
       name: 'purchases',
       label: 'Purchases',
       type: 'relationship',

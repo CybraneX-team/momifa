@@ -135,6 +135,9 @@ const LoginForm: React.FC = () => {
             variants={containerVariants}
             className="mt-6"
           >
+            <Link
+              href={'/oauth2/authorize'}
+            >
             <motion.button
               variants={itemVariants}
               type="button"
@@ -145,7 +148,7 @@ const LoginForm: React.FC = () => {
                 Log in with Google
               </h2>
             </motion.button>
-
+            </Link>
             <motion.div
               className="w-full mt-5 pt-6 border-t border-[#2F2F2F]"
               variants={containerVariants}
