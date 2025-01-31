@@ -40,46 +40,9 @@ $tablet-max: 1024px;
 }
 
 .horizontalScrollWrapper {
-  // margin-bottom: 20px; /* Add some bottom margin */
-  height: 33em;
-
-  /* Tablet screen sizes */
-  @media screen and (min-width: 768px) and (max-width: 1024px) {
-    height: 368vh;
-  }
-
-  /* Medium screens */
-  @media screen and (min-width: 820px) and (max-width: 1180px) {
-    height: 304em;
-  }
-
-  /* Large tablet  */
-  @media screen and (min-width: 1024px) and (max-width: 1366px) {
-    height: 358em;
-  }
-
-  /* Small screen breakpoint */
-  @include small-break {
-    height: 97vh;
-  }
-
-  /* Small screen heights */
-  @media screen and (min-width: 414px) and (max-width: 896px) {
-    height: 377vh;
-  }
-
-  /* Medium screen breakpoint */
-  @include mid-break {
-    margin-bottom: 20px;
-  }
-
-  /* Mobile screens */
-  @media (max-width: 650px) {
-    margin-left: 20px;
-    height: 97vh;
-  }
+  margin-bottom: 50px;
+  margin-top: 50px;
 }
-
 .faq {
   @media (max-width: 650px) {
     margin-top: 3rem;

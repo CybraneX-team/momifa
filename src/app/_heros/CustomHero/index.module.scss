@@ -1,5 +1,6 @@
 @import '../../_css/queries.scss';
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
 
 .hero {
   position: relative;
@@ -24,8 +25,6 @@
 
   @include small-break {
     flex-direction: column;
-    
-    
   }
 }
 
@@ -39,7 +38,6 @@
     width: 100%;
     // height: 200%;
   }
- 
 }
 
 .carouselSlide {
@@ -79,41 +77,39 @@
   align-items: flex-start;
   padding: 0 5%;
   position: relative;
-  
- z-index: 1;
+
+  z-index: 1;
 
   @include small-break {
     width: 100%;
     // height: 50%;
     // padding: 20px;
   }
- 
+
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url("/media/cart-bg.png");
+    background-image: url('/media/cart-bg.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     filter: blur(5px); /* Apply blur to the background */
     z-index: -1; /* Keep the background behind the content */
-     /* Optional: Adjust the transparency of the background */
+    /* Optional: Adjust the transparency of the background */
 
-     @media (max-width: 650px) {
+    @media (max-width: 650px) {
       margin-top: 20rem;
       background: transparent;
-       
-     }
+    }
   }
 
   @media (max-width: 650px) {
     margin-top: 6rem;
-     
-   }
+  }
 }
 
 .heartIcon {
@@ -129,7 +125,6 @@
 
   @media (max-width: 650px) {
     top: -3rem;
-    
   }
 }
 
@@ -156,12 +151,11 @@
   @media (max-width: 650px) {
     width: 33px;
     top: 45%;
-    
   }
 }
 
 .heroHeading {
-  font-family: "Syne", sans-serif;
+  font-family: 'Syne', sans-serif;
   font-weight: 700;
   font-size: 3vw;
   letter-spacing: 0.5vw;
@@ -171,7 +165,7 @@
 }
 
 .heroTagline {
-  font-family: "Syne", sans-serif;
+  font-family: 'Syne', sans-serif;
   font-size: 1.5vw;
   font-weight: 500;
   line-height: 1.2;
@@ -243,7 +237,6 @@
     left: 10px;
     transform: translateY(-50%) rotate(-90deg);
   }
-
 }
 
 .rotatedText {
@@ -262,7 +255,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin-top: 1rem;
 
-  @media (max-width: 650px){
+  @media (max-width: 650px) {
     font-size: 10px;
   }
 }
@@ -337,5 +330,48 @@
   }
   60% {
     transform: scale(1);
+  }
+}
+
+.michroma-text {
+  /* MODERN */
+
+  position: absolute;
+  width: 836px;
+  height: 182px;
+  left: 957.79px;
+  top: 512.85px;
+
+  font-family: 'Michroma';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 128px;
+  line-height: 182px;
+  /* identical to box height */
+
+  color: #ffffff;
+
+  mix-blend-mode: exclusion;
+}
+
+.hero-img {
+  width: 1858.04px;
+  height: 1051.93px;
+  left: 30.98px;
+  gap: 0px;
+  border-radius: 30px 0px 0px 0px;
+  opacity: 0px;
+}
+
+.blend-wrapper {
+  position: relative;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    z-index: -1;
   }
 }

@@ -29,12 +29,11 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
       </div>
       </Link> */}
       <div className="-mt-3 flex items-center justify-around text-white space-x-6 md:space-x-16 -mr-3  md:mr-12">
-        <Link href="/products" className="mt-1.5 text-white  font-medium">
-          Collection
-        </Link>
-
         <Link href="/" className="mt-1.5 text-white ">
           Home
+        </Link>
+        <Link href="/products" className="mt-1.5 text-white  font-medium">
+          Collection
         </Link>
 
         {user && <CartLink />}
@@ -49,7 +48,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
         <div className="mt-2 flex items-center justify-center text-white space-x-6 md:space-x-16">
           {!user && <CartLink />}
           {!user && (
-            <div className="bg-[#ffffff] p-1 cursor-pointer text-black">
+            <div className="bg-[#ffffff] p-1 cursor-pointer text-black rounded-sm">
               <button onClick={() => (window.location.href = '/login')} className="px-4 md:px-10">
                 Login
               </button>

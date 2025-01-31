@@ -114,6 +114,7 @@ const ProductDisplay: React.FC = () => {
     const index = menuItems.findIndex(item => item.name === itemName)
     return `${index * 60 + 30}px`
   }
+
   function getURL(colorKey) {
     const baseURL = 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/'
 
@@ -262,6 +263,7 @@ const ProductDisplay: React.FC = () => {
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/onyx-black.png'
     }
   }
+
   const initialColors = currentCol => {
     if (currentCol === 'blue') {
       return 'minkGray'
@@ -510,71 +512,30 @@ const ProductDisplay: React.FC = () => {
               return (
                 <div
                   key={colorKey}
-                  style={
-                    currentVariant === 'polo' || currentVariant === 'plain'
-                      ? {
-                          background:
-                            currentColor === colorKey
-                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
-                              : variants[currentVariant]['colors'][colorKey],
-                          height: '28px',
-                          width: currentColor === colorKey ? '155px' : '13px',
-                          margin: '1.3em',
-                          position: 'relative',
-                          left: '21em',
-                          cursor: 'pointer',
-                          bottom: '59em',
-                          textAlign: 'left',
-                          transform:
-                            currentColor === colorKey
-                              ? 'rotate(-12deg) skew(-12deg)'
-                              : 'skew(-10deg)',
-                          transition: 'all 0.3s ease',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }
-                      : {
-                          background:
-                            currentColor === colorKey
-                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
-                              : variants[currentVariant]['colors'][colorKey],
-                          height: '31px',
-                          width: currentColor === colorKey ? '150px' : '13px',
-                          position: 'relative',
-                          margin: '1.3em',
-                          left: '23em',
-                          cursor: 'pointer',
-                          bottom: '59em',
-                          transform:
-                            currentColor === colorKey
-                              ? 'rotate(-12deg) skew(-20deg)'
-                              : 'skew(-10deg)',
-                          transition: 'all 0.3s ease',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }
-                  }
+                  style={{
+                    background:
+                      currentColor === colorKey
+                        ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
+                        : variants[currentVariant]['colors'][colorKey],
+                    height: '28px',
+                    width: currentColor === colorKey ? '170px' : '13px',
+                    margin: '1em',
+                    position: 'relative',
+                    left: '21em',
+                    cursor: 'pointer',
+                    bottom: '59em',
+                    textAlign: 'left',
+                    transform: 'rotate(-10deg) skew(-9deg)', // Removed conditional transform
+                    transformOrigin: 'left center', // Add this to keep expansion from left side
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    paddingLeft: currentColor === colorKey ? '20px' : '0', // Add padding for text
+                  }}
                   onClick={() => {
                     setCurrentColor(colorKey)
                   }}
                 >
-                  {/* {currentColor === colorKey && (
-                    <span
-                      style={{
-                        color:
-                          variants[currentVariant]['colors'][colorKey] === '#ffffff' ||
-                          variants[currentVariant]['colors'][colorKey] === 'white'
-                            ? 'black'
-                            : 'white',
-                        fontSize: '15px',
-                        fontWeight: '500',
-                      }}
-                    >
-                      {colorKey.toUpperCase()}
-                    </span>
-                  )} */}
                   {currentColor === colorKey && (
                     <span
                       style={{
@@ -585,7 +546,8 @@ const ProductDisplay: React.FC = () => {
                             : 'white',
                         fontSize: '15px',
                         fontWeight: '500',
-                        transform: 'skew(12deg)', // Counter-skew the text to make it readable
+                        transform: 'skew(20deg)', // Counter-skew the text
+                        whiteSpace: 'nowrap',
                       }}
                     >
                       {colorKey.toUpperCase()}
@@ -594,6 +556,7 @@ const ProductDisplay: React.FC = () => {
                 </div>
               )
             })}
+
             {/* <div className="bg-red-800 ">
               <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
               <Link href={`${buyNowRedirect()}`}>
@@ -668,7 +631,7 @@ const ProductDisplay: React.FC = () => {
             <FlipWords
               words={wordsArray}
               duration={3000} // Optional: Time in milliseconds for each word
-              className=" " // Optional: Additional Tailwind classes
+              className="" // Optional: Additional Tailwind classes
             />
           </h2>
           <Link href={`${buyNowRedirect()}`}>
