@@ -89,12 +89,6 @@ export const Card: React.FC<{
                 <div className={classes.titleOverlayP}>
                   <h4 className={classes.title}>{title}</h4>
                 </div>
-
-                <div className={classes.titleOverlayG}>
-                  <h4 className={classes.title}>
-                    <img src="/media/goTo.png" alt="" className=" " />
-                  </h4>
-                </div>
               </div>
             </div>
           </div>

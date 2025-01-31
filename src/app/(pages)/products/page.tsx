@@ -33,10 +33,10 @@ const Products = async () => {
   }
   return (
     <div className={classes.container}>
-      <Gutter className={classes.products}>
-        <Filters categories={categories} productColors={proudctColors}  />
-        <Blocks blocks={page?.layout} disableTopPadding={true} />
-      </Gutter>
+      {/* <Gutter className={classes.products}> */}
+      <Filters categories={categories} productColors={proudctColors} />
+      <Blocks blocks={page?.layout} disableTopPadding={true} />
+      {/* </Gutter> */}
       {/* <HR /> */}
     </div>
   )
