@@ -6,19 +6,15 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, useAnimation } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-
-import { Footer } from '../../../../payload/payload-types'
-import { noHeaderFooterUrls } from '../../../constants'
 import { SparklesCore } from '../../ui/sparkle'
-import { Gutter } from '../../Gutter'
-
+import { noHeaderFooterUrls } from '../../../constants'
 import classes from './index.module.scss'
 
-const FooterComponent = ({ footer }: { footer: Footer }) => {
+const FooterComponent = ({ footer }) => {
   const pathname = usePathname()
   const controls = useAnimation()
   const [ref, inView] = useInView({
-    threshold: 0.1, // Trigger when 10% of the footer is visible
+    threshold: 0.1,
   })
 
   useEffect(() => {
@@ -89,21 +85,29 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
     },
   }
 
+  const MotionDiv = motion.create('div')
+  const MotionH2 = motion.create('h2')
+  const MotionH3 = motion.create('h3')
+
   return (
     <footer
       ref={ref}
-      className={noHeaderFooterUrls.includes(pathname) ? classes.hide : classes.footer}
+      className={`z-50 relative bg-transparent text-white py-16 px-4 md:px-12 lg:px-48 shadow-[inset_1px_1px_10px_#f0e4ff95] rounded-t-[30px] mt-5 ${
+        noHeaderFooterUrls?.includes(pathname) ? 'hidden' : ''
+      }`}
     >
-      <motion.div
-        className={classes.footerContent}
+      <MotionDiv
+        className="relative flex flex-col items-center"
         variants={containerVariants}
         initial="hidden"
         animate={controls}
       >
         <SparklesCore className="absolute inset-0 z-[-1]" />
-        <motion.div className={classes.logoSection} variants={itemVariants}>
-          <Link href="/">
-            <motion.svg
+        
+        {/* Logo Section */}
+        <MotionDiv className="text-center mb-12" variants={itemVariants}>
+          <Link href="/" className="inline-block mb-4">
+          <motion.svg
               className={classes.logo}
               xmlns="http://www.w3.org/2000/svg"
               id="Layer_1"
@@ -143,51 +147,58 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
               />
             </motion.svg>
           </Link>
-          <motion.h2 className={classes.slogan} variants={itemVariants}>
+          <MotionH2 className="text-xl md:text-2xl" variants={itemVariants}>
             Shop Branded Goods From Here
-          </motion.h2>
-        </motion.div>
+          </MotionH2>
+        </MotionDiv>
 
-        {footerLinks.map((column, index) => (
-          <motion.div key={index} className={classes.linkColumn} variants={itemVariants}>
-            <motion.h3 variants={itemVariants} className={classes.title}>
-              {column.title}
-            </motion.h3>
-            <motion.ul variants={containerVariants}>
-              {column.items.map((item, itemIndex) => (
-                <motion.li key={itemIndex} variants={itemVariants}>
-                  <Link href={item.url}>{item.item}</Link>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
-        ))}
-      </motion.div>
+        {/* Links Section - Grid with center alignment */}
+        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 justify-items-center text-center">
+          {footerLinks.map((column, index) => (
+            <MotionDiv key={index} variants={itemVariants} className="flex flex-col items-center">
+              <MotionH3 variants={itemVariants} className="font-semibold text-lg md:text-xl mb-6">
+                {column.title}
+              </MotionH3>
+              <ul className="space-y-4">
+                {column.items.map((item, itemIndex) => (
+                  <li key={itemIndex}>
+                    <Link 
+                      href={item.url}
+                      className="text-[#eee3ff] hover:underline decoration-[#eee3ffad] transition-colors duration-300"
+                    >
+                      {item.item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </MotionDiv>
+          ))}
+        </div>
 
-      <motion.div
-        className={classes.bottomSection}
-        variants={containerVariants}
-        initial="hidden"
-        animate={controls}
-      >
-        <motion.div className="flex flex-col md:-mt-10 ml-16 md:ml-0 items-center justify-center md:justify-start md:items-start">
-          <motion.h3
-            variants={itemVariants}
-            className="font-bold text-left md:ml-12 text-xl mb-5 md:mb-0"
-          >
+        {/* Social Links Section */}
+        <MotionDiv className="text-center w-full" variants={containerVariants}>
+          <MotionH3 variants={itemVariants} className="font-bold text-xl mb-6">
             Socials
-          </motion.h3>
-          <motion.div className={classes.socialLinks} variants={containerVariants}>
+          </MotionH3>
+          <MotionDiv className="flex justify-center gap-6 flex-wrap" variants={containerVariants}>
             {socialLinks.map((link, index) => (
-              <motion.div key={index} variants={itemVariants}>
-                <Link href={link.url}>
-                  <Image src={link.icon} alt="social icon" width={24} height={24} />
-                </Link>
-              </motion.div>
+              <Link 
+                key={index}
+                href={link.url}
+                className="opacity-70 hover:opacity-100 transition-opacity duration-300"
+              >
+                <Image 
+                  src={link.icon} 
+                  alt="social icon" 
+                  width={24} 
+                  height={24} 
+                  className="w-6 h-6"
+                />
+              </Link>
             ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </MotionDiv>
+        </MotionDiv>
+      </MotionDiv>
     </footer>
   )
 }

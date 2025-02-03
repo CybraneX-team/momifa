@@ -1,7 +1,7 @@
 "use client"
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-import styles from './index.module.scss';
+import { useState, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import styles from './index.module.scss'
 
 interface FAQItemProps {
   question: string;
@@ -12,7 +12,6 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   const itemRef = useRef(null);
   const isItemInView = useInView(itemRef, { triggerOnce: false, threshold: 0.5 });
-  
 
   return (
     <motion.div 
@@ -27,17 +26,16 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.02 }}
       >
-        <motion.h3
-          className={styles.questionText}
-          initial={{ width: '100%' }}
-          animate={{ width: isOpen ? '90%' : '100%' }}
-          transition={{ duration: 0.3 }}
-        >
-          {question}
-        </motion.h3>
-        <span className={styles.toggleIcon}>
-          {isOpen ? '-' : '+'}
-        </span>
+        <div className={styles.questionContent}>
+          <motion.h3 className={styles.questionText}>
+            {question}
+          </motion.h3>
+          <div className={styles.toggleIconWrapper}>
+            <span className={styles.toggleIcon}>
+              {isOpen ? '-' : '+'}
+            </span>
+          </div>
+        </div>
       </motion.div>
       <AnimatePresence>
         {isOpen && (

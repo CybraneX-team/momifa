@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import Link from 'next/link'
 import { FlipWords } from '../ui/FlipWords'
+// import { BackgroundColor } from '../BackgroundColor'
 
 const ProductDisplay: React.FC = () => {
   const [currentColor, setCurrentColor] = useState('blue')
@@ -33,6 +34,7 @@ const ProductDisplay: React.FC = () => {
     }
   }, [])
 
+  //
   const getTopValue = color => {
     if (color === 'blue') {
       return '-13.7em'
@@ -48,6 +50,7 @@ const ProductDisplay: React.FC = () => {
       return '-16em'
     }
   }
+
   const variants = {
     plain: {
       colors: {
@@ -94,6 +97,7 @@ const ProductDisplay: React.FC = () => {
     },
     {
       name: 'plain',
+      // gradientClass: 'from-black via-blue-600/90 to-purple-500/90',
       gradientClass: 'from-[#0A0610] via-[#716CFF]/50 to-[#FF47FF]/60',
       varientName: 'plain',
     },
@@ -181,6 +185,28 @@ const ProductDisplay: React.FC = () => {
     setCurrentColor(setVariantColor(currentVariant))
   }, [currentVariant])
 
+  // function setVariant(currentVriant: string): string {
+  //   let newVariant: string
+
+  //   switch (currentVariant) {
+  //     case 'plain':
+  //       newVariant = 'polo'
+  //       break
+  //     case 'polo':
+  //       newVariant = 'branded'
+  //       break
+  //     case 'branded':
+  //       newVariant = 'brandedtshirt'
+  //       break
+  //     case 'brandedtshirt':
+  //       newVariant = 'plain'
+  //       break
+  //     default:
+  //       throw new Error('Unknown variant')
+  //   }
+
+  //   return newVariant
+  // }
   function setVariantColor(currentVariant: string): string {
     let newVariant: string
 
@@ -208,31 +234,34 @@ const ProductDisplay: React.FC = () => {
       return '/products/aqua-plain-t-shirt-unisex'
     } else if (currentColor === 'blue') {
       return '/products/aqua-plain-t-shirt-unisex'
-    } else if (currentColor === 'red') {
+    }else if(currentColor === "red"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/redd.png'
-    } else if (currentColor === 'white') {
+    }else if(currentColor === "white"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/plainwhite.png'
-    } else if (currentColor === 'green') {
+    }else if(currentColor === "green"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/plain-green.png'
-    } else if (currentColor === 'darkblue') {
+    }else if(currentColor === "darkblue"){
       return '/products/royal-blue-plain-t-shirt-unisex'
     } else if (currentColor === 'gray') {
       return '/products/grey-marl-plain-t-shirt-unisex'
     } else if (currentColor === 'minkGray') {
       return '/products/mink-gray'
-    } else if (currentColor === 'aquablue') {
+    }
+    else if(currentColor === "aquablue"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/aqual-blue.png'
-    } else if (currentColor === 'frenchPink') {
+    }
+    else if(currentColor === "frenchPink"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/french-pink.png'
-    } else if (currentColor === 'rolexGreen') {
+    }
+    else if(currentColor === "rolexGreen"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/rolex-green.png'
-    } else if (currentColor === 'vistaWhite') {
+    }else if(currentColor === "vistaWhite"){
       return '/products/vista-white'
-    } else if (currentColor === 'cobaltBlue') {
+    }else if(currentColor === "cobaltBlue"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/cobalt-bluew.png'
-    } else if (currentColor === 'RichCream') {
+    }else if(currentColor === "RichCream"){
       return '/products/rich-cream'
-    } else if (currentColor === 'onyxBlack') {
+    }else if(currentColor === "onyxBlack"){
       return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/onyx-black.png'
     }
   }
@@ -244,6 +273,7 @@ const ProductDisplay: React.FC = () => {
       return 'black'
     }
   }
+  // console.log("variants[currentVariant]", Object.keys(variants[currentVariant]))
   const handlePreviousVariant = () => {
     const currentIndex = variantList.indexOf(currentVariant)
     const newIndex = (currentIndex - 1 + variantList.length) % variantList.length
@@ -365,6 +395,14 @@ const ProductDisplay: React.FC = () => {
             <h1 className={styles.FashionLine}>Fashion at Next level</h1>
             <h5 className={styles.tagLine}>Branded Polo T-Shirts</h5>
           </div>
+          {/* <div className="h">
+            <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
+            <Link href={`${buyNowRedirect()}`}>
+              <button className={styles.buyNowButton}>
+                <span className="text-sm">Buy Now </span>
+              </button>
+            </Link>
+          </div> */}
           <div className={styles.imgDiv}>
             <Image
               style={
@@ -373,7 +411,7 @@ const ProductDisplay: React.FC = () => {
                       zIndex: -1,
                       top: getTopValue(currentColor),
                       position: 'absolute',
-                      left: '8em',
+                      left: "8em"
                     }
                   : currentVariant === 'plain' && isMobile
                   ? {
@@ -387,26 +425,26 @@ const ProductDisplay: React.FC = () => {
                       top: '-13.6em',
                       position: 'absolute',
                       height: '35rem',
-                      left: '1em',
+                      left: "1em",
                       width: '33rem',
                     }
                   : currentVariant === 'branded'
                   ? {
-                      zIndex: 2,
-                      position: 'absolute',
-                      left: '5em',
-                      top: '-15.3em',
-                      width: '30rem',
-                      height: '34rem',
+                    zIndex: 2,
+                    position: "absolute",
+                    left: "5em",
+                    top: "-15.3em",
+                    width: "30rem",
+                    height: "34rem",
                     }
                   : currentVariant === 'brandedtshirt'
                   ? {
-                      zIndex: 2,
-                      position: 'absolute',
-                      left: '7em',
-                      top: '-15.3em',
-                      width: '32rem',
-                      height: '34rem',
+                    zIndex: 2,
+                    position: "absolute",
+                    left: "7em",
+                    top: "-15.3em",
+                    width: "32rem",
+                    height: "34rem",
                     }
                   : undefined
               }
@@ -510,7 +548,8 @@ const ProductDisplay: React.FC = () => {
                             : 'white',
                         fontSize: '15px',
                         fontWeight: '500',
-                        transform: 'skew(12deg)', // Counter-skew the text to make it readable
+                        transform: 'skew(20deg)', // Counter-skew the text
+                        whiteSpace: 'nowrap',
                       }}
                     >
                       {colorKey.toUpperCase()}

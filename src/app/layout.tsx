@@ -47,7 +47,7 @@ export default async function RootLayout({
           <Header />
           <main className="main">{children}</main>
           {/* @ts-expect-error */}
-          <Footer />
+          <Footer className="z-50" />
         </Providers>
       </body>
     </html>

@@ -36,6 +36,8 @@ html {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  scroll-behavior: smooth;
+
 
   min-height: 100vh;
   width: 100%;
@@ -154,4 +156,11 @@ svg {
 .label {
   text-transform: none;
   text-transform: lowercase;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
