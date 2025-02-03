@@ -35,7 +35,8 @@ $breakpoints: (
   width: 400px;
   line-height: 34px;
   position: absolute;
-  bottom: 5em;
+  bottom: 7.5em;
+  left: -5rem;
   @include respond-to(medium) {
     display: none;
   }
@@ -48,7 +49,8 @@ $breakpoints: (
   height: 2.3em;
   font-weight: 200;
   position: absolute;
-  bottom: 3.5em;
+  bottom: 6em;
+  left: -5rem;
   border-radius: 50px;
   margin: 1em -1.5em;
   @include respond-to(medium) {
@@ -134,11 +136,11 @@ $breakpoints: (
 }
 .imgDiv {
   position: absolute;
-    height: 100%;
-    left: 8em;
-    top: 21.3em;
-    z-index: 1;
-    width: 41%;
+  height: 100%;
+  left: 8em;
+  top: 21.3em;
+  z-index: 1;
+  width: 41%;
   @include respond-to(medium) {
     position: relative;
     /* border: 2px solid red; */

@@ -8,7 +8,6 @@ import Image from 'next/image'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import Link from 'next/link'
 import { FlipWords } from '../ui/FlipWords'
-// import { BackgroundColor } from '../BackgroundColor'
 
 const ProductDisplay: React.FC = () => {
   const [baseURL, setbaseURL] = useState(
@@ -17,6 +16,7 @@ const ProductDisplay: React.FC = () => {
 
   const [currentColor, setCurrentColor] = useState('blue')
   const [currentVariant, setCurrentVariant] = useState('plain')
+  const [isHovered, setisHovered] = useState<Record<string, boolean>>({})
 
   const variants = {
     plain: {
@@ -219,7 +219,7 @@ const ProductDisplay: React.FC = () => {
   useEffect(() => {
     if (!variants[currentVariant]?.colors?.[currentColor]) {
       const newColor = setVariantColor(currentVariant)
-      setCurrentColor(newColor) // Set color first
+      setCurrentColor(newColor)
     }
   }, [currentVariant])
 
@@ -328,82 +328,82 @@ const ProductDisplay: React.FC = () => {
             <h5 className={styles.tagLine}>Branded Polo T-Shirts</h5>
           </div>
           <div className={styles.imgDiv}>
-          <motion.div
-    key={imgUrl}
-    initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.3, ease: "easeInOut" }}
-  >
-            <Image
-              style={
-                currentVariant === 'plain' && !isMobile
-                  ? {
-                      zIndex: -1,
-                      top: getTopValue(currentColor),
-                      position: 'absolute',
-                      left: '8em',
-                    }
-                  : currentVariant === 'plain' && isMobile
-                  ? {
-                      position: 'absolute',
-                      bottom: '55.1em',
-                      zIndex: -1,
-                    }
-                  : currentVariant === 'polo' && isMobile
-                  ? {
-                      position: 'absolute',
-                      top: '-32em',
-                      width: '38rem',
-                      height: '40rem',
-                    }
-                  : currentVariant === 'polo'
-                  ? {
-                      zIndex: -1,
-                      top: '-13.6em',
-                      position: 'absolute',
-                      height: '35rem',
-                      left: '1em',
-                      width: '33rem',
-                    }
-                  : currentVariant === 'branded'
-                  ? {
-                      zIndex: 2,
-                      position: 'absolute',
-                      left: '5em',
-                      top: '-15.3em',
-                      width: '30rem',
-                      height: '34rem',
-                    }
-                  : currentVariant === 'brandedtshirt' && isMobile
-                  ? {
-                      left: '1em',
-                      top: '-35.3em',
-                      width: '34rem',
-                      height: '34rem',
-                    }
-                  : currentVariant === 'brandedtshirt'
-                  ? {
-                      zIndex: 2,
-                      position: 'absolute',
-                      left: '7em',
-                      top: '-15.3em',
-                      width: '32rem',
-                      height: '34rem',
-                    }
-                  : currentVariant === 'brandedtshirt' && isMobile
-                  ? {
-                      left: '1em',
-                      top: '-42.3em',
-                      width: '32rem',
-                      height: '47rem',
-                    }
-                  : undefined
-              }
-              alt="image"
-              src={imgUrl}
-              height={1000}
-              width={416}
-            />
+            <motion.div
+              key={imgUrl}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+            >
+              <Image
+                style={
+                  currentVariant === 'plain' && !isMobile
+                    ? {
+                        zIndex: -1,
+                        top: getTopValue(currentColor),
+                        position: 'absolute',
+                        left: '8em',
+                      }
+                    : currentVariant === 'plain' && isMobile
+                    ? {
+                        position: 'absolute',
+                        bottom: '55.1em',
+                        zIndex: -1,
+                      }
+                    : currentVariant === 'polo' && isMobile
+                    ? {
+                        position: 'absolute',
+                        top: '-32em',
+                        width: '38rem',
+                        height: '40rem',
+                      }
+                    : currentVariant === 'polo'
+                    ? {
+                        zIndex: -1,
+                        top: '-13.6em',
+                        position: 'absolute',
+                        height: '35rem',
+                        left: '1em',
+                        width: '33rem',
+                      }
+                    : currentVariant === 'branded'
+                    ? {
+                        zIndex: 2,
+                        position: 'absolute',
+                        left: '5em',
+                        top: '-15.3em',
+                        width: '30rem',
+                        height: '34rem',
+                      }
+                    : currentVariant === 'brandedtshirt' && isMobile
+                    ? {
+                        left: '1em',
+                        top: '-35.3em',
+                        width: '34rem',
+                        height: '34rem',
+                      }
+                    : currentVariant === 'brandedtshirt'
+                    ? {
+                        zIndex: 2,
+                        position: 'absolute',
+                        left: '7em',
+                        top: '-15.3em',
+                        width: '32rem',
+                        height: '34rem',
+                      }
+                    : currentVariant === 'brandedtshirt' && isMobile
+                    ? {
+                        left: '1em',
+                        top: '-42.3em',
+                        width: '32rem',
+                        height: '47rem',
+                      }
+                    : undefined
+                }
+                alt="image"
+                src={imgUrl}
+                height={1000}
+                width={416}
+              />
             </motion.div>
           </div>
           <div
@@ -419,11 +419,11 @@ const ProductDisplay: React.FC = () => {
                   key={colorKey}
                   style={{
                     background:
-                      currentColor === colorKey
+                      currentColor === colorKey || isHovered[colorKey]
                         ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey].color} 60%, rgba(0,0,0,0.3))`
                         : variants[currentVariant]['colors'][colorKey].color,
                     height: '28px',
-                    width: currentColor === colorKey ? '170px' : '13px',
+                    width: currentColor === colorKey || isHovered[colorKey] ? '170px' : '13px',
                     margin: '1em',
                     position: 'relative',
                     left: '21em',
@@ -435,13 +435,15 @@ const ProductDisplay: React.FC = () => {
                     transition: 'all 0.3s ease',
                     display: 'flex',
                     alignItems: 'center',
-                    paddingLeft: currentColor === colorKey ? '20px' : '0', // Add padding for text
+                    paddingLeft: currentColor === colorKey || isHovered[colorKey] ? '20px' : '0', // Add padding for text
                   }}
+                  onMouseEnter={() => setisHovered(prev => ({ ...prev, [colorKey]: true }))}
+                  onMouseLeave={() => setisHovered(prev => ({ ...prev, [colorKey]: false }))}
                   onClick={() => {
                     setCurrentColor(colorKey)
                   }}
                 >
-                  {currentColor === colorKey && (
+                  {currentColor === colorKey || isHovered[colorKey] ? (
                     <span
                       style={{
                         color:
@@ -457,21 +459,23 @@ const ProductDisplay: React.FC = () => {
                     >
                       {colorKey.toUpperCase()}
                     </span>
+                  ) : (
+                    ''
                   )}
                 </div>
               )
             })}
           </div>
         </div>
-        <div className={styles.sliderDiv}>
+        <div className="ml-10">
           <div className={styles.menu}>
-            <div className="p-8 min-h-[300px] flex items-center">
+            <div className="p-8 min-h-[300px] flex items-center mb-10">
               <nav className="relative w-[250px] flex">
                 <div className="flex-1 pr-8">
                   {menuItems.map(item => (
                     <div
                       key={item.name}
-                      className="relative group py-2 mt-2"
+                      className="relative group py-1 mt-2"
                       onMouseEnter={() => setActiveItem(item.name)}
                       onClick={() => {
                         setCurrentVariant(item.varientName)
@@ -498,7 +502,7 @@ const ProductDisplay: React.FC = () => {
                         <button
                           className={`w-full text-right transition-all duration-300 ${
                             activeItem === item.name
-                              ? 'text-white text-xl font-bold'
+                              ? 'text-white text-lg font-bold'
                               : 'text-[#888] text-md -p-5 px-1'
                           }`}
                         >
