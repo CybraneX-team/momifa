@@ -205,7 +205,12 @@ export const CollectionArchive: React.FC<Props> = props => {
         <div className={classes.grid}>
           {results.docs?.map((result, index) => {
             console.log(result)
-            return <Card key={index} relationTo="products" doc={result} showCategories />
+            return <Card
+            containerHeight="300px"
+            containerWidth="300px"
+            rotateAmplitude={14}
+            scaleOnHover={1.1}
+            showTooltip={true} key={index} relationTo="products" doc={result} showCategories />
           })}
         </div>
 

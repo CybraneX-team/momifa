@@ -3,7 +3,8 @@
 .productHero {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  margin: 0 auto;
+  // gap: 30px;
 
   @include small-break {
     grid-template-columns: 1fr;
@@ -11,9 +12,16 @@
     display: inline-flex;
   }
 }
+.transition-opacity {
+  transition: opacity 0.2s ease-in-out;
+}
 
-.main {
+.opacity-50 {
+  opacity: 0.5;
+}
+.mainn {
   margin-left: 1%;
+  margin-top: 0; 
 }
 
 .btns {
@@ -31,9 +39,9 @@
   @include small-break {
     border: none;
     flex-direction: column;
-    width: 22em;
+width: 100%; // Instead of 22em
+    margin: 13em 0; // Instead of 13em 2em
     height: 52em;
-    margin: 13em 2em;
   }
   @media (max-width: 650px) {
     // padding-left: 10px;
@@ -42,12 +50,13 @@
 }
 .vig {
   position: relative;
-  margin: 6em 1em;
+  margin: 3em 1em;
   width: 36em;
   border-radius: 36px;
-  height: 29em;
+  height: 40em;
   overflow: hidden;
-  box-shadow: inset 0 0 1em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0);
+  border: 1px solid black;
+  // box-shadow: inset 0 0 1em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0);
 
   @include small-break {
     width: 68em;
@@ -55,7 +64,7 @@
     display: flex;
     justify-self: center;
     margin: -5em -1.5em;
-    box-shadow: inset 0 0 1em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0);
+    // box-shadow: inset 0 0 1em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0), inset 0 0 2em rgb(0, 0, 0);
   }
 }
 
@@ -64,7 +73,7 @@
   position: relative;
   z-index: -10;
   width: 30em;
-  height: 29em;
+  height: 40em;
   border-radius: 26px;
   -o-object-fit: cover;
   object-fit: cover;
@@ -93,7 +102,7 @@
   font-weight: 400;
   text-align: left;
   color: #ffffff;
-  margin-top: 4.3em;
+  margin-top: 3em;
   @include small-break {
     text-align: left;
     font-size: 21px;
@@ -314,11 +323,11 @@
 }
 
 .rotatedText {
-  position: fixed;
-  top: 3em;
-  z-index: -1;
+  position: absolute;
+  top: 10em;
+  z-index: -999;
   height: 36em;
-  left: 78em;
+  left: 80em;
 
   @include small-break {
     display: none;
@@ -500,6 +509,10 @@
   gap: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+
+  @include small-break{
+    margin-left: -1rem;
+  }
 }
 
 .sizeButton {

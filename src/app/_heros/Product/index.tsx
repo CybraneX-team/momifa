@@ -1,17 +1,14 @@
 'use client'
 import React, { Fragment, useEffect, useState } from 'react'
-
 import { Category, Product } from '../../../payload/payload-types'
 import { AddToCartButton } from '../../_components/AddToCartButton'
 import { Gutter } from '../../_components/Gutter'
 import { Media } from '../../_components/Media'
 import { Price } from '../../_components/Price'
-
 import classes from './index.module.scss'
 import { useAuth } from '../../_providers/Auth'
 import { addToWishlist } from '../../../payload/utilities/addToWishlist'
 import Image from 'next/image'
-// import toHex from 'colornames'
 import Link from 'next/link'
 import ReviewForm from '../../_components/ReviewForm'
 import { useCart } from '../../_providers/Cart'
@@ -19,15 +16,18 @@ import { Media as mediaType } from '../../../payload/payload-types'
 
 export const ProductHero: React.FC<{
   product: Product
-}> = ({ product }) => {
+}> = ({ product: initialProduct }) => {
+  // State management
+  const [product, setProduct] = useState(initialProduct)
   const { id, title, categories, meta: { image: metaImage, description } = {} } = product
+
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
   const { user } = useAuth()
   const [wishlistID, setwishlistID] = useState('')
   const [cartvalue, setcartvalue] = useState(0)
   const [colors, setcolors] = useState([])
+  const [colorProducts, setColorProducts] = useState({})
   const [added, setadded] = useState(false)
-  const [disabled, setdisabled] = useState(false)
   const [wishlist, setwishlist] = useState([])
   const [showReviewForm, seshowReviewForm] = useState(false)
   const [feedback, setfeedback] = useState([])
@@ -36,10 +36,63 @@ export const ProductHero: React.FC<{
   const [displayedImage, setdisplayedImage] = useState(metaImage)
   const [sleeveLength, setSleeveLength] = useState(17)
   const [chest, setChest] = useState(19)
-  const [imagesLoding, setimagesLoading] = useState(true)
+  const [imagesLoading, setimagesLoading] = useState(true)
   const [sizeName, setsizeName] = useState('Small')
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [preloadedImages, setPreloadedImages] = useState({})
 
-  console.log('metaImage', metaImage)
+  // Review functionality
+  async function PostReview(bodyObject) {
+    const postReview = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyObject),
+    })
+    const postedResult = await postReview.json()
+    setfeedback([...feedback, postedResult.doc])
+  }
+
+  // Wishlist functionality
+  async function add() {
+    if (!user?.id) return
+
+    if (!added) {
+      setadded(true)
+      const data = await addToWishlist(id, user.id)
+      setwishlistID(data.doc.id)
+    } else {
+      setadded(false)
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${wishlistID}`, {
+        method: 'DELETE',
+      })
+    }
+  }
+
+  // Check wishlist status
+  useEffect(() => {
+    async function checkWishlist() {
+      if (user?.id) {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[product][equals]=${id}&where[user][equals]=${user.id}`,
+        )
+        const response = await res.json()
+
+        if (response.docs.length) {
+          setadded(true)
+          setwishlistID(response.docs[0].id)
+        } else {
+          setadded(false)
+          setwishlistID('')
+        }
+      }
+    }
+
+    checkWishlist()
+  }, [id, user?.id])
+
+  // Cart quantity management
   function setvalue(op) {
     if (op === 'reduce' && cartvalue !== 0) {
       setcartvalue(prev => prev - 1)
@@ -50,108 +103,14 @@ export const ProductHero: React.FC<{
     }
   }
 
+  // URL formatting
   function addHyphenToSpace(str) {
     return str.toLowerCase().replace(/\s+/g, '-')
   }
-  useEffect(() => {
-    cart?.items?.map(cartItem => {
-      if (cartItem.product.id === id) {
-        setcartvalue(cartItem.quantity)
-      }
-    })
-  }, [])
-  useEffect(() => {
-    async function getImages() {
-      const images = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/images?productId=${id}`)
-      const imagesArray = await images.json()
-      setimagess(imagesArray)
-      setimagesLoading(prev => (prev === true ? false : prev))
-    }
-    getImages()
-  }, [])
 
-  useEffect(() => {
-    async function get() {
-      try {
-        // Fetch all requests concurrently
-        const [res, res2, res3] = await Promise.all([
-          fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist?where[product][equals]=${id}&where[user][equals]=${user?.id}`,
-          ),
-          fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback?where[product][equals]=${id}&depth=2`,
-          ),
-          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?limit=100`),
-        ])
-
-        // Parse responses concurrently
-        const [response, response2, response3] = await Promise.all([
-          res.json(),
-          res2.json(),
-          res3.json(),
-        ])
-
-        setfeedback(response2.docs)
-        // setimagess(response3.images)
-        // Reduce color array
-        const colorArr = response3?.docs?.reduce((acc, e) => {
-          if (e.categories[0].title === categories[0].title) {
-            acc.push({ color: e.color, link: addHyphenToSpace(e.title) })
-          }
-          return acc
-        }, [])
-
-        setcolors(colorArr)
-
-        // Set wishlist status
-        if (response.docs.length) {
-          setadded(true)
-          setwishlistID(response.docs[0].id)
-        } else {
-          setadded(false)
-          setwishlistID('')
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    }
-
-    get()
-  }, [id, user?.id, categories]) // Add dependencies for re-execution when necessary
-
-  async function PostReview(bodyObject) {
-    const postReview = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(bodyObject),
-    })
-    const postedResult = await postReview.json()
-    const newUpdatedFeedbacks = [...feedback, postedResult.doc]
-    setfeedback(newUpdatedFeedbacks)
-  }
-
-  async function add() {
-    if (added === false) {
-      if (user?.id) {
-        setadded(true)
-        const data = await addToWishlist(id, user.id)
-        setwishlistID(data.doc.id)
-      } else {
-        return
-      }
-    } else {
-      setadded(false)
-      const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/wishlist/${wishlistID}`, {
-        method: 'DELETE',
-      })
-      const res = await req.json()
-    }
-  }
+  // Image management
   const swapImage = (image: string) => {
     if (image) {
-      console.log('imageee', image, 'imagesssArray', imagess)
       const imgToReplace = imagess.indexOf(image)
       const newImages = [...imagess]
       newImages.splice(imgToReplace, 1)
@@ -159,7 +118,7 @@ export const ProductHero: React.FC<{
         `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${displayedImage.filename}`,
       )
       setimagess(newImages)
-      console.log('newImagessss', newImages)
+
       const newDisplayedImage: mediaType = {
         ...metaImage,
         filename: image.replace('https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/', ''),
@@ -168,6 +127,7 @@ export const ProductHero: React.FC<{
     }
   }
 
+  // Size management
   function setSizeAndSliderValue(size) {
     setSelectedSize(size)
     if (size === 'S') {
@@ -189,76 +149,168 @@ export const ProductHero: React.FC<{
     }
   }
 
-  function removeParentheses(input) {
-    return input.replace(/[()]/g, '')
+  // Preload images for color variants
+  const preloadColorImages = async productId => {
+    try {
+      const imagesRes = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/images?productId=${productId}`,
+      )
+      const imagesArray = await imagesRes.json()
+      return imagesArray
+    } catch (error) {
+      console.error('Error preloading images:', error)
+      return []
+    }
+  }
+
+  // Initial data load
+  useEffect(() => {
+    async function loadInitialData() {
+      try {
+        setimagesLoading(true)
+        const [productsRes, feedbackRes] = await Promise.all([
+          fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/products?limit=100`),
+          fetch(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback?where[product][equals]=${id}&depth=2`,
+          ),
+        ])
+
+        const [productsData, feedbackData] = await Promise.all([
+          productsRes.json(),
+          feedbackRes.json(),
+        ])
+
+        setfeedback(feedbackData.docs)
+
+        const variants = {}
+        const colorArr = []
+        const imagePromises = []
+
+        productsData.docs.forEach(prod => {
+          if (prod.categories[0].title === categories[0].title) {
+            variants[prod.color] = prod
+            colorArr.push({
+              color: prod.color,
+              link: addHyphenToSpace(prod.title),
+            })
+            imagePromises.push(preloadColorImages(prod.id))
+          }
+        })
+
+        const preloadedImagesData = await Promise.all(imagePromises)
+        const preloadedImagesMap = {}
+        colorArr.forEach((color, index) => {
+          preloadedImagesMap[color.color] = preloadedImagesData[index]
+        })
+
+        setPreloadedImages(preloadedImagesMap)
+        setColorProducts(variants)
+        setcolors(colorArr)
+
+        const imagesRes = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/images?productId=${id}`,
+        )
+        const imagesArray = await imagesRes.json()
+        setimagess(imagesArray)
+        setimagesLoading(false)
+      } catch (error) {
+        console.error('Error loading initial data:', error)
+        setimagesLoading(false)
+      }
+    }
+
+    loadInitialData()
+  }, [id, categories])
+
+  // Color change handler
+  const handleColorChange = async colorData => {
+    setIsTransitioning(true)
+    setimagesLoading(true)
+    const newProduct = colorProducts[colorData.color]
+
+    if (newProduct) {
+      setProduct(newProduct)
+
+      const preloadedProductImages = preloadedImages[colorData.color]
+      if (preloadedProductImages) {
+        setimagess(preloadedProductImages)
+      }
+
+      if (newProduct.meta?.image) {
+        setdisplayedImage(newProduct.meta.image)
+      }
+
+      setcartvalue(0)
+      setSelectedSize('S')
+      setSizeAndSliderValue('S')
+    }
+
+    setTimeout(() => {
+      setIsTransitioning(false)
+      setimagesLoading(false)
+    }, 100)
   }
 
   return (
-    <div className="overflow-x-hidden flex flex-col justify-center items-center md:justify-start md:items-start px-5 pt-6 ">
+    <div className="overflow-x-hidden flex flex-col justify-center items-center md:justify-start md:items-start px-5 pt-6">
       <Image
         src="/media/MOMIFA.png"
         alt="MOMIFA"
-        // layout="fill" // Adjust this based on your desired layout
-        // objectFit="cover"
         height={150}
         width={70}
         className={`${classes.rotatedText}`}
       />
       <Gutter className={classes.productHero}>
         <div className={classes.mainn}>
-          {imagesLoding ? (
+          {imagesLoading ? (
             <div className={classes.loading} />
           ) : (
-            <div className={classes.imagess}>
-              {imagess.map(image => {
-                return (
-                  <div
-                    onClick={() => {
-                      swapImage(image)
-                    }}
-                    className={`${classes.imagessImage} rounded-xl`}
-                  >
-                    <Image
-                      className={classes.imageclass}
-                      src={image}
-                      width={100}
-                      height={40}
-                      alt="image"
-                    />
-                  </div>
-                )
-              })}
+            <div
+              className={`${classes.imagess} ${
+                isTransitioning ? 'opacity-50 transition-opacity' : ''
+              }`}
+            >
+              {imagess.map(image => (
+                <div
+                  key={image}
+                  onClick={() => swapImage(image)}
+                  className={`${classes.imagessImage} rounded-xl`}
+                >
+                  <Image
+                    className={classes.imageclass}
+                    src={image}
+                    width={100}
+                    height={40}
+                    alt="image"
+                  />
+                </div>
+              ))}
             </div>
           )}
-          <div className={classes.vig}>
+          <div
+            className={`${classes.vig} ${isTransitioning ? 'opacity-50 transition-opacity' : ''}`}
+          >
             <Media imgClassName={classes.image} resource={displayedImage} />
           </div>
           <div className={`${classes.detailsDiv}`}>
             <div className={classes.responsivee}>
               <h3 className={classes.productTitle}>{title}</h3>
               <h4 className={classes.dText}>Description </h4>
-              <p className={classes.description}> {description} </p>
+              <p className={classes.description}>{description}</p>
             </div>
             <h2 className="text-white my-2 text-2xl">
               <Price product={product} button={false} />
             </h2>
             <div className={classes.responsivee2}>
               <h4 className="text-white text-md mt-2">Colors</h4>
-              {colors.map(e => {
-                {
-                  console.log('ee', e)
-                }
-                const bgClass = `bg-[#262626]-400`
-                return (
-                  <Link href={`/products/${removeParentheses(e.link)}`}>
-                    <span
-                      key={e}
-                      style={{ backgroundColor: e.color }}
-                      className={` cursor-pointer inline-block w-8 h-8 rounded-full m-1 border-white border-2`}
-                    ></span>
-                  </Link>
-                )
-              })}
+              {colors.map(colorData => (
+                <span
+                  key={colorData.color}
+                  onClick={() => handleColorChange(colorData)}
+                  style={{ backgroundColor: colorData.color }}
+                  className={`cursor-pointer inline-block w-8 h-8 rounded-full m-1 border-white border-2`}
+                />
+              ))}
             </div>
             <div className={classes.sizeButtons}>
               {['S', 'M', 'L', 'XL'].map(size => (
@@ -309,34 +361,18 @@ export const ProductHero: React.FC<{
             </div>
             <div className={classes.quan}>
               <div className={classes.quan2}>
-                <h4 className="text-white sm:flex  text-sm inline lg:block">Quantity</h4>
-
-                <div className="relative lg:block lg:left-0 lg:top-0  sm:left-[7em] sm:top-[-2.2em] sm:mx-3 sm:my-2">
+                <h4 className="text-white sm:flex text-sm inline lg:block">Quantity</h4>
+                <div className="relative lg:block lg:left-0 lg:top-0 sm:left-[7em] sm:top-[-2.2em] sm:mx-3 sm:my-2">
                   <div className="flex items-center justify-center mt-3 sm:justify-center sm:items-center md:justify-start md:items-start lg:justify-start lg:items-start">
                     <div className="flex text-lg text-white text-center">
-                      <div
-                        className="text-xl 
-        w-10 h-10 bg-[#262626] text-center rounded-s-3xl cursor-pointer flex items-center justify-center"
-                      >
-                        <span
-                          onClick={() => {
-                            setvalue('reduce')
-                          }}
-                        >
-                          -
-                        </span>
+                      <div className="text-xl w-10 h-10 bg-[#262626] text-center rounded-s-3xl cursor-pointer flex items-center justify-center">
+                        <span onClick={() => setvalue('reduce')}>-</span>
                       </div>
-                      <div className="text-xl  w-10 h-10 bg-[#262626] text-center flex items-center justify-center">
+                      <div className="text-xl w-10 h-10 bg-[#262626] text-center flex items-center justify-center">
                         {cartvalue}
                       </div>
                       <div className="text-xl w-10 h-10 bg-[#262626] text-center rounded-e-3xl cursor-pointer flex items-center justify-center">
-                        <span
-                          onClick={() => {
-                            setvalue('inc')
-                          }}
-                        >
-                          +
-                        </span>
+                        <span onClick={() => setvalue('inc')}>+</span>
                       </div>
                     </div>
                   </div>
@@ -348,9 +384,8 @@ export const ProductHero: React.FC<{
                 quantity={cartvalue === 0 ? cartvalue + 1 : cartvalue}
                 product={product}
                 className={classes.addToCartButton}
-                size={`${sizeName} : Chest - ${sleeveLength}  Waist -  ${chest}`}
+                size={`${sizeName} : Chest - ${sleeveLength} Waist - ${chest}`}
               />
-
               <button
                 onClick={add}
                 className={`${classes.wishlistButton} ${added ? 'added' : 'not-added'}`}
@@ -372,13 +407,13 @@ export const ProductHero: React.FC<{
           onClick={() => {
             seshowReviewForm(!showReviewForm)
           }}
-          className={`${classes.postReviewButton} `}
+          className={`${classes.postReviewButton}`}
         >
           {showReviewForm === false ? <span>Post a Review</span> : <span>Cancel Review</span>}
         </button>
       </div>
       <ReviewForm
-        showReviewForm={seshowReviewForm}
+        showReviewForm={showReviewForm}
         productId={id}
         postReview={PostReview}
         value={showReviewForm}
