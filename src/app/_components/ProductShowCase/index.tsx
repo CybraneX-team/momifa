@@ -15,6 +15,8 @@ const ProductDisplay: React.FC = () => {
   const [currentVariant, setCurrentVariant] = useState('plain')
   const [isMobile, setIsMobile] = useState(false)
   const [href, sethref] = useState('')
+  const [imgUrl, setimgUrl] = useState(`/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`)
+  const [buyNowLink, setbuyNowLink] = useState("/products/aqua-plain-t-shirt-unisex")
   const [baseURL, setbaseURL] = useState('https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/')
 
   useEffect(() => {
@@ -96,8 +98,8 @@ const ProductDisplay: React.FC = () => {
         },
         aquablue: {
           color :'#7ABAD3',
-          imageUrl : "",
-          buyNowLink :``
+          imageUrl : "https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/aqual-blue.png",
+          buyNowLink :`/products/aqua-blue`
         },
         frenchPink: {
           color :'#d801c0',
@@ -197,31 +199,21 @@ const ProductDisplay: React.FC = () => {
   }
 
   useEffect(() => {
-    setCurrentColor(setVariantColor(currentVariant))
-  }, [currentVariant])
+    if (!variants[currentVariant]?.colors?.[currentColor]) {
+      const newColor = setVariantColor(currentVariant);
+      setCurrentColor(newColor); // Set color first
+    }
+  }, [currentVariant]);
+  
+  useEffect(() => {
+    if (variants[currentVariant]?.colors?.[currentColor]) {
+      setimgUrl(variants[currentVariant].colors[currentColor].imageUrl);
+      setbuyNowLink(variants[currentVariant].colors[currentColor].buyNowLink);
+    }
+  }, [currentColor, currentVariant]);
+  
+  
 
-  // function setVariant(currentVriant: string): string {
-  //   let newVariant: string
-
-  //   switch (currentVariant) {
-  //     case 'plain':
-  //       newVariant = 'polo'
-  //       break
-  //     case 'polo':
-  //       newVariant = 'branded'
-  //       break
-  //     case 'branded':
-  //       newVariant = 'brandedtshirt'
-  //       break
-  //     case 'brandedtshirt':
-  //       newVariant = 'plain'
-  //       break
-  //     default:
-  //       throw new Error('Unknown variant')
-  //   }
-
-  //   return newVariant
-  // }
   function setVariantColor(currentVariant: string): string {
     let newVariant: string
 
@@ -245,7 +237,7 @@ const ProductDisplay: React.FC = () => {
     return newVariant
   }
   function getBackgroundColor(currentColor) {
-    return `linear-gradient(44.52deg, #111517 5.12%, ${variants[currentVariant]['colors'][currentColor].color} 97.99%)`
+    return `linear-gradient(44.52deg, #111517 5.12%, ${variants[currentVariant]['colors'][currentColor]?.color} 97.99%)`
   }
   const wordsArray = ['"Feel the vibes of 1990\'s streets."', '"Modern street fashion"']
   return (
@@ -318,14 +310,6 @@ const ProductDisplay: React.FC = () => {
             <h1 className={styles.FashionLine}>Fashion at Next level</h1>
             <h5 className={styles.tagLine}>Branded Polo T-Shirts</h5>
           </div>
-          {/* <div className="h">
-            <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
-            <Link href={`${buyNowRedirect()}`}>
-              <button className={styles.buyNowButton}>
-                <span className="text-sm">Buy Now </span>
-              </button>
-            </Link>
-          </div> */}
           <div className={styles.imgDiv}>
             <Image
               style={
@@ -392,7 +376,7 @@ const ProductDisplay: React.FC = () => {
                   : undefined
               }
               alt="image"
-              src={`${variants[currentVariant]['colors'][currentColor].imageUrl}`}
+              src={imgUrl}
               height={1000}
               width={416}
             />
@@ -452,15 +436,6 @@ const ProductDisplay: React.FC = () => {
                 </div>
               )
             })}
-
-            {/* <div className="bg-red-800 ">
-              <h2 className={styles.linehead}> “Feel the vibes of 1990’s streets.” </h2>
-              <Link href={`${buyNowRedirect()}`}>
-                <button className={styles.buyNowButton}>
-                  <span className="text-sm">Buy Now </span>
-                </button>
-              </Link>
-            </div> */}
           </div>
         </div>
         <div className={styles.sliderDiv}>
@@ -530,20 +505,7 @@ const ProductDisplay: React.FC = () => {
               className="" // Optional: Additional Tailwind classes
             />
           </h2>
-          <Link href={`${variants[currentVariant]['colors'][currentColor].buyNowLink}`}>
-            {/* <button
-              className={styles.buyNowButton}
-              style={{
-                backgroundColor: variants[currentVariant]['colors'][currentColor],
-                color:
-                  variants[currentVariant]['colors'][currentColor] === '#ffffff' ||
-                  variants[currentVariant]['colors'][currentColor] === 'white'
-                    ? 'black'
-                    : 'white',
-              }}
-            >
-              <span className="text-sm">Buy Now </span>
-            </button> */}
+          <Link href={buyNowLink}>
             <button
               className={`${styles.buyNowButton} group relative inline-flex items-center justify-center px-8 py-3 text-lg font-bold text-white transition-all duration-300 ease-in-out transform hover:scale-80 active:scale-95`}
             >
