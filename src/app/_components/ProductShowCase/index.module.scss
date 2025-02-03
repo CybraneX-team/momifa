@@ -21,6 +21,7 @@ $breakpoints: (
   height: 40em;
   width: 100%;
   background-color: black;
+  position: relative;
   overflow: hidden;
   @include respond-to(medium) {
     height: 60em;
@@ -123,7 +124,6 @@ $breakpoints: (
   top: -19em;
 }
 .colorVarient {
-  // position: absolute;
   left: 48em;
   cursor: pointer;
   bottom: -88em;
@@ -136,7 +136,7 @@ $breakpoints: (
   position: absolute;
     height: 100%;
     left: 8em;
-    top: 133.3em;
+    top: 21.3em;
     z-index: 1;
     width: 41%;
   @include respond-to(medium) {

@@ -15,6 +15,7 @@ const ProductDisplay: React.FC = () => {
   const [currentVariant, setCurrentVariant] = useState('plain')
   const [isMobile, setIsMobile] = useState(false)
   const [href, sethref] = useState('')
+  const [baseURL, setbaseURL] = useState('https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/')
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 768px)')
@@ -54,37 +55,115 @@ const ProductDisplay: React.FC = () => {
   const variants = {
     plain: {
       colors: {
-        blue: '#9fcbd6',
-        red: '#f46e65',
-        white: '#ffffff',
-        green: '#a2b7a1',
-        darkblue: '#0464b8',
-        gray: '#626063',
+        blue: { 
+           color : '#9fcbd6',
+           imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`, 
+           buyNowLink : "/products/aqua-plain-t-shirt-unisex"
+          },
+        red: 
+        {  color: '#f46e65',
+           imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`, 
+           buyNowLink : "/products/cherry-red-plain-t-shirt-unisex"
+        },
+        white: {
+          color : '#ffffff',
+          imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`, 
+          buyNowLink : "/products/vanilla-plain-t-shirt-unisex"
+        },
+        green: {
+          color: '#a2b7a1',
+          imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`, 
+          buyNowLink : "/products/mint-plain-t-shirt-unisex"
+        },
+        darkblue: {
+          color : '#0464b8',
+          imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`, 
+          buyNowLink : "/products/royal-blue-plain-t-shirt-unisex"
+        },
+        gray: {
+          color: '#626063',
+          imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`, 
+          buyNowLink : "/products/grey-marl-plain-t-shirt-unisex"
+        },
       },
     },
     polo: {
       colors: {
-        minkGray: '#5F5249',
-        aquablue: '#7ABAD3',
-        frenchPink: '#d801c0',
-        rolexGreen: '#3F613F',
-        vistaWhite: '#F9F5ED',
-        cobaltBlue: '#2B83B4',
-        RichCream: '#F1DABD',
-        onyxBlack: '#1C1913',
+        minkGray: {
+          color :'#5F5249',
+          imageUrl : `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/mink-gray.png`,
+          buyNowLink :`/products/mink-gray`
+        },
+        aquablue: {
+          color :'#7ABAD3',
+          imageUrl : "",
+          buyNowLink :``
+        },
+        frenchPink: {
+          color :'#d801c0',
+          imageUrl : `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/french-pink.png`,
+          buyNowLink :`/products/french-pink`
+        },
+        rolexGreen: {
+          color :'#3F613F',
+          imageUrl : `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/rolex-green.png`,
+          buyNowLink :`/products/rolex-green`
+        },
+        vistaWhite: {
+          color :'#F9F5ED',
+          imageUrl : `${baseURL}Vista%2BWhite%2B-%2B2-removebg-preview.png`,
+          buyNowLink : `/products/vista-white`
+        },
+        cobaltBlue: {
+          color :'#2B83B4',
+          imageUrl : `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/cobalt-bluew.png`,
+          buyNowLink : `/products/cobalt-blue`
+        },
+        RichCream: {
+          color :'#F1DABD',
+          imageUrl : `${baseURL}Rich%2BCream%2B-%2B1-removebg-preview.png`,
+          buyNowLink : `/products/rich-cream`
+        },
+        onyxBlack: {
+          color :'#1C1913',
+          imageUrl : `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/onyx-black.png`,
+          buyNowLink :`/products/onyx-black`
+        },
       },
     },
     branded: {
       colors: {
-        blackHoodie: '#1B181B',
-        redHoodie: '#BE2B35',
-        whiteHoodie: 'white',
+        blackHoodie: 
+        {
+          color :'#1B181B',
+          imageUrl: `${baseURL}16064970992068608875_2048__1_-removebg-preview.png`,
+          buyNowLink : ""
+
+        },
+        redHoodie: {
+          color : '#BE2B35',
+          imageUrl: `${baseURL}14223432531880195733_2048-removebg-preview.png`,
+          buyNowLink : ""
+        },
+        whiteHoodie: {
+          color: 'white',
+          imageUrl: `${baseURL}9879001911551987587_2048-removebg-preview.png`,
+          buyNowLink : ""
+        },
       },
     },
     brandedtshirt: {
       colors: {
-        blackbranded: '#1B181B',
-        whitebranded: 'white',
+        blackbranded: {
+          color: '#1B181B',
+          imageUrl: `${baseURL}1-removebg-preview.png`,
+          buyNowLink : "/products/black-flex-t-shirt"
+        },
+        whitebranded: {
+          color: 'white',
+          imageUrl:`${baseURL}2-2-removebg-preview.png`,
+          buyNowLink : "/products/white-flex-t-shirt-"
+        },
       },
     },
   }
@@ -117,70 +196,6 @@ const ProductDisplay: React.FC = () => {
     return `${index * 60 + 30}px`
   }
 
-  function getURL(colorKey) {
-    const baseURL = 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/'
-
-    switch (colorKey) {
-      case 'minkGray':
-        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/mink-gray.png`
-      case 'frenchPink':
-        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/french-pink.png`
-      case 'rolexGreen':
-        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/rolex-green.png`
-      case 'onyxBlack':
-        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/onyx-black.png`
-      case 'cobaltBlue':
-        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/cobalt-bluew.png`
-      case 'vistaWhite':
-        return `${baseURL}Vista%2BWhite%2B-%2B2-removebg-preview.png`
-      case 'RichCream':
-        return `${baseURL}Rich%2BCream%2B-%2B1-removebg-preview.png`
-      case 'aquablue':
-        return `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/aqual-blue.png`
-      case 'blackHoodie':
-        return `${baseURL}16064970992068608875_2048__1_-removebg-preview.png`
-      case 'redHoodie':
-        return `${baseURL}14223432531880195733_2048-removebg-preview.png`
-      case 'blueHoodie':
-        return `${baseURL}9879001911551987587_2048-removebg-preview.png`
-      case 'whiteHoodie':
-        return `${baseURL}9879001911551987587_2048-removebg-preview.png`
-      case 'blackbranded':
-        return `${baseURL}1-removebg-preview.png`
-      case 'whitebranded':
-        return `${baseURL}2-2-removebg-preview.png`
-      default:
-        return `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`
-    }
-  }
-
-  let newLinesObject = {
-    blue: 'True blue dreams',
-    red: 'Seeing red with passion',
-    white: 'Cloud nine in white',
-    green: 'Fresh as a green leaf',
-    darkblue: 'A sky full of dark blue',
-    gray: 'Gray matter magic',
-    minkGray: 'In the haze of gray',
-    aquablue: 'A sky full of blue',
-    frenchPink: 'Cotton candy skies',
-    rolexGreen: 'Fresh as a green leaf',
-    vistaWhite: 'Cloud nine in white',
-    cobaltBlue: 'Lost in the blues',
-    RichCream: 'RichCream: Pure Elegance.',
-    onyxBlack: 'Dark and divine',
-    blackHoodie: 'In the depth of black',
-    redHoodie: 'Seeing red with passion',
-    whiteHoodie: 'White-hot wonder',
-    blackbranded: 'In the depth of black',
-    whitebranded: 'White-hot wonder',
-  }
-
-  const variantList = Object.keys(variants)
-
-  const handleColorChange = (color: string) => {
-    setCurrentColor(color)
-  }
   useEffect(() => {
     setCurrentColor(setVariantColor(currentVariant))
   }, [currentVariant])
@@ -229,100 +244,8 @@ const ProductDisplay: React.FC = () => {
 
     return newVariant
   }
-  function buyNowRedirect() {
-    if (currentColor === 'blue') {
-      return '/products/aqua-plain-t-shirt-unisex'
-    } else if (currentColor === 'blue') {
-      return '/products/aqua-plain-t-shirt-unisex'
-    }else if(currentColor === "red"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/redd.png'
-    }else if(currentColor === "white"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/plainwhite.png'
-    }else if(currentColor === "green"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/plain-green.png'
-    }else if(currentColor === "darkblue"){
-      return '/products/royal-blue-plain-t-shirt-unisex'
-    } else if (currentColor === 'gray') {
-      return '/products/grey-marl-plain-t-shirt-unisex'
-    } else if (currentColor === 'minkGray') {
-      return '/products/mink-gray'
-    }
-    else if(currentColor === "aquablue"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/aqual-blue.png'
-    }
-    else if(currentColor === "frenchPink"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/french-pink.png'
-    }
-    else if(currentColor === "rolexGreen"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/rolex-green.png'
-    }else if(currentColor === "vistaWhite"){
-      return '/products/vista-white'
-    }else if(currentColor === "cobaltBlue"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/cobalt-bluew.png'
-    }else if(currentColor === "RichCream"){
-      return '/products/rich-cream'
-    }else if(currentColor === "onyxBlack"){
-      return 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/onyx-black.png'
-    }
-  }
-
-  const initialColors = currentCol => {
-    if (currentCol === 'blue') {
-      return 'minkGray'
-    } else {
-      return 'black'
-    }
-  }
-  // console.log("variants[currentVariant]", Object.keys(variants[currentVariant]))
-  const handlePreviousVariant = () => {
-    const currentIndex = variantList.indexOf(currentVariant)
-    const newIndex = (currentIndex - 1 + variantList.length) % variantList.length
-    setCurrentVariant(variantList[newIndex])
-    setCurrentColor(Object.keys(variants[variantList[newIndex] as keyof typeof variants].colors)[0])
-  }
-
-  const handleNextVariant = () => {
-    const currentIndex = variantList.indexOf(currentVariant)
-    const newIndex = (currentIndex + 1) % variantList.length
-    setCurrentVariant(variantList[newIndex])
-    setCurrentColor(Object.keys(variants[variantList[newIndex] as keyof typeof variants].colors)[0])
-  }
-
-  const imageVariants = {
-    enter: { opacity: 0, x: 50 },
-    center: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -50 },
-  }
-
-  const getGradientStyle = (color: string, variant: string) => {
-    const colorHex =
-      variants[variant as keyof typeof variants].colors[
-        color as keyof (typeof variants)[keyof typeof variants]['colors']
-      ]
-    return {
-      backgroundColor: 'hsla(0,0%,0%,0)',
-      backgroundImage: `
-              radial-gradient(at 0% 100%, ${colorHex} 0px, transparent 50%),
-              radial-gradient(at 0% 0%, ${colorHex} 0px, transparent 50%)
-            `,
-      '--bg-color': colorHex,
-    } as React.CSSProperties
-  }
-  const getTitle = (variant: string) => {
-    switch (variant) {
-      case 'polo':
-        return 'Polo T-Shirts'
-      case 'branded':
-        return 'Branded Hoodies'
-      case 'brandedtshirt':
-        return 'Branded T-Shirts'
-      default:
-        return 'Plain T-Shirts'
-    }
-  }
-
   function getBackgroundColor(currentColor) {
-    return `linear-gradient(44.52deg, #111517 5.12%, ${variants[currentVariant]['colors'][currentColor]} 97.99%)`
+    return `linear-gradient(44.52deg, #111517 5.12%, ${variants[currentVariant]['colors'][currentColor].color} 97.99%)`
   }
   const wordsArray = ['"Feel the vibes of 1990\'s streets."', '"Modern street fashion"']
   return (
@@ -367,7 +290,7 @@ const ProductDisplay: React.FC = () => {
             return (
               <span
                 style={{
-                  backgroundColor: `${variants[currentVariant]['colors'][e]}`,
+                  backgroundColor: `${variants[currentVariant]['colors'][e].color}`,
                   borderRadius: '100%',
                   height: '20px',
                   width: '20px',
@@ -415,9 +338,16 @@ const ProductDisplay: React.FC = () => {
                     }
                   : currentVariant === 'plain' && isMobile
                   ? {
-                      zIndex: -1,
-                      top: '-12.5em',
-                      position: 'absolute',
+                      position: "absolute",
+                      bottom: "55.1em",
+                      zIndex: -1
+                    }
+                    : currentVariant === 'polo' && isMobile
+                  ? {
+                      position: "absolute",
+                      top: "-32em",
+                      width: "38rem",
+                      height:"40rem"
                     }
                   : currentVariant === 'polo'
                   ? {
@@ -430,13 +360,19 @@ const ProductDisplay: React.FC = () => {
                     }
                   : currentVariant === 'branded'
                   ? {
-                    zIndex: 2,
-                    position: "absolute",
-                    left: "5em",
-                    top: "-15.3em",
-                    width: "30rem",
-                    height: "34rem",
-                    }
+                      zIndex: 2,
+                      position: 'absolute',
+                      left: '5em',
+                      top: '-15.3em',
+                      width: '30rem',
+                      height: '34rem',
+                    } :currentVariant === 'brandedtshirt' && isMobile
+                    ? {
+                        "left": "1em",
+                        "top": "-35.3em",
+                        "width": "34rem",
+                        "height": "34rem",
+                   }
                   : currentVariant === 'brandedtshirt'
                   ? {
                     zIndex: 2,
@@ -446,10 +382,17 @@ const ProductDisplay: React.FC = () => {
                     width: "32rem",
                     height: "34rem",
                     }
+                   :currentVariant === 'brandedtshirt' && isMobile
+                    ? {
+                        left: "1em",
+                        top: "-42.3em",
+                        width: "32rem",
+                        height: "47rem",
+                      }
                   : undefined
               }
               alt="image"
-              src={getURL(currentColor)}
+              src={`${variants[currentVariant]['colors'][currentColor].imageUrl}`}
               height={1000}
               width={416}
             />
@@ -461,55 +404,6 @@ const ProductDisplay: React.FC = () => {
             }}
           ></div>
           <div className={styles.colorVarient}>
-            {/* {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
-              return (
-                <div
-                  key={colorKey}
-                  style={
-                    currentVariant === 'polo' || currentVariant === 'plain'
-                      ? {
-                          background:
-                            currentColor === colorKey
-                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
-                              : variants[currentVariant]['colors'][colorKey],
-                          height: '28px',
-                          width: currentColor === colorKey ? '155px' : '13px',
-                          margin: '1.3em',
-                          position: 'relative',
-                          left: '21em',
-                          cursor: 'pointer',
-                          bottom: '59em',
-                          textAlign: 'left',
-                          transform:
-                            currentColor === colorKey ? 'rotate(-12deg)' : 'skew(356deg, 12deg)',
-                          transition: 'all 0.3s ease',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }
-                      : {
-                          background:
-                            currentColor === colorKey
-                              ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
-                              : variants[currentVariant]['colors'][colorKey],
-                          height: '31px',
-                          width: currentColor === colorKey ? '150px' : '13px',
-                          position: 'relative',
-                          margin: '1.3em',
-                          left: '23em',
-                          cursor: 'pointer',
-                          bottom: '59em',
-                          transform:
-                            currentColor === colorKey ? 'rotate(-12deg) ' : 'skew(356deg, 12deg)',
-                          transition: 'all 0.3s ease',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }
-                  }
-                  onClick={() => {
-                    setCurrentColor(colorKey)
-                  }} */}
             {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
               return (
                 <div
@@ -517,8 +411,8 @@ const ProductDisplay: React.FC = () => {
                   style={{
                     background:
                       currentColor === colorKey
-                        ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey]} 60%, rgba(0,0,0,0.3))`
-                        : variants[currentVariant]['colors'][colorKey],
+                        ? `linear-gradient(to right, ${variants[currentVariant]['colors'][colorKey].color} 60%, rgba(0,0,0,0.3))`
+                        : variants[currentVariant]['colors'][colorKey].color,
                     height: '28px',
                     width: currentColor === colorKey ? '170px' : '13px',
                     margin: '1em',
@@ -527,8 +421,8 @@ const ProductDisplay: React.FC = () => {
                     cursor: 'pointer',
                     bottom: '59em',
                     textAlign: 'left',
-                    transform: 'rotate(-10deg) skew(-9deg)', // Removed conditional transform
-                    transformOrigin: 'left center', // Add this to keep expansion from left side
+                    transform: 'rotate(-10deg) skew(-9deg)', 
+                    transformOrigin: 'left center', 
                     transition: 'all 0.3s ease',
                     display: 'flex',
                     alignItems: 'center',
@@ -542,8 +436,8 @@ const ProductDisplay: React.FC = () => {
                     <span
                       style={{
                         color:
-                          variants[currentVariant]['colors'][colorKey] === '#ffffff' ||
-                          variants[currentVariant]['colors'][colorKey] === 'white'
+                          variants[currentVariant]['colors'][colorKey].color === '#ffffff' ||
+                          variants[currentVariant]['colors'][colorKey].color === 'white'
                             ? 'black'
                             : 'white',
                         fontSize: '15px',
@@ -636,7 +530,7 @@ const ProductDisplay: React.FC = () => {
               className="" // Optional: Additional Tailwind classes
             />
           </h2>
-          <Link href={`${buyNowRedirect()}`}>
+          <Link href={`${variants[currentVariant]['colors'][currentColor].buyNowLink}`}>
             {/* <button
               className={styles.buyNowButton}
               style={{
