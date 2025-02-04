@@ -69,8 +69,10 @@ export const cartReducer = (cart: CartType, action: CartAction): CartType => {
       const productId =
         typeof incomingItem.product === 'string' ? incomingItem.product : incomingItem?.product?.id
 
-      const indexInCart = cart?.items?.findIndex(({ product }) =>
-        typeof product === 'string' ? product === productId : product?.id === productId,
+      const indexInCart = cart?.items?.findIndex(({ product, size }) =>
+        typeof product === 'string' ? product === productId && size === incomingItem.size  
+      : product?.id === productId && size === incomingItem.size
+        ,
       ) // eslint-disable-line function-paren-newline
 
       let withAddedItem = [...(cart?.items || [])]
@@ -94,21 +96,68 @@ export const cartReducer = (cart: CartType, action: CartAction): CartType => {
     }
 
     case 'DELETE_ITEM': {
-      const { payload: incomingProduct } = action
-      const withDeletedItem = { ...cart }
-
-      const indexInCart = cart?.items?.findIndex(({ product }) =>
-        typeof product === 'string'
-          ? product === incomingProduct.id
-          : product?.id === incomingProduct.id,
-      ) // eslint-disable-line function-paren-newline
-
-      if (typeof indexInCart === 'number' && withDeletedItem.items && indexInCart > -1)
-        withDeletedItem.items.splice(indexInCart, 1)
-
-      return withDeletedItem
+      // console.log("🔹 Size to delete (from action.payload):", action.payload.size);
+    
+      const { product: incomingProduct, size } = action.payload;
+      // console.log("🔹 Received product to delete:", incomingProduct);
+    
+      const normalizeSize = (size) => 
+        typeof size === 'string' 
+          ? size.toLowerCase().split(":")[0]?.trim()  // Ensure case insensitivity + trim
+          : "";
+    
+      const normalizeProductID = (product) => 
+        typeof product === 'string' 
+          ? product 
+          : product?.id || ""; // Ensure string comparison for product ID
+    
+      // Ensure we work with a fresh copy of cart items
+      const currentItems = [...(cart.items || [])];
+    
+      // console.log("🛒 Current cart items before deletion:");
+      currentItems.forEach(({ product, size: itemSize }, index) => {
+        // console.log(`  🔸 Index: ${index}, Product ID: ${normalizeProductID(product)}, Size: ${normalizeSize(itemSize)}`);
+      });
+    
+      // Find index using normalized values
+      const indexInCart = currentItems.findIndex(({ product, size: itemSize }) => {
+        const normalizedIncomingSize = normalizeSize(size);
+        const normalizedCartSize = normalizeSize(itemSize);
+    
+        const isProductMatch = normalizeProductID(product) === normalizeProductID(incomingProduct);
+        const isSizeMatch = normalizedCartSize === normalizedIncomingSize;
+    
+        // console.log(`  🔍 Checking item - Product ID: ${normalizeProductID(product)}, Item Size: ${normalizedCartSize}, Incoming Size: ${normalizedIncomingSize}, Match: ${isProductMatch && isSizeMatch}`);
+    
+        return isProductMatch && isSizeMatch;
+      });
+    
+      // console.log("🔎 Result of findIndex:", indexInCart);
+    
+      if (indexInCart !== -1) {
+        // console.log("✅ Deleting item at index:", indexInCart);
+    
+        // Create a new filtered array instead of mutating
+        const updatedItems = currentItems.filter((_, idx) => idx !== indexInCart);
+    
+        // console.log("🛍️ Updated cart items after deletion:", updatedItems);
+    
+        return {
+          ...cart,
+          items: updatedItems, // Ensure a completely new array is assigned
+        };
+      } else {
+        console.log("❌ Item not found in cart.");
+      }
+    
+      return cart; // Return original cart if nothing is deleted
     }
-
+    
+    
+    
+    
+    
+    
     case 'CLEAR_CART': {
       return {
         ...cart,

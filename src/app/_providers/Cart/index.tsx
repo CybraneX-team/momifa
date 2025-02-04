@@ -17,10 +17,10 @@ import { CartItem, cartReducer } from './reducer'
 export type CartContext = {
   cart: User['cart']
   addItemToCart: (item: CartItem) => void
-  deleteItemFromCart: (product: Product) => void
+  deleteItemFromCart: (product: Product, size: string) => void
   cartIsEmpty: boolean | undefined
   clearCart: () => void
-  isProductInCart: (product: Product) => boolean
+  isProductInCart: (product: Product, incomingSize : string) => boolean
   cartTotal: {
     formatted: string
     raw: number
@@ -185,22 +185,33 @@ export const CartProvider = props => {
   }, [user, cart])
 
   const isProductInCart = useCallback(
-    (incomingProduct: Product): boolean => {
-      let isInCart = false
-      const { items: itemsInCart } = cart || {}
-      if (Array.isArray(itemsInCart) && itemsInCart.length > 0) {
-        isInCart = Boolean(
-          itemsInCart.find(({ product }) =>
-            typeof product === 'string'
-              ? product === incomingProduct.id
-              : product?.id === incomingProduct.id,
-          ), // eslint-disable-line function-paren-newline
-        )
+    (incomingProduct: Product, incomingSize: string): boolean => {
+      if (!cart || !Array.isArray(cart.items) || cart.items.length === 0) {
+        return false;
       }
-      return isInCart
+      if(!incomingSize){
+        return false
+      }
+      const normalizeSize = (size: string) => size.split(":")[0]?.trim() || "";
+  
+      return cart.items.some(({ product, size }) => {
+        console.log("cart.items[0].size", cart.items[0].size)
+        const productMatches =
+          typeof product === "string"
+            ? product === incomingProduct.id
+            : product?.id === incomingProduct.id;
+  
+        const sizeMatches = incomingSize
+          ? normalizeSize(size) === normalizeSize(incomingSize)
+          : true;
+  
+        return productMatches && sizeMatches;
+      });
     },
-    [cart],
-  )
+    [cart]
+  );
+  
+  
 
   // this method can be used to add new items AND update existing ones
   const addItemToCart = useCallback(incomingItem => {
@@ -210,12 +221,13 @@ export const CartProvider = props => {
     })
   }, [])
 
-  const deleteItemFromCart = useCallback((incomingProduct: Product) => {
+  const deleteItemFromCart = useCallback((incomingProduct: Product, size: string) => {
     dispatchCart({
       type: 'DELETE_ITEM',
-      payload: incomingProduct,
-    })
-  }, [])
+      payload: { product: incomingProduct, size },
+    });
+  }, [dispatchCart]);
+  
 
   const clearCart = useCallback(() => {
     dispatchCart({

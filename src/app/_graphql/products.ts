@@ -19,7 +19,7 @@ export const PRODUCTS = `
 
 export const PRODUCT = `
   query Product($slug: String, $draft: Boolean) {
-    Products(where: { slug: { equals: $slug}}, limit: 1, draft: $draft) {
+    Products(where: { slug: { equals: $slug } }, limit: 1, draft: $draft) {
       docs {
         id
         title
@@ -33,6 +33,11 @@ export const PRODUCT = `
         }
         priceJSON
         enablePaywall
+       variants { 
+          id
+          size
+          stock
+        }
         relatedProducts {
           id
           slug
@@ -43,7 +48,8 @@ export const PRODUCT = `
       }
     }
   }
-`
+`;
+
 
 export const PRODUCT_PAYWALL = `
   query Product($slug: String, $draft: Boolean) {

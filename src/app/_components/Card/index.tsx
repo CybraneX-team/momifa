@@ -97,9 +97,11 @@ export const Card = ({
     const imagePath = metaImage.filename || metaImage.url || ''
 
     // Ensure the path starts with '/'
-    const formattedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`
-
-    return `${baseUrl}${formattedPath}`
+    const formattedPath = imagePath.startsWith('https') ?
+     imagePath.replace('https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com', "")
+     : `/${imagePath}`
+    console.log("formatted path ", formattedPath)
+    return  formattedPath.startsWith(`https`) ?  `${formattedPath}`  :  `${baseUrl}${formattedPath}`
   }
 
   const imageUrl = getImageUrl()

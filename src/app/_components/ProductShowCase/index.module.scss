@@ -126,19 +126,26 @@ $breakpoints: (
   top: -19em;
 }
 .colorVarient {
-  left: 48em;
-  cursor: pointer;
-  bottom: -88em;
+  position: absolute;
+  left: 48em; // Keep this consistent
+  bottom: -88em; // Keep this consistent
   transform: skew(337deg, 12deg);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Ensure all elements align properly
+  gap: 8px; // Keep spacing consistent
+  min-height: 200px; // Ensure consistent space allocation
+
   @include respond-to(medium) {
     display: none;
   }
 }
+
 .imgDiv {
   position: absolute;
   height: 100%;
-  left: 8em;
-  top: 21.3em;
+  left: 7em;
+  top: 23.3em;
   z-index: 1;
   width: 41%;
   @include respond-to(medium) {

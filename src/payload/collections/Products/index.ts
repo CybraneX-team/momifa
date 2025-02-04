@@ -122,19 +122,47 @@ const Products: CollectionConfig = {
               required: true,
             },
             {
-              name: 'images', // Updated to allow multiple images
+              name: 'images',
               label: 'Product Images',
-              type: 'array', // Change the type to array
+              type: 'array',
               fields: [
                 {
                   name: 'image',
                   type: 'upload',
-                  relationTo: 'media', // Assuming your images are stored in a media collection
+                  relationTo: 'media',
                   required: true,
                 },
               ],
               admin: {
                 description: 'Upload one or more images of the product.',
+              },
+            },
+            {
+              name: 'variants',
+              label: 'Variants',
+              type: 'array',
+              fields: [
+                {
+                  name: 'size',
+                  type: 'select',
+                  required: true,
+                  options: [
+                    { label: 'Small', value: 'S' },
+                    { label: 'Medium', value: 'M' },
+                    { label: 'Large', value: 'L' },
+                    { label: 'Extra Large', value: 'XL' },
+                  ],
+                },
+                {
+                  name: 'stock',
+                  type: 'number',
+                  label: 'Stock Quantity',
+                  min: 0,
+                  required: true,
+                },
+              ],
+              admin: {
+                description: 'Manage stock for different sizes of the product.',
               },
             },
           ],

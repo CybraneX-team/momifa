@@ -26,9 +26,10 @@ export const AddToCartButton: React.FC<{
   const router = useRouter()
 
   useEffect(() => {
-    setIsInCart(isProductInCart(product))
-  }, [isProductInCart, product, cart])
-
+    
+    setIsInCart(isProductInCart(product, size))
+  }, [isProductInCart, product, cart, size])
+  console.log("isProductInCart(product, size)", isProductInCart(product, size)) 
   const handleClick = () => {
     if (!isInCart) {
       addItemToCart({
@@ -44,7 +45,7 @@ export const AddToCartButton: React.FC<{
         setTimeout(() => setReset(false), 300) 
       }, 300)
 
-      router.push('/cart')
+      // router.push('/cart')
     }
   }
 

@@ -397,8 +397,20 @@ export interface Product {
   };
   updatedAt: string;
   createdAt: string;
+  product: any;
   _status?: 'draft' | 'published';
+  size : string
+  // ✅ ADDED CART VARIANTS SUPPORT
+  variants?: ('S' | 'M' | 'L' | 'XL')[];
+  cart?: {
+    items: {
+      product: Product;
+      size: 'S' | 'M' | 'L' | 'XL';
+      quantity: number;
+    }[];
+  };
 }
+
 export interface Order {
   id: string;
   orderedBy?: string | User;

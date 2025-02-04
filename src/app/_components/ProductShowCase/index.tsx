@@ -24,12 +24,12 @@ const ProductDisplay: React.FC = () => {
         blue: {
           color: '#9fcbd6',
           imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`,
-          buyNowLink: '/products/aqua-plain-t-shirt-unisex',
+          buyNowLink: 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/Frame+427318915.png',
         },
         red: {
           color: '#f46e65',
           imageUrl: `/media/tshirt/tshirt-${currentColor}-${currentVariant}.png`,
-          buyNowLink: '/products/cherry-red-plain-t-shirt-unisex',
+          buyNowLink: 'https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/Frame+427318915+(1).png',
         },
         white: {
           color: '#ffffff',
@@ -88,7 +88,7 @@ const ProductDisplay: React.FC = () => {
         RichCream: {
           color: '#F1DABD',
           imageUrl: `${baseURL}Rich%2BCream%2B-%2B1-removebg-preview.png`,
-          buyNowLink: `/products/rich-cream`,
+          buyNowLink: `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/Frame+427318915+(2).png`,
         },
         onyxBlack: {
           color: '#1C1913',
@@ -158,17 +158,17 @@ const ProductDisplay: React.FC = () => {
   //
   const getTopValue = color => {
     if (color === 'blue') {
-      return '-13.7em'
+      return '-13.5em'
     } else if (color === 'red') {
-      return '-9.4em'
+      return '-9.3em'
     } else if (color === 'white') {
-      return '-11.9em'
+      return '-12.7em'
     } else if (color === 'green') {
-      return '-12.6em'
+      return '-13.4em'
     } else if (color === 'darkblue') {
-      return '-11.5em'
+      return '-12.2em'
     } else if (color === 'gray') {
-      return '-16em'
+      return '-17em'
     }
   }
 
@@ -359,7 +359,7 @@ const ProductDisplay: React.FC = () => {
                     : currentVariant === 'polo'
                     ? {
                         zIndex: -1,
-                        top: '-13.6em',
+                        top: '-14.6em',
                         position: 'absolute',
                         height: '35rem',
                         left: '1em',
@@ -374,11 +374,11 @@ const ProductDisplay: React.FC = () => {
                         width: '30rem',
                         height: '34rem',
                       }
-                    : currentVariant === 'brandedtshirt' && isMobile
+                    : currentVariant === 'branded' && isMobile
                     ? {
-                        left: '1em',
-                        top: '-35.3em',
-                        width: '34rem',
+                        position: 'absolute',
+                        left: "3em",
+                        top: "-40.3em",
                         height: '34rem',
                       }
                     : currentVariant === 'brandedtshirt'
@@ -395,6 +395,7 @@ const ProductDisplay: React.FC = () => {
                         left: '1em',
                         top: '-42.3em',
                         width: '32rem',
+                        position: 'absolute',
                         height: '47rem',
                       }
                     : undefined
@@ -412,7 +413,55 @@ const ProductDisplay: React.FC = () => {
               background: getBackgroundColor(currentColor),
             }}
           ></div>
-          <div className={styles.colorVarient}>
+          <div 
+          style={
+            currentVariant === 'plain' && !isMobile ? {
+              "position": "absolute",
+              "left": "47em",
+              "bottom": "20em",
+              "transform": "skew(337deg, 12deg)",
+              "display": "flex",
+              "flexDirection": "column",
+              "alignItems": "flex-start",
+              "gap": "8px",
+              "minHeight": "200px"
+            } : currentVariant === 'brandedtshirt' 
+            ? {
+              "position": "absolute",
+              "left": "48em",
+              "bottom": "25em",
+              "transform": "skew(337deg, 12deg)",
+              "display": "flex",
+              "flexDirection": "column",
+              "alignItems": "flex-start",
+              "gap": "8px",
+              "minHeight": "200px"
+            }  : currentVariant === 'polo'
+            ?{
+              "position": "absolute",
+              "left": "46em",
+              "bottom": "14em",
+              "transform": "skew(337deg, 12deg)",
+              "display": "flex",
+              "flexDirection": "column",
+              "alignItems": "flex-start",
+              "gap": "8px",
+              "minHeight": "200px"
+            } : currentVariant === 'branded'?
+            {
+              "position": "absolute",
+              "left": "48em",
+              "bottom": "25em",
+              "transform": "skew(337deg, 12deg)",
+              "display": "flex",
+              "flexDirection": "column",
+              "alignItems": "flex-start",
+              "gap": "8px",
+              "minHeight": "200px"
+            }: undefined
+          }
+          className={styles.colorVarient}
+          >
             {Object.keys(variants[currentVariant]['colors']).map(colorKey => {
               return (
                 <div
@@ -424,11 +473,11 @@ const ProductDisplay: React.FC = () => {
                         : variants[currentVariant]['colors'][colorKey].color,
                     height: '28px',
                     width: currentColor === colorKey || isHovered[colorKey] ? '170px' : '13px',
-                    margin: '1em',
+                    margin: '0.5em 0',
                     position: 'relative',
-                    left: '21em',
+                    // left: '21em',
                     cursor: 'pointer',
-                    bottom: '59em',
+                    // bottom: '59em',
                     textAlign: 'left',
                     transform: 'rotate(-10deg) skew(-9deg)',
                     transformOrigin: 'left center',

@@ -19,7 +19,7 @@ export const ProductHero: React.FC<{
 }> = ({ product: initialProduct }) => {
   // State management
   const [product, setProduct] = useState(initialProduct)
-  const { id, title, categories, meta: { image: metaImage, description } = {} } = product
+  const { id, title, categories, meta: { image: metaImage, description } = {}, variants } = product
 
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
   const { user } = useAuth()
@@ -31,16 +31,26 @@ export const ProductHero: React.FC<{
   const [wishlist, setwishlist] = useState([])
   const [showReviewForm, seshowReviewForm] = useState(false)
   const [feedback, setfeedback] = useState([])
-  const [selectedSize, setSelectedSize] = useState('S')
+  const [selectedSize, setSelectedSize] = useState('small')
   const [imagess, setimagess] = useState([])
   const [displayedImage, setdisplayedImage] = useState(metaImage)
   const [sleeveLength, setSleeveLength] = useState(17)
+  const [sizeActive, setsizeActive] = useState("S")
   const [chest, setChest] = useState(19)
   const [imagesLoading, setimagesLoading] = useState(true)
   const [sizeName, setsizeName] = useState('Small')
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [preloadedImages, setPreloadedImages] = useState({})
+  const [initialSizeData, setinitialSizeData] = useState(
+    {
+      small: {val : 1},
+      medium : {val : 1},
+      large: {val : 1},
+      XL : {val : 1}
+    }
+  )
 
+  
   // Review functionality
   async function PostReview(bodyObject) {
     const postReview = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback`, {
@@ -91,18 +101,37 @@ export const ProductHero: React.FC<{
 
     checkWishlist()
   }, [id, user?.id])
-
+  useEffect(() => {
+    if (!id) return // Prevent errors if ID isn't available yet
+    const storedData = localStorage.getItem(`${id}-initializedData`)
+    if (storedData) {
+      setinitialSizeData(JSON.parse(storedData))
+    }
+  }, [id])
   // Cart quantity management
   function setvalue(op) {
-    if (op === 'reduce' && cartvalue !== 0) {
-      setcartvalue(prev => prev - 1)
-    } else if (op === 'reduce' && cartvalue === 0) {
-      setcartvalue(0)
-    } else {
-      setcartvalue(prev => prev + 1)
-    }
-  }
+    setinitialSizeData((prevData) => {
+      const newData = { ...prevData }
 
+      if (op === "inc") {
+        newData[selectedSize] = {
+          ...prevData[selectedSize],
+          val: prevData[selectedSize].val + 1,
+        };
+      } else {
+        if (prevData[selectedSize].val > 1) {
+          newData[selectedSize] = {
+            ...prevData[selectedSize],
+            val: prevData[selectedSize].val - 1,
+          };
+        }
+      }
+
+      localStorage.setItem(`${id}-initializedData`, JSON.stringify(newData)) // Save updated data
+      return newData
+    });
+  }
+  
   // URL formatting
   function addHyphenToSpace(str) {
     return str.toLowerCase().replace(/\s+/g, '-')
@@ -129,24 +158,34 @@ export const ProductHero: React.FC<{
 
   // Size management
   function setSizeAndSliderValue(size) {
-    setSelectedSize(size)
-    if (size === 'S') {
+    if(size ===  "S"){
+      setSelectedSize(
+        "small"
+      )
       setSleeveLength(17)
       setChest(19)
       setsizeName('Small')
-    } else if (size === 'M') {
+      setsizeActive(size)
+    }else if(size ===  "M"){
+      setSelectedSize('medium')
       setSleeveLength(19)
       setChest(20)
-      setsizeName('Medium')
-    } else if (size === 'L') {
+      setsizeName('medium')
+      setsizeActive(size)
+    }else if(size ===  "L"){
       setSleeveLength(20)
       setChest(21)
-      setsizeName('Large')
-    } else {
+      setsizeName('large')
+      setSelectedSize('large')
+      setsizeActive(size)
+    }else if(size === "XL"){
       setSleeveLength(21)
       setChest(22)
+      setSelectedSize('XL')
       setsizeName('XL')
+      setsizeActive(size)
     }
+   
   }
 
   // Preload images for color variants
@@ -243,6 +282,12 @@ export const ProductHero: React.FC<{
       setcartvalue(0)
       setSelectedSize('S')
       setSizeAndSliderValue('S')
+      setinitialSizeData({
+        small: {val : 1},
+        medium : {val : 1},
+        large: {val : 1},
+        XL : {val : 1}
+      })
     }
 
     setTimeout(() => {
@@ -313,17 +358,20 @@ export const ProductHero: React.FC<{
               ))}
             </div>
             <div className={classes.sizeButtons}>
-              {['S', 'M', 'L', 'XL'].map(size => (
-                <button
-                  key={size}
-                  onClick={() => setSizeAndSliderValue(size)}
+            {variants.length > 0 ?   
+                variants.map((elemet : any)=>{
+                  return  <button
+                  key={elemet.size}
+                  onClick={() => setSizeAndSliderValue(elemet.size)}
                   className={`${classes.sizeButton} ${
-                    selectedSize === size ? classes.activeSize : ''
+                    sizeActive === elemet.size ? classes.activeSize : ''
                   }`}
-                >
-                  {size}
-                </button>
-              ))}
+                > 
+                {elemet.size}
+                </button> 
+                })
+                 : <p>no size data available for this product </p>
+                }
             </div>
             <div className={classes.sliderContainer}>
               <label className={classes.sliderLabel}>
@@ -369,7 +417,7 @@ export const ProductHero: React.FC<{
                         <span onClick={() => setvalue('reduce')}>-</span>
                       </div>
                       <div className="text-xl w-10 h-10 bg-[#262626] text-center flex items-center justify-center">
-                        {cartvalue}
+                      {initialSizeData[selectedSize].val}
                       </div>
                       <div className="text-xl w-10 h-10 bg-[#262626] text-center rounded-e-3xl cursor-pointer flex items-center justify-center">
                         <span onClick={() => setvalue('inc')}>+</span>
@@ -380,8 +428,9 @@ export const ProductHero: React.FC<{
               </div>
             </div>
             <div className={classes.btns}>
-              <AddToCartButton
-                quantity={cartvalue === 0 ? cartvalue + 1 : cartvalue}
+            <AddToCartButton
+                quantity={initialSizeData[selectedSize].val === 0 ? 
+                  initialSizeData[selectedSize].val + 1 : initialSizeData[selectedSize].val}
                 product={product}
                 className={classes.addToCartButton}
                 size={`${sizeName} : Chest - ${sleeveLength} Waist - ${chest}`}

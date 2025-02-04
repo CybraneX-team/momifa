@@ -52,7 +52,7 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart, size }) => {
         <div className="flex items-center justify-between">
           <h6 className="text-white font-medium overflow-ellipsis max-w-48">{title}</h6>
           <div className="md:hidden">
-            <RemoveFromCartButton product={product} />
+            <RemoveFromCartButton product={product} size={size} />
           </div>
         </div>
 
@@ -86,7 +86,7 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart, size }) => {
           <Price product={product} button={false} />
         </h2>
         <div className="hidden lg:flex w-10">
-          <RemoveFromCartButton product={product} />
+          <RemoveFromCartButton product={product} size={size} />
         </div>
         <div
           className="flex items-center cursor-pointer text-white text-3xl"
