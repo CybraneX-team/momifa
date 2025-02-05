@@ -35,22 +35,19 @@ export const ProductHero: React.FC<{
   const [imagess, setimagess] = useState([])
   const [displayedImage, setdisplayedImage] = useState(metaImage)
   const [sleeveLength, setSleeveLength] = useState(17)
-  const [sizeActive, setsizeActive] = useState("S")
+  const [sizeActive, setsizeActive] = useState('S')
   const [chest, setChest] = useState(19)
   const [imagesLoading, setimagesLoading] = useState(true)
   const [sizeName, setsizeName] = useState('Small')
-  const [isTransitioning, setIsTransitioning] = useState(false)
   const [preloadedImages, setPreloadedImages] = useState({})
-  const [initialSizeData, setinitialSizeData] = useState(
-    {
-      small: {val : 1},
-      medium : {val : 1},
-      large: {val : 1},
-      XL : {val : 1}
-    }
-  )
+  const [initialSizeData, setinitialSizeData] = useState({
+    small: { val: 1 },
+    medium: { val: 1 },
+    large: { val: 1 },
+    XL: { val: 1 },
+  })
 
-  
+  const [isTransitioning, setIsTransitioning] = useState(false)
   // Review functionality
   async function PostReview(bodyObject) {
     const postReview = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback`, {
@@ -110,28 +107,28 @@ export const ProductHero: React.FC<{
   }, [id])
   // Cart quantity management
   function setvalue(op) {
-    setinitialSizeData((prevData) => {
+    setinitialSizeData(prevData => {
       const newData = { ...prevData }
 
-      if (op === "inc") {
+      if (op === 'inc') {
         newData[selectedSize] = {
           ...prevData[selectedSize],
           val: prevData[selectedSize].val + 1,
-        };
+        }
       } else {
         if (prevData[selectedSize].val > 1) {
           newData[selectedSize] = {
             ...prevData[selectedSize],
             val: prevData[selectedSize].val - 1,
-          };
+          }
         }
       }
 
       localStorage.setItem(`${id}-initializedData`, JSON.stringify(newData)) // Save updated data
       return newData
-    });
+    })
   }
-  
+
   // URL formatting
   function addHyphenToSpace(str) {
     return str.toLowerCase().replace(/\s+/g, '-')
@@ -158,34 +155,31 @@ export const ProductHero: React.FC<{
 
   // Size management
   function setSizeAndSliderValue(size) {
-    if(size ===  "S"){
-      setSelectedSize(
-        "small"
-      )
+    if (size === 'S') {
+      setSelectedSize('small')
       setSleeveLength(17)
       setChest(19)
       setsizeName('Small')
       setsizeActive(size)
-    }else if(size ===  "M"){
+    } else if (size === 'M') {
       setSelectedSize('medium')
       setSleeveLength(19)
       setChest(20)
       setsizeName('medium')
       setsizeActive(size)
-    }else if(size ===  "L"){
+    } else if (size === 'L') {
       setSleeveLength(20)
       setChest(21)
       setsizeName('large')
       setSelectedSize('large')
       setsizeActive(size)
-    }else if(size === "XL"){
+    } else if (size === 'XL') {
       setSleeveLength(21)
       setChest(22)
       setSelectedSize('XL')
       setsizeName('XL')
       setsizeActive(size)
     }
-   
   }
 
   // Preload images for color variants
@@ -261,13 +255,12 @@ export const ProductHero: React.FC<{
     loadInitialData()
   }, [id, categories])
 
-  // Color change handler
+  // Color change handler with optimized image loading
   const handleColorChange = async colorData => {
-    setIsTransitioning(true)
-    setimagesLoading(true)
     const newProduct = colorProducts[colorData.color]
 
     if (newProduct) {
+      setIsTransitioning(true) // Add this line
       setProduct(newProduct)
 
       const preloadedProductImages = preloadedImages[colorData.color]
@@ -283,10 +276,10 @@ export const ProductHero: React.FC<{
       setSelectedSize('S')
       setSizeAndSliderValue('S')
       setinitialSizeData({
-        small: {val : 1},
-        medium : {val : 1},
-        large: {val : 1},
-        XL : {val : 1}
+        small: { val: 1 },
+        medium: { val: 1 },
+        large: { val: 1 },
+        XL: { val: 1 },
       })
     }
 
@@ -307,35 +300,29 @@ export const ProductHero: React.FC<{
       />
       <Gutter className={classes.productHero}>
         <div className={classes.mainn}>
-          {imagesLoading ? (
-            <div className={classes.loading} />
-          ) : (
-            <div
-              className={`${classes.imagess} ${
-                isTransitioning ? 'opacity-50 transition-opacity' : ''
-              }`}
-            >
-              {imagess.map(image => (
-                <div
-                  key={image}
-                  onClick={() => swapImage(image)}
-                  className={`${classes.imagessImage} rounded-xl`}
-                >
-                  <Image
-                    className={classes.imageclass}
-                    src={image}
-                    width={100}
-                    height={40}
-                    alt="image"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-          <div
-            className={`${classes.vig} ${isTransitioning ? 'opacity-50 transition-opacity' : ''}`}
-          >
+          <div className={classes.imagess}>
+            {imagess.map(image => (
+              <div
+                key={image}
+                onClick={() => swapImage(image)}
+                className={`${classes.imagessImage} rounded-xl`}
+              >
+                <Image
+                  className={classes.imageclass}
+                  src={image}
+                  width={100}
+                  height={40}
+                  alt="image"
+                  loading="eager" // Added this
+                  priority // Added this
+                />
+              </div>
+            ))}
+          </div>
+          <div className={classes.vig}>
             <Media imgClassName={classes.image} resource={displayedImage} />
+            {/* Add the vignette effect overlay */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-black opacity-30 rounded-xl" />
           </div>
           <div className={`${classes.detailsDiv}`}>
             <div className={classes.responsivee}>
@@ -358,20 +345,23 @@ export const ProductHero: React.FC<{
               ))}
             </div>
             <div className={classes.sizeButtons}>
-            {variants.length > 0 ?   
-                variants.map((elemet : any)=>{
-                  return  <button
-                  key={elemet.size}
-                  onClick={() => setSizeAndSliderValue(elemet.size)}
-                  className={`${classes.sizeButton} ${
-                    sizeActive === elemet.size ? classes.activeSize : ''
-                  }`}
-                > 
-                {elemet.size}
-                </button> 
+              {variants.length > 0 ? (
+                variants.map((elemet: any) => {
+                  return (
+                    <button
+                      key={elemet.size}
+                      onClick={() => setSizeAndSliderValue(elemet.size)}
+                      className={`${classes.sizeButton} ${
+                        sizeActive === elemet.size ? classes.activeSize : ''
+                      }`}
+                    >
+                      {elemet.size}
+                    </button>
+                  )
                 })
-                 : <p>no size data available for this product </p>
-                }
+              ) : (
+                <p>no size data available for this product </p>
+              )}
             </div>
             <div className={classes.sliderContainer}>
               <label className={classes.sliderLabel}>
@@ -417,7 +407,7 @@ export const ProductHero: React.FC<{
                         <span onClick={() => setvalue('reduce')}>-</span>
                       </div>
                       <div className="text-xl w-10 h-10 bg-[#262626] text-center flex items-center justify-center">
-                      {initialSizeData[selectedSize].val}
+                        {initialSizeData[selectedSize].val}
                       </div>
                       <div className="text-xl w-10 h-10 bg-[#262626] text-center rounded-e-3xl cursor-pointer flex items-center justify-center">
                         <span onClick={() => setvalue('inc')}>+</span>
@@ -428,9 +418,12 @@ export const ProductHero: React.FC<{
               </div>
             </div>
             <div className={classes.btns}>
-            <AddToCartButton
-                quantity={initialSizeData[selectedSize].val === 0 ? 
-                  initialSizeData[selectedSize].val + 1 : initialSizeData[selectedSize].val}
+              <AddToCartButton
+                quantity={
+                  initialSizeData[selectedSize].val === 0
+                    ? initialSizeData[selectedSize].val + 1
+                    : initialSizeData[selectedSize].val
+                }
                 product={product}
                 className={classes.addToCartButton}
                 size={`${sizeName} : Chest - ${sleeveLength} Waist - ${chest}`}
