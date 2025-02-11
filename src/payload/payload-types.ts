@@ -400,8 +400,10 @@ export interface Product {
   product: any;
   _status?: 'draft' | 'published';
   size : string
-  // ✅ ADDED CART VARIANTS SUPPORT
-  variants?: ('S' | 'M' | 'L' | 'XL')[];
+  variants?: {
+    size: string;
+    stock: number;
+  }[];
   cart?: {
     items: {
       product: Product;

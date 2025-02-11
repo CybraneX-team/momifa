@@ -202,7 +202,7 @@ export const CartProvider = props => {
             : product?.id === incomingProduct.id;
   
         const sizeMatches = incomingSize
-          ? normalizeSize(size) === normalizeSize(incomingSize)
+          ? normalizeSize(size? size : "") === normalizeSize(incomingSize)
           : true;
   
         return productMatches && sizeMatches;

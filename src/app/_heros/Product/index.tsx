@@ -20,8 +20,8 @@ export const ProductHero: React.FC<{
   // State management
   const [product, setProduct] = useState(initialProduct)
   const { id, title, categories, meta: { image: metaImage, description } = {}, variants } = product
-
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
+  console.log("meta iamge", metaImage)
   const { user } = useAuth()
   const [wishlistID, setwishlistID] = useState('')
   const [cartvalue, setcartvalue] = useState(0)
@@ -47,8 +47,11 @@ export const ProductHero: React.FC<{
     XL: { val: 1 },
   })
 
+  const [stockData , setstockData] = useState(variants)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  
   // Review functionality
+  
   async function PostReview(bodyObject) {
     const postReview = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/feedback`, {
       method: 'POST',
@@ -99,7 +102,7 @@ export const ProductHero: React.FC<{
     checkWishlist()
   }, [id, user?.id])
   useEffect(() => {
-    if (!id) return // Prevent errors if ID isn't available yet
+    if (!id) return 
     const storedData = localStorage.getItem(`${id}-initializedData`)
     if (storedData) {
       setinitialSizeData(JSON.parse(storedData))
@@ -129,7 +132,7 @@ export const ProductHero: React.FC<{
     })
   }
 
-  // URL formatting
+  
   function addHyphenToSpace(str) {
     return str.toLowerCase().replace(/\s+/g, '-')
   }
@@ -140,9 +143,17 @@ export const ProductHero: React.FC<{
       const imgToReplace = imagess.indexOf(image)
       const newImages = [...imagess]
       newImages.splice(imgToReplace, 1)
-      newImages.push(
-        `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${displayedImage.filename}`,
-      )
+      console.log("displayedImage", displayedImage)
+      if(displayedImage.filename.startsWith("https")){
+        console.log("got true")
+        newImages.push(
+          displayedImage.filename
+        )
+      }else{
+        newImages.push(
+          `https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/${displayedImage.filename}`,
+        )
+      }
       setimagess(newImages)
 
       const newDisplayedImage: mediaType = {
@@ -290,7 +301,7 @@ export const ProductHero: React.FC<{
   }
 
   return (
-    <div className="overflow-x-hidden flex flex-col justify-center items-center md:justify-start md:items-start px-5 pt-6">
+    <div className="overflow-x-hidden flex flex-col justify-center items-center md:justify-start md:items-start  pt-6">
       <Image
         src="/media/MOMIFA.png"
         alt="MOMIFA"
@@ -321,7 +332,7 @@ export const ProductHero: React.FC<{
           </div>
           <div className={classes.vig}>
             <Media imgClassName={classes.image} resource={displayedImage} />
-            {/* Add the vignette effect overlay */}
+           
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-black opacity-30 rounded-xl" />
           </div>
           <div className={`${classes.detailsDiv}`}>
@@ -344,9 +355,16 @@ export const ProductHero: React.FC<{
                 />
               ))}
             </div>
+            <p className={classes.stockText}> 
+              In Stock :
+               {variants.find((e) => sizeActive === e.size)?.stock ? 
+                variants.find((e) => sizeActive === e.size).stock :
+                "No stock Data Found" 
+              } </p>
             <div className={classes.sizeButtons}>
-              {variants.length > 0 ? (
-                variants.map((elemet: any) => {
+              {stockData.length > 0 
+              ? (
+                stockData.map((elemet: any) => {
                   return (
                     <button
                       key={elemet.size}
@@ -442,7 +460,7 @@ export const ProductHero: React.FC<{
           </div>
         </div>
       </Gutter>
-      <div className="flex justify-center mx-auto mt-[12.5rem] mb-5 md:mt-[0rem]">
+      <div className="flex justify-center mx-auto mt-[13.5rem] mb-5 md:mt-[0rem]">
         <h2 className="text-3xl text-white mx-auto text-center lg:text-4xl">Reviews</h2>
         <h2 className="text-3xl text-white mx-2 text-center lg:text-4xl"> | </h2>
         <button

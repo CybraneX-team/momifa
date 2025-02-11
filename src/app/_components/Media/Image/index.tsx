@@ -43,12 +43,16 @@ export const Image: React.FC<MediaProps> = props => {
    
     src = filename
   }
-  function getSrc(src){
-    if(src.includes("https")){
-      return src.replace("https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/", "")
+  function getSrc(src) {
+    if (src.includes("https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/")) {
+      return src.replace("https://momifa-storage-bucket.s3.eu-west-2.amazonaws.com/", "");
     }
-    return src
+    if (src.includes("https://momifa-storage-bucket.s3.amazonaws.com/")) {
+      return src.replace("https://momifa-storage-bucket.s3.amazonaws.com/", "");
+    }
+    return src;
   }
+  
   
   const sizes = Object.entries(breakpoints)
     .map(([, value]) => `(max-width: ${value}px) ${value}px`)

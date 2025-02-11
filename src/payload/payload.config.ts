@@ -34,8 +34,8 @@ import wishlist from './collections/Wishlist/wishlist'
 import Feedback from './collections/Feedbacks/feedback'
 import Address from './collections/Address/address'
 import Cards from './collections/Cards/card'
-import Adminlogo from '../app/_components/AdminLogo/Icon';
-
+import Logo from './components/Logo/Logo'
+import Icon from './components/Icon/Icon'
 const generateTitle: GenerateTitle = () => {
   return 'My Store'
 }
@@ -50,9 +50,17 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(), // bundler-config
+    meta: {
+      favicon: "/favicon.ico",
+      titleSuffix: "- Momifa" 
+    },
     components: {
       beforeLogin: [BeforeLogin],
       beforeDashboard: [BeforeDashboard],
+      graphics: {
+        Logo,
+        Icon
+      }
     },
     webpack: config => {
       return {

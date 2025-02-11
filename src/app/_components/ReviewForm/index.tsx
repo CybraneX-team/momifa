@@ -50,7 +50,7 @@ const ReviewForm = ({ postReview, value, productId, showReviewForm }) => {
   };
 
   return (
-    <form ref={form} style={{display: "none"}}>
+    <form ref={form}  className={classes.formMain} style={{display: "none"}}>
       <div className={classes.mainDiv}>
         <div className={classes.formDiv}>
           <label htmlFor="rating" className={classes.label}>Rating:</label>

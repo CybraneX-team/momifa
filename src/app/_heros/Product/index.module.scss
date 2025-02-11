@@ -39,13 +39,9 @@
   @include small-break {
     border: none;
     flex-direction: column;
-width: 100%; // Instead of 22em
-    margin: 13em 0; // Instead of 13em 2em
-    height: 52em;
-  }
-  @media (max-width: 650px) {
-    // padding-left: 10px;
-    // padding-right: 32px;
+    width: 100%;
+    margin: 13em 0;
+    height: 60em;
   }
 }
 .vig {
@@ -89,10 +85,9 @@ width: 100%; // Instead of 22em
   filter: brightness(1.1) contrast(1.2);
   @include small-break {
     height: 25em;
-    width: 25em;
+    width: 22em;
+    margin: 0 1.2em;
     position: absolute;
-    // left: 0.4em;
-    // top: 0;
   }
 }
 
@@ -141,11 +136,11 @@ width: 100%; // Instead of 22em
   @include small-break {
     text-align: left;
     background: #1f1f1f;
-    width: 26em;
+    width: 24em;
     position: relative;
     padding: 1em 1em;
     margin-top: 6em;
-    right: 2em;
+    right: 1em;
     border-radius: 20px;
   }
 }
@@ -153,10 +148,10 @@ width: 100%; // Instead of 22em
   @include small-break {
     text-align: left;
     background: #1f1f1f;
-    width: 26em;
+    width: 24em;
     position: relative;
     padding: 1em 1em;
-    right: 2em;
+    right: 1em;
     border-radius: 20px;
   }
 }
@@ -193,9 +188,9 @@ width: 100%; // Instead of 22em
   overflow: hidden;
   z-index: 1;
   @include small-break {
-    width: 27.5em;
+    width: 13.5em;
     right: 2em;
-    top: 0.5em;
+    top: 0.2em;
     margin: 0px 0em;
   }
 
@@ -237,7 +232,8 @@ width: 100%; // Instead of 22em
   overflow: hidden;
   z-index: 1;
   @include small-break {
-    width: 15em;
+    width: 14em;
+    height: 3em;
     left: 1em;
     margin: -5px 0em;
   }
@@ -380,9 +376,9 @@ width: 100%; // Instead of 22em
     background-color: #3d3d3d;
   }
   @include small-break {
-    width: 38.5em;
+    width: 16.5em;
     right: 3em;
-    margin: 0px 0em;
+    margin: 0px 1em;
   }
 }
 
@@ -444,19 +440,16 @@ width: 100%; // Instead of 22em
   }
 }
 .quan {
-  // display: block;
   display: block;
   @include small-break {
     display: flex;
     background: #1f1f1f;
-    /* text-align: center; */
-    width: 26em;
+    width: 24em;
     margin-top: 2em;
     position: relative;
-    /* margin-right: 1em; */
     height: 4em;
     border-radius: 20px;
-    right: 2em;
+    right: 1em;
     flex-direction: row;
   }
 }
@@ -511,7 +504,7 @@ width: 100%; // Instead of 22em
   margin-bottom: 1rem;
 
   @include small-break{
-    margin-left: -1rem;
+    margin-left: 0rem;
   }
 }
 
@@ -531,6 +524,11 @@ width: 100%; // Instead of 22em
 }
 .sliderContainer {
   margin-bottom: 0.8rem;
+  width: 31em;
+  @include small-break{
+    margin-bottom: 0.8rem;
+    width: 22em;
+  }
 }
 
 .sliderLabel {
@@ -598,6 +596,15 @@ width: 100%; // Instead of 22em
   background-size: 200% 100%;
   animation: shimmer 5.5s linear;
   border-radius: 1em;
+}
+.stockText{
+  color: white;
+  @include small-break{
+    color: white;
+    font-size: 18px;
+    margin: 0.5rem 0;
+    padding: 1% 0;
+  }
 }
 @keyframes shimmer {
   0% {

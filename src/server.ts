@@ -166,7 +166,7 @@ const start = async (): Promise<void> => {
       res.status(500).json({ error: 'Failed to fetch products' });
     }
   });
-  
+
   app.post('/api/mailContactUs',  sendMail)
   app.post("/api/verificationMail",sendVerificationMail)
   app.post("/api/decodedData", decodeDataToLogin)
