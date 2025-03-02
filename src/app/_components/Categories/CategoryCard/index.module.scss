@@ -7,14 +7,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  
+
   @media (max-width: 1024px) {
     flex-direction: column;
   }
 
   @media (min-width: 1024px) {
-    // margin-left: -70px;
+    margin-left: -100px;
+    width: 120%;
+    margin-top: 20px;
   }
 }
 
@@ -30,7 +31,7 @@
   border-radius: 10px;
   margin: 10px;
   overflow: hidden;
-  
+
   @media (max-width: 1024px) {
     width: 100% !important;
     height: 300px !important;
@@ -47,7 +48,7 @@
   //   z-index: 1;
   //   pointer-events: none;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -57,23 +58,19 @@
     z-index: 1;
     pointer-events: none;
 
-
-
     @media (max-width: 1024px) {
       display: block; // gradient on mobile
       background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 50%);
-      // display: none; 
+      // display: none;
     }
-    
   }
   @media (min-width: 1024px) {
     &:hover .title {
       opacity: 1;
       transform: translateY(0);
     }
+  }
 }
-}
-
 
 .title {
   position: absolute;
@@ -87,11 +84,11 @@
   opacity: 1;
   transform: translateY(0);
   transition: none;
-  
+
   @media (max-width: 1024px) {
     opacity: 1;
     transform: translateY(0);
-    color: #c5c5c5; 
+    color: #c5c5c5;
     font-weight: 500;
     font-size: 2.2rem;
   }
@@ -101,18 +98,18 @@
     transform-origin: 0 0;
     top: 50%;
     left: 10px;
-    
-    white-space: nowrap; 
+
+    white-space: nowrap;
   }
 }
 
-
-.image, .image2 {
-  position: relative; 
+.image,
+.image2 {
+  position: relative;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.8));
   transition: all 0.3s ease;
   border-radius: 10px;
-  overflow: hidden; 
+  overflow: hidden;
   filter: brightness(0.9);
   object-fit: cover;
 
@@ -125,7 +122,6 @@
   }
 
   /* Gradient overlay */
- 
 }
 .imageContainer {
   position: relative;
@@ -139,14 +135,14 @@
 .cardGroup {
   display: flex;
   flex-direction: column;
-  
+
   @media (max-width: 1024px) {
     width: 100%;
     padding: 0 !important;
   }
 }
 
-.image{
+.image {
   @media (min-width: 1024px) {
     // margin-top: 50px;
   }

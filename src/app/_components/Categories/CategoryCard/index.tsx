@@ -9,6 +9,7 @@ import img02 from './media/plainn.png'
 import img03 from './media/polo.jpg'
 // import img03 from './media/img03.jpg'
 import img04 from './media/access.png'
+import img05 from './media/hoodies.png'
 
 const CategoryCard = () => {
   const ref = React.useRef(null)
@@ -100,7 +101,29 @@ const CategoryCard = () => {
           layout="fill"
           objectFit="cover"
         />
-        <div className={classes.title}>Accessories</div>
+        <div className={classes.title}>Accessories </div>
+        {/* </div>  */}
+      </MotionLink>
+      <MotionLink
+        href="/products"
+        data-text="Explore Hoodies"
+        // style={{ height: "250px", width: "600px" }}
+        style={{ height: '700px', width: '800px' }}
+        className={classes.glass}
+        variants={cardVariants}
+        initial="hidden"
+        animate={isInView ? 'visible' : 'hidden'}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        {/* <div className={classes.imageContainer}> */}
+        <Image
+          className={classes.image2}
+          src={img05}
+          alt="Accessories"
+          layout="fill"
+          objectFit="cover"
+        />
+        <div className={classes.title}>Hoodies</div>
         {/* </div>  */}
       </MotionLink>
     </div>

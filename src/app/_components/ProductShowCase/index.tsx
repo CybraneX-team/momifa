@@ -201,7 +201,7 @@ const ProductDisplay: React.FC = () => {
       varientName: 'plain',
     },
     {
-      name: 'branded',
+      name: 'hoodies',
       gradientClass: 'from-[#0A0610] via-[#9E367A]/40 to-[#FF6CCC]/60',
       varientName: 'branded',
     },
@@ -325,7 +325,7 @@ const ProductDisplay: React.FC = () => {
         <div className={styles.contentDiv}>
           <div className="">
             <h1 className={styles.FashionLine}>Fashion at Next level</h1>
-            <h5 className={styles.tagLine}>Branded Polo T-Shirts</h5>
+            <h5 className={styles.tagLine}>100% Cotton T-Shirts</h5>
           </div>
           <div className={styles.imgDiv}>
             <motion.div

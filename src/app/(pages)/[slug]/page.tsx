@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import SmoothScroll from './SmoothScroll';
+import SmoothScroll from './SmoothScroll'
 
 import { Category, Page } from '../../../payload/payload-types'
 import { staticHome } from '../../../payload/seed/home-static'
@@ -39,6 +39,7 @@ import Head from 'next/head'
 import Hoodies from '../../_components/Hoodies'
 import ToastNotifier from './TostNotifier'
 import { Plus_Jakarta_Sans } from 'next/font/google'
+import Story from '../our-story/page'
 
 const FallingRectangles = dynamicM(() => import('../../_components/Fall'), {
   ssr: false,
@@ -106,7 +107,7 @@ export default async function Page({ params: { slug = 'home' } }) {
 
   return (
     <React.Fragment>
-       {/* <SmoothScroll /> */}
+      {/* <SmoothScroll /> */}
       {slug === 'home' ? (
         <>
           <Head>
@@ -140,6 +141,7 @@ export default async function Page({ params: { slug = 'home' } }) {
             </div>
             <ProductsOnHome />
             <Feedback />
+            <Story />
             <div className={classes.faq}>
               <FAQ />
             </div>
