@@ -91,33 +91,39 @@
   }
 }
 .cartHR{
-  margin: 8px 14px;
-  width: 26em;
+  margin: 8px 0;
+  width: 100%;
+  border-color: #3e3e3ee8;
 }
 .h3desc{
-  margin: 0 1em;
+  margin: 0.5em 1em;
   color: white;
+  font-size: 1rem;
 }
 .sizeSelected{
-  position: relative;
-  right: -18px;
+  margin: 0.5em 1em;
   color: white;
+  font-size: 1rem;
 }
 .cartpara{
-  color: white;
-  margin: 0.5em 2em;
-  width: 29em;
-  font-size: 15px;
+  color: #BDBDBD;
+  margin: 0;
+  width: 100%;
+  padding-right: 1rem;
+  font-size: 0.85rem;
+  padding-left: 1rem;
+
+
+  line-height: 1.2;
 }
 .sizeVal{
-  font-size: 17px;
+  font-size: 0.9rem;
   margin: 0 8px;
+  color: #BDBDBD;
 }
 .cartSize{
-  position: relative;
-  left: 2em;
+  margin: 0.5em 1em;
   color: white;
-  margin: 0.8rem 0;
-  font-size: 17px;
-  width: 14em;
+  font-size: 0.9rem;
+  width: auto;
 }

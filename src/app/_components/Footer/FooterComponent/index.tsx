@@ -92,12 +92,12 @@ const FooterComponent = ({ footer }) => {
   return (
     <footer
       ref={ref}
-      className={`z-50 relative bg-transparent text-white py-16 px-4 md:px-12 lg:px-48 shadow-[inset_1px_1px_10px_#f0e4ff95] rounded-t-[30px] mt-5 ${
+      className={`z-999 relative bg-transparent text-white py-16 px-4 md:px-12 lg:px-48 shadow-[inset_1px_1px_10px_#f0e4ff95] rounded-t-[30px] mt-5 ${
         noHeaderFooterUrls?.includes(pathname) ? 'hidden' : ''
       }`}
     >
       <MotionDiv
-        className="relative flex flex-col items-center"
+        className="relative flex flex-col items-center z-999"
         variants={containerVariants}
         initial="hidden"
         animate={controls}

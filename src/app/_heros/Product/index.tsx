@@ -301,7 +301,7 @@ export const ProductHero: React.FC<{
   }
 
   return (
-    <div className="overflow-x-hidden flex flex-col justify-center items-center md:justify-start md:items-start  pt-6">
+    <div className="overflow-x-hidden flex flex-col justify-center items-center md:justify-start md:items-start pt-6">
       <Image
         src="/media/MOMIFA.png"
         alt="MOMIFA"
@@ -322,7 +322,7 @@ export const ProductHero: React.FC<{
                   className={classes.imageclass}
                   src={image}
                   width={100}
-                  height={40}
+                  height={100}
                   alt="image"
                   loading="eager" // Added this
                   priority // Added this

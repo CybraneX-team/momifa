@@ -100,10 +100,12 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart, size }) => {
         </div> */}
       </div>
       {showDropdownContent ? (
-        <div>
+        <div className="col-span-2 w-full px-2">
           <hr className={styles.cartHR} />
           <h3 className={styles.h3desc}> Description:</h3>
-          <p className={styles.cartpara}> {product.meta.description} </p>
+          <div className="px-1 w-full">
+            <p className={styles.cartpara}>{product.meta.description}</p>
+          </div>
           <h3 className={styles.sizeSelected}>Size Selected:</h3>
           <p className={styles.cartSize}>
             {sizee ? sizee.split(':')[0] : ' '} :
